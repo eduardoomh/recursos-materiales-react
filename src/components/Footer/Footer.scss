@@ -1,0 +1,22 @@
+@import "../../scss/index.scss";
+
+//Estilos del footer de la pagina.
+
+.footer{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    @include flexbox(false, center, center);
+    @include min-w(100vw);
+    @include min-h(15rem);
+    padding: 2em;
+    background-color: $guindo;
+    color: $dorado-claro;
+
+    p{
+        text-align: center;
+        font-size: 1.3em;
+    }
+    
+
+}

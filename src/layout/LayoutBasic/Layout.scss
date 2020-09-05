@@ -5,58 +5,30 @@
 
     .move{
         transition: .2s;
-        transform: translateX(200px);
+        transform: translateX(200px);    
+
     }
 
-    .menu-left, .submenu-left{
-        position: absolute;
-        left: 0;
-        top: 0;
-        margin:0;
-        padding: 1em;
-        min-width:  200px;
-        min-height: 100vh;
-        transform: translateX(-200px);
-        background-color: rgba(214, 210, 210, 1);
-        font-size: 1.2em;
-
-        .absolute{
-            position: absolute;
-            top: 0;
-            right: 0;
-
-            &:hover{
-                color: $dorado-oscuro;
-            }
-        }
+    main{
+        min-width: 100vw;
+        min-height: calc(100vh - 4.5em);
+        margin-bottom: 5rem;
         
-
-        li{
-            padding: 1em;
-            color: $guindo;
-
-            &:hover{
-                cursor: pointer;
-            }
-        }
-    
     }
 
 
-
-    .menu-left.open{
-            transition: .2s;
-            transform: translateX(0);
-        }
-    .submenu-left.open-submenu{
-        transition: .2s;
-        transform: translateX(0);
-    }
-    
 
 
 }
 
+.scroll{
+    overflow-y: hidden;
+    overflow-x: hidden;
+    max-height: 100vh;
+    max-width: 100vw;
+}
+
 .blur{
     opacity: 0.5;
+
 }

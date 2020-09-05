@@ -1,0 +1,89 @@
+@import "../../../scss/index.scss";
+
+//Estilos del banner principal.
+
+    .banner{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 6rem 1fr;
+        background-color: $naranja;
+        background-image: $gradient-fondo;
+        min-height: 22rem;
+        max-height: 22rem;
+
+        h1{
+            @include flexbox();
+            @include min-h(6rem);
+            font-size: 1.6em;
+        }
+
+        .banner-box{
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            padding: 1em 1em 1em 4em;
+            @include min-h(calc(22rem - 6rem));
+
+            .banner-box-cards{
+                display: grid;
+                grid-template-columns: 12rem 1fr;
+                grid-template-rows: 1fr;
+                background-color: $gris-transparente;
+                border-radius: 6px;
+                border: 1px solid $borde-gris;
+                margin: 0;
+                padding: 0;
+                @include min-h(14rem);
+
+
+                .text{
+                    grid-column: 1/2;
+                    grid-row: 1/2;
+                    @include flexbox();
+                    text-align: center;
+                    padding: .5em;
+                    font-size: 1.2em;
+                    @include min-h(14rem);
+                    border-right: 1px solid $borde-gris;
+                    color: $guindo;
+                    border-radius: 6px 0 0 6px;
+                }
+
+                .cards{
+                    grid-column: 2/3;
+                    grid-row: 1/2;
+                    display: grid;
+                    grid-template-columns: 1fr 1fr 1fr 1fr;
+                    grid-template-rows: 1fr;
+                    padding: 0 0 0 1em;
+                    margin: 0;
+                    @include min-h(14rem);
+                }
+
+
+            }
+
+            div{
+                @include flexbox();
+                flex-direction: column;
+                padding: 2em;
+
+                p{
+                    font-size: 1.4em;
+
+                    i{
+                        color: $guindo;
+                    }
+                }
+
+                button{
+                    @include boton();
+                }
+
+
+            }
+            
+        }
+
+        
+
+    }

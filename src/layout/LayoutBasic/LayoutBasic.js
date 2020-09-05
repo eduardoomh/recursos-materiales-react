@@ -5,6 +5,7 @@ import "./Layout.scss";
 import MenuHamburguer from "../../components/Menu/MenuHamburguer/MenuHamburguer";
 import SubmenuSolicitudes from "../../components/Menu/SubmenuSolicitudes/SubmenuSolicitudes";
 import SubmenuCrear from "../../components/Menu/SubmenuCrear/SubmenuCrear";
+import Footer from "../../components/Footer/Footer";
 
 export default function LayoutBasic(props) {
     const [showHamburguer, setShowHamburguer] = useState(false);
@@ -25,7 +26,7 @@ export default function LayoutBasic(props) {
 
     return (
         <>
-            <div className="layout">
+            <div className={showHamburguer ? "layout scroll" : "layout"}>
                 <MenuHamburguer 
                     showHamburguer={showHamburguer}
                     setShowSubmenu={setShowSubmenu}
@@ -48,10 +49,11 @@ export default function LayoutBasic(props) {
                     setShowSubmenu={setShowSubmenu}
                     setShowSubmenuCrear={setShowSubmenuCrear}
                      />
-                <main className={showHamburguer ? "move blur": ""}>
+                <main className={showHamburguer ? "move blur": ""} >
                     {children}
-                    <p>{showHamburguer ? "menu responsive abierto" : "menu responsive cerrado"}</p>
                 </main>
+                
+                <Footer />
             </div>
 
         </>

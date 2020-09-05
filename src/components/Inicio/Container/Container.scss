@@ -1,0 +1,32 @@
+@import "../../../scss/index.scss";
+
+//Estilos del contenedor de la pagina de inicio
+
+.container{
+    grid-column: 1/2;
+    grid-row: 2/3;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 3em 1fr;
+
+    h2{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 3em;
+        max-height: 3em;
+        color: #525252;
+        border: 1px solid #D8C9C9;
+        font-weight: normal;
+        font-size: 1.4em;
+    }
+
+    div{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        margin-top: 2em;
+
+    }
+    
+}

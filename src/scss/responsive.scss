@@ -1,0 +1,20 @@
+//se utilizo un map para guarar todas las medidas de responsive que utilizaremos en el proyecto.
+
+$breakpoints: (
+    "chico": 0,
+    "mediano": 640px,
+    "mediogrande": 920px,
+    "grande": 1024px,
+    "extragrande": 1440px,
+);
+
+//funcion para reducir el codigo en las media queries.
+
+@function query($value){
+    @if($value){
+
+      @return map-get($breakpoints, $value);
+   
+    }
+
+}

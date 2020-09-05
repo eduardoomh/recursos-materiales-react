@@ -1,67 +1,14 @@
+//se ha importado las variables de color y los estilos para hacer responsive web design.
 @import "../../scss/index.scss";
 
-//Estilos del submenu que se reutilizaran varias veces en el menu.
-@mixin submenu{
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    background-color: $seminegro;
-    color: white;
-    transform: scale(0,0);
-    width: 15rem;
-    padding: 0;
-    top: 4em;
-    
-    border-radius: 0 0 6px 6px;
-
-    li{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: .3em;
-
-        &:hover{
-            transition: .4s;
-            background-color: $dorado-oscuro;
-            color: $seminegro
-        }
-
-        &:last-child{
-            border-radius: 0 0 6px 6px;
-        }
-
-    }
-
-}
-
-
-//se utilizo un map para guarar todas las medidas de responsive que utilizaremos en el proyecto.
-
-$breakpoints: (
-    "chico": 0,
-    "mediano": 640px,
-    "grande": 1024px,
-    "extragrande": 1440px,
-);
-
-//funcion para reducir el codigo en las media queries.
-
-@function query($value){
-    @if($value){
-
-      @return map-get($breakpoints, $value);
-   
-    }
-
-}
-
+//se ha importado los estilos del submenu del header.
+@import "../../scss/header/submenu.scss";
 
 //Aqui se anexan todos los estilos del menu de navegacion de usuario que ha iniciado sesion.
+
 .blur{
     opacity: 0.5;
 }
-
-
 
 
 header{

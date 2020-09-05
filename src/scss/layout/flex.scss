@@ -1,0 +1,32 @@
+
+//mixin para agregar flexbox
+
+@mixin flexbox($flex: true, $justify: null, $align: null, $direction: null){
+    @if($justify or $align or $direction){
+ 
+        @if(flex == true){
+            display: flex;
+        }
+
+        @if($direction != null){
+            flex-direction: $direction;
+        }
+
+        @if($justify != null){
+            justify-content: $justify;
+        }
+
+        @if($align != null){
+            align-items: $align;
+        }
+
+    }
+    @else{
+        display: flex;
+        justify-content: center;
+        align-items: center;  
+    
+        
+    }
+
+}

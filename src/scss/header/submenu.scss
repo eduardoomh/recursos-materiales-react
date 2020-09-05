@@ -1,0 +1,35 @@
+//Estilos del submenu que se reutilizaran varias veces en el menu.
+@mixin submenu{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background-color: $dorado-claro;
+    color: $guindo;
+    transform: scale(0,0);
+    width: 15rem;
+    padding: 0;
+    top: 4em;
+    border: 1px solid $dorado-claro-hover;
+    border-radius: 0 0 6px 6px;
+    box-shadow: $box-shadow;
+
+    li{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: .3em;
+
+        &:hover{
+            transition: .4s;
+            background-color: $dorado-claro-hover;
+            color: $guindo;
+            
+        }
+
+        &:last-child{
+            border-radius: 0 0 6px 6px;
+        }
+
+    }
+
+}

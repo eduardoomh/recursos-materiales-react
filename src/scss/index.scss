@@ -1,1 +1,6 @@
+//se importan los ficheros scss que tendran todas las paginas sass
 @import "./colors.scss";
+@import "./layout/flex.scss";
+@import "./layout/minmax.scss";
+@import "./botones/boton.scss";
+@import "./responsive.scss";

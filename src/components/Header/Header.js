@@ -19,9 +19,7 @@ export default function Header(props){
         <header className={show ? "move blur" : ""}>
 
             <ul>
-                <li className="burguer" onClick={() => showModal(show)}> <Icon name="bars" size="large"  />
-
-                </li>
+                <li className="burguer" onClick={() => showModal(show)}> <Icon name="bars" size="large"  /></li>
                 <li>Inicio <Icon name="angle down" /> </li>
                 <li>Solicitudes <Icon name="angle down" />
                     <ul className="solicitud-submenu">

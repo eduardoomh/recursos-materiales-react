@@ -1,0 +1,16 @@
+@import "../../scss/index.scss";
+
+//estilos para la pagina de inicio
+
+.inicio{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 22rem 1fr;
+    min-width: 100vw;
+    max-width: 100vh;
+    min-height: calc(100vh - 4.5em);
+    max-height: 100%;
+
+
+
+}

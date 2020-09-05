@@ -1,0 +1,14 @@
+
+//se creo un mixin que inserta min-width y max-width
+
+@mixin min-w($min, $max: $min){
+    min-width: $min;
+    max-width: $max;
+}
+
+//se creo un mixin que inserta min-height y max-height
+
+@mixin min-h($min, $max: $min){
+    min-height: $min;
+    max-height: $max;
+}
