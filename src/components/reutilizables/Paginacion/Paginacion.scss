@@ -1,0 +1,6 @@
+@import "../../../scss/index.scss";
+
+.paginacion{
+    @include flexbox();
+    @include min-h(6rem);
+}

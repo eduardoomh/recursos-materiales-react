@@ -1,0 +1,8 @@
+
+//Estilos para todas las paginas cpara visualizar un grid de solicitudes.
+
+@mixin verSolicitudes(){
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 10rem 1fr;
+}

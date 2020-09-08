@@ -1,0 +1,16 @@
+@import "../../../scss/index.scss";
+
+//Estilos de componente filtrador de solicitudes.
+
+.filtrado{
+    @include flexbox();
+    @include min-h(4rem);
+
+    p{
+        @include flexbox();
+        @include min-h(inherit);
+        margin: 0 1em;
+        font-size: 1.1em;
+        color: $gris-oscuro;
+    }
+}

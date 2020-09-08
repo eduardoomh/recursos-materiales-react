@@ -1,0 +1,8 @@
+
+//Estilos de la pagina de crear solicitud
+
+@mixin CrearSolicitud(){
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 10rem 3em 1fr;
+}

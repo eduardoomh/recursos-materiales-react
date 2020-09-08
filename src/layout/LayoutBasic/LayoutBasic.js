@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import Header from "../../components/Header/Header";
-import { Icon } from "semantic-ui-react";
 import "./Layout.scss";
 import MenuHamburguer from "../../components/Menu/MenuHamburguer/MenuHamburguer";
 import SubmenuSolicitudes from "../../components/Menu/SubmenuSolicitudes/SubmenuSolicitudes";

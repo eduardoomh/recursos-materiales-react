@@ -1,9 +1,16 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { Icon, Button } from "semantic-ui-react";
 import "./Banner.scss";
 import Card from "../../reutilizables/Card/Card";
 
 export default function Banner(){
+    const history = useHistory();
+    const gotoCalendar = () => {
+        
+        history.push("/calendario");
+    }
+
     return(
         <div className="banner">
             <h1>Sistema de Gestión para el Departamento de Recursos Materiales y Servicios.</h1>
@@ -16,7 +23,7 @@ export default function Banner(){
                 </article>
                 <div>
                     <p>Busque mas solicitudes <Icon name="calendar" size="big" /></p>
-                    <Button>Ver Calendario</Button>
+                    <Button onClick={() => gotoCalendar()}>Ver Calendario</Button>
                 </div>
             </div>
         </div>

@@ -1,0 +1,6 @@
+@import "../../../scss/pages/crear-solicitud.scss";
+
+//Estilos de la pagina de crear Mantenimiento.
+.crear-mantenimiento{
+    @include CrearSolicitud();
+}

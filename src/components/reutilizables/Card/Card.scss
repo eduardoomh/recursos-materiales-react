@@ -50,8 +50,18 @@
             color: $azul !important;
         }
 
+        i.pendiente{
+            color: $guindo !important;
+        }
+
         span{
             justify-content: flex-start;
         }
+    }
+
+    &:hover{
+        transition: .3s;
+        cursor: pointer;
+        background-color: rgba(255, 194, 53, 0.6) !important;
     }
 }

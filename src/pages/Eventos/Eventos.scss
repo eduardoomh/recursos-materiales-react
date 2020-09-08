@@ -1,0 +1,6 @@
+@import "../../scss/pages/ver-solicitudes.scss";
+
+//Estilos de pagina de Eventos.
+.eventos{
+    @include verSolicitudes();  
+}

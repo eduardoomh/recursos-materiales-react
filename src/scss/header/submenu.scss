@@ -9,6 +9,8 @@
     width: 15rem;
     padding: 0;
     top: 4em;
+    grid-gap: 0;
+    margin: 0;
     border: 1px solid $dorado-claro-hover;
     border-radius: 0 0 6px 6px;
     box-shadow: $box-shadow;
@@ -17,7 +19,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: .3em;
 
         &:hover{
             transition: .4s;
@@ -28,6 +29,11 @@
 
         &:last-child{
             border-radius: 0 0 6px 6px;
+        }
+
+        a{
+            @include enlaces;
+            padding: .3em;
         }
 
     }

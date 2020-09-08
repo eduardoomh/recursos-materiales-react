@@ -32,6 +32,11 @@
             &:hover{
                 cursor: pointer;
             }
+
+            a{
+                @include enlaces;
+                justify-content: flex-start;
+            }
         }
     
 }

@@ -1,0 +1,6 @@
+@import "../../../scss/pages/ver-solicitud.scss";
+
+//Estilos de pagina de ver Salida.
+.ver-salida{
+    @include verSolicitud();
+}

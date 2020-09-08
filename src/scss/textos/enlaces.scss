@@ -1,0 +1,8 @@
+//mixin para dar estilos a los enlaces
+
+@mixin enlaces(){
+    @include flexbox;
+    color: inherit;
+    min-width: inherit;
+    min-height: inherit;
+}

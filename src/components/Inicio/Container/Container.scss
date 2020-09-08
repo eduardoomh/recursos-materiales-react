@@ -9,17 +9,6 @@
     grid-template-columns: 1fr;
     grid-template-rows: 3em 1fr;
 
-    h2{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 3em;
-        max-height: 3em;
-        color: #525252;
-        border: 1px solid #D8C9C9;
-        font-weight: normal;
-        font-size: 1.4em;
-    }
 
     div{
         display: grid;

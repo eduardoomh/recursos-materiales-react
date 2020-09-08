@@ -1,0 +1,12 @@
+@import "../../../scss/index.scss";
+
+//estilos de componente titulo
+h2{
+    @include flexbox();
+    @include min-h(3em);
+    color: $gris-oscuro;
+    border: 1px solid #D8C9C9;
+    font-weight: normal;
+    font-size: 1.4em;
+    margin: 0;
+}

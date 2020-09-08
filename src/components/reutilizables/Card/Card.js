@@ -1,14 +1,23 @@
 import React from "react";
+import { useHistory} from "react-router-dom";
 import { Icon } from "semantic-ui-react";
 import "./Card.scss";
 
-export default function Card(){
+export default function Card(props){
+    const { fecha = "fecha", contenido = "contenido", status = "aprobada", tipo = "eventos"} = props;
+    const history = useHistory();
+
+    const cardClick = () => {
+        history.push(`/${tipo}/id`);
+    }
+
     return(
-        <article className="card">
-            <p className="fecha">fecha</p>
-            <p className="contenido">contenido</p>
+        <article className="card" onClick={() => cardClick()}>
+            <p className="fecha">{fecha}</p>
+            <p className="contenido">{contenido}</p>
             <p className="status">
-                <Icon name="check"/>
+                { status === "aprobada" ? <Icon name="check"/> : <Icon name="warning" className="pendiente" />}
+                
             </p>
         </article>
     )

@@ -1,0 +1,6 @@
+@import "../../../scss/pages/ver-solicitud.scss";
+
+//Estilos de la pagina de ver-mantenimiento
+.ver-mantenimiento{
+    @include verSolicitud();
+}

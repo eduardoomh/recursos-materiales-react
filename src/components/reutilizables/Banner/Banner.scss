@@ -1,0 +1,9 @@
+@import "../../../scss/index.scss";
+
+//etilos para el componente banner
+.banner-titulo{
+    background-image: $gradient-fondo;
+    @include flexbox();
+    @include min-h(10rem);
+    font-size: 1.1em;
+}
