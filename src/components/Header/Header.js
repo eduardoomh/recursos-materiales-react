@@ -6,7 +6,9 @@ import "./Header.scss";
 
 export default function Header(props){
     const { show, setShow, setShowSubmenu, setShowSubmenuCrear } = props;
-    const { logout } = useIdentity();
+    const { logout, identity } = useIdentity();
+
+    const userName = `${identity.name} ${identity.surname}`;
 
     const showModal = (show) => {
         if(show === true){
@@ -43,7 +45,7 @@ export default function Header(props){
                 <li className="vacio"></li>
             </ul>
             <div>
-                <p>Fernando Vazquez <Icon name="angle down" />
+                <p>{userName} <Icon name="angle down" />
                     <ul className="user-submenu">
                             <li>Perfil</li>
                             <li>Editar Perfil</li>

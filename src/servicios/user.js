@@ -1,18 +1,12 @@
-import { endpoint } from "../../src/api/endpoint";
+import { authFetch } from "./reutilizables/postService";
+
 
 export const loginService = async (data) => {
 
-    const petition = await fetch(`${endpoint.url}login`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(
-            data
-        )
-    })
-    const result =  await petition.json();
-    const response = await result;
+    const petition = await authFetch("/login", data);
+
+    const response = await petition.json();
+
     return response;
 
 }

@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import useIdentity from "../../../utils/hooks/useIdentity";
 import { loginService } from "../../../servicios/user";
-import { endpoint } from "../../../api/endpoint";
+import { saveStorage } from "../../../servicios/reutilizables/localStorage";
 import { Form, Button } from "semantic-ui-react";
 import "./Login.scss";
 
@@ -26,12 +26,16 @@ export default function Login(){
                 console.log(response);
 
                 if(response !== undefined && response.status === "success"){
+
+                    saveStorage("usuario", response.usuario);
+                    saveStorage("token", response.acceso.token);
                     login();
                     toast.success("Ha ingresado al sistema correctamente");
+
                 }else{
                     toast.error("Sus datos son incorrectos.");
                 }
-                
+                 
             }
             catch(err){
                 toast.error("Parece que los datos han sido incorrectos");
