@@ -3,42 +3,50 @@
 .card-carrousel{
     display: grid;
     grid-template-columns: 1fr 2rem;
-    grid-template-rows: 1fr;
-    @include min-h(17rem);
+    grid-template-rows: 2rem 14rem;
+    @include min-h(18rem);
     margin: 2em 4em 2em 4em;
     border-radius: 6px;
     background-color: $gris;
     border: 1px solid $borde-gris-claro;
-    padding: 1em;
+    padding: 1rem;
     overflow-x: hidden;
+    overflow-y: hidden;
 
     div{
+        grid-column: 1/2;
+        grid-row: 2/3;
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
         grid-template-rows: 1fr;
-        @include min-h(13rem);
+        align-items: center;
+        justify-content: center;
+        @include min-h(14rem);
         overflow-x: hidden;
         overflow-y: hidden;
+        margin: 0;
     }
 
     .titulo{
-        margin-top: -5px;
-        position: absolute;
+        grid-column: 1/span 2;
+        grid-row: 1/2;
         @include min-w(100%);
+        @include min-h(2rem);
+        padding: 0 !important;
+        margin: 0 !important;
+        text-align: center;
         @include flexbox();
-
-        span{
-            @include min-w(15rem);
-            font-size: 1.2em;
-            color: $guindo;
-        }
+        font-size: 1.2em;
+        color: $guindo;
 
     }
 
     i{
+        grid-column: 2/3;
+        grid-row: 2/3;
         @include flexbox();
         flex-direction: column;
-        @include min-h(100%);
+        @include min-h(14rem);
         color: $guindo;
 
         &:hover{

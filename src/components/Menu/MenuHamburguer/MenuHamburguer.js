@@ -12,6 +12,7 @@ export default function MenuHamburguer(props){
             <li><Link to="/">Inicio <Icon name="angle right" /></Link></li>
             <li onClick={() => setShowSubmenu(true)}>Solicitudes <Icon name="angle right" /></li>
             <li onClick={() => setShowSubmenuCrear(true)}>Nuevo <Icon name="angle right" /></li>
+            <li>Usuario <Icon name="angle right" /></li>
             <li className="absolute" onClick={() => closeAll()}><Icon name="x" size="big" /></li>
         </MenuResponsive>
          

@@ -1,0 +1,16 @@
+@import "../index.scss";
+
+//mixin para el boton de los formularios.
+
+@mixin botonSubmit(){
+    font-size: 1.2em;
+    color: white;
+    background-color: $guindo;
+    @include min-w(100%);
+    margin: 2em 0;
+
+    &:hover{
+        background-color: $dorado-claro-hover;
+        color: $guindo;
+    }
+}

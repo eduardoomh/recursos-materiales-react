@@ -1,10 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import useIdentity from "../../utils/hooks/useIdentity";
 import { Icon } from "semantic-ui-react";
 import "./Header.scss";
 
 export default function Header(props){
     const { show, setShow, setShowSubmenu, setShowSubmenuCrear } = props;
+    const { logout } = useIdentity();
 
     const showModal = (show) => {
         if(show === true){
@@ -46,7 +48,7 @@ export default function Header(props){
                             <li>Perfil</li>
                             <li>Editar Perfil</li>
                             <li>Solicitudes</li>
-                            <li>Cerrar Sesion</li>
+                            <li onClick={() => logout()}>Cerrar Sesion</li>
                         </ul>
                 </p>
             </div>

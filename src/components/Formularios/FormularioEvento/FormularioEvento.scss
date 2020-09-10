@@ -1,0 +1,11 @@
+@import "../../../scss/index.scss";
+@import "../../../scss/formularios/formulario-basico.scss";
+
+.formulario-evento{
+    display: grid;
+    grid-template-columns: 1fr 50rem 1fr;
+    grid-template-rows: 1fr;
+    margin-top: 4rem;
+
+    @include formularioBasico();
+}

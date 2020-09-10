@@ -1,0 +1,40 @@
+@import "../botones/boton-submit.scss";
+@import "../index.scss";
+
+@mixin formularioBasico(){
+    .ui.form{
+        grid-column: 2/3;
+        grid-row: 1/2;
+        padding: 1rem;
+        border: 1px solid $borde-gris-claro;
+        box-shadow: $box-shadow;
+        border-radius: 6px;
+        background-color: $gris;
+    
+    
+        label{
+            @include flexbox();
+            font-size: 1.2em;
+            padding: 1em;
+            color: $gris-oscuro;
+        }
+    
+        .input{
+            @include min-h(3rem);
+        }
+    
+        .select{
+            @include min-h(3rem);
+        }
+    
+        .textarea{
+            @include min-h(8rem);
+        }
+
+        button{
+            @include botonSubmit();
+            
+        }
+    
+    }
+}

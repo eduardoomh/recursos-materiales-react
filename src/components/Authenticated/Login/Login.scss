@@ -1,0 +1,9 @@
+@import "../../../scss/index.scss";
+@import "../../../scss//formularios/formulario-basico.scss";
+
+.login{
+    margin-top: 4rem;
+    padding-top: 2rem;
+    @include formularioBasico();
+
+}

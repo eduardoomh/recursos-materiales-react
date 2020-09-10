@@ -1,0 +1,37 @@
+@import "../../scss/index.scss";
+@import "../../scss/formularios/formulario-basico.scss";
+
+.authenticated{
+    display: grid;
+    grid-template-columns: 1fr 40rem 1fr;
+    grid-template-rows: 6rem 1fr 4rem;
+    @include min-h(100vh);
+    @include formularioBasico();
+    padding: 3rem;
+
+    h1{
+        grid-column: 2/3;
+        grid-row: 1/2;
+        text-align: center;
+
+    }
+
+    .ui.form{
+        grid-column: 2/3;
+        grid-row: 2/3;
+    }
+
+    p{
+        grid-column: 2/3;
+        grid-row: 3/4;
+        @include min-w(100%);
+        @include min-h(100%);
+        @include flexbox();
+        font-size: 1.2em;
+
+        a{
+            margin-left: .5em;
+            cursor: pointer;
+        }
+    }
+}
