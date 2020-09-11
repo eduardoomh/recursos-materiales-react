@@ -1,11 +1,12 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
+import { getStorage } from "../../../servicios/reutilizables/localStorage";
 import { Icon } from "semantic-ui-react";
 import "./CardCarrousel.scss";
 import Card from "../Card/Card";
 
 export default function CardCarrousel(props) {
-    const { titulo, data } = props;
+    const { titulo, data, loading } = props;
     const history = useHistory();
 
 
@@ -13,6 +14,7 @@ export default function CardCarrousel(props) {
         history.push(`/${titulo.toLowerCase()}`);
     }
 
+    if(loading) return null;
 
     return (
         <article className="card-carrousel">
@@ -21,7 +23,7 @@ export default function CardCarrousel(props) {
                 {
                     data ? 
                     data.map(d => 
-                        <Card fecha={d.fecha} contenido={d.contenido} status={d.status} tipo={titulo.toLowerCase()}
+                        <Card key={d.id} fecha={d.fecha} contenido={d.evento || d.trabajo_realizado || d.destino} status={d.status} tipo={titulo.toLowerCase()}
                         />
                     ) 
                     : "El contenido se esta cargando.."

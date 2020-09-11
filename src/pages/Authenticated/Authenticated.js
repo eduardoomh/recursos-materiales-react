@@ -18,10 +18,10 @@ export default function Authenticated(){
             }
             {
                 isLogin === true ? (
-                    <p>No tine una cuenta? <a onClick={() => changeLogin()}>Registrese</a></p>
+                    <p>No tine una cuenta? <span onClick={() => changeLogin()}>Registrese</span></p>
                 ) 
                 : (
-                    <p>Ya tiene una cuenta? <a onClick={() => changeLogin()}>Inicie Sesion</a></p>
+                    <p>Ya tiene una cuenta? <span  onClick={() => changeLogin()}>Inicie Sesion</span></p>
                 )
             }
         </div>

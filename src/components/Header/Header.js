@@ -45,14 +45,14 @@ export default function Header(props){
                 <li className="vacio"></li>
             </ul>
             <div>
-                <p>{userName} <Icon name="angle down" />
+                <div className="user-name">{userName} <Icon name="angle down" />
                     <ul className="user-submenu">
                             <li>Perfil</li>
                             <li>Editar Perfil</li>
                             <li>Solicitudes</li>
                             <li onClick={() => logout()}>Cerrar Sesion</li>
                         </ul>
-                </p>
+                </div>
             </div>
       </header>
 

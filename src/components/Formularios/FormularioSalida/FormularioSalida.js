@@ -22,10 +22,11 @@ export default function FormularioSalida(){
                 <Form.Input label="Nombre del evento" />
                 <Form.TextArea label="Actividades a realizar" /> 
                 <Form.Select label="Departamento Solicitante" options={departamentos}/>
-                <Form.Select label="Locacion Elegida" options={departamentos}/>
+                <Form.Select label="Locacion Elegida" options={locaciones}/>
                 <Form.Input  />
                 <Form.Input />
                 <p>Esto es un formulario</p>
+                <Button>Crear Salida</Button>
             </Form>
             
         </div>

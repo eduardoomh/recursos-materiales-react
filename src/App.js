@@ -5,7 +5,6 @@ import IdentityContext from "./utils/context/IdentityContext";
 import { clearStorage, getStorage } from "./servicios/reutilizables/localStorage";
 import './App.scss';
 import Authenticated from "./pages/Authenticated/Authenticated";
-import { get } from 'react-scroll/modules/mixins/scroller';
 
 function App() {
   const [ identity, setIdentity ] = useState(getStorage("usuario") || false);
