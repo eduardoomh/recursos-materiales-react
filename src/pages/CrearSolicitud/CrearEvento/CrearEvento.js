@@ -9,7 +9,7 @@ export default function CrearEvento(){
         <div className="crear-evento">
             <Banner titulo="Crear nuevo Evento" />
             <Titulo titulo="Rellene el formulario con los datos que se le indiquen." />
-            <FormularioEvento />
+            <FormularioEvento /> 
         </div>
     )
 }

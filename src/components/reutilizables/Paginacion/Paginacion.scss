@@ -3,4 +3,17 @@
 .paginacion{
     @include flexbox();
     @include min-h(6rem);
+
+    button{
+        
+
+    }
+
+    p{
+        @include flexbox();
+        @include min-h(100%);
+        @include min-w(2.5rem);
+        font-size: 1.2em;
+        margin: 0;
+    }
 }

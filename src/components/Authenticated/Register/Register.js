@@ -5,7 +5,7 @@ import "./Register.scss";
 export default function Register(){
 
     return(
-        <Form>
+        <Form className="register">
             <Form.Input type="text" label="Introduzca su nombre" />
             <Form.Input type="text" label="Introduzca sus apellidos" />
             <Form.Input type="text" label="Introduzca un correo electronico" />

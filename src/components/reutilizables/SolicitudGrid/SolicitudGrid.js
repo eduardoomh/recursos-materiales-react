@@ -1,28 +1,71 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./SolicitudGrid.scss";
 import Titulo from "../Titulo/Titulo";
 import Grid from "../Grid/Grid";
 import Filtrado from "../Filtrado/Filtrado";
 import Paginacion from "../Paginacion/Paginacion";
+import { getPorFiltrado } from "../../../servicios/filtrado";
 
 export default function SolicitudGrid(props){
-    const {data, tipo} = props;
+    const {data, setData, tipo, loading, setLoading } = props;
     const { data: datos } = data;
+    const textTitulo = tipo === "eventos" || "mantenimientos" || "salidas" ? "Solicitudes Mas Recientes" : "Mas Recientes"
 
-    const [titulo, setTitulo] = useState("Solicitudes Mas Recientes");
+    const [titulo, setTitulo] = useState(textTitulo);
+    const [filtro, setFiltro] = useState(false);
 
+    const fetchData = async () => {
+        try{
+            setLoading(true);
+            const response = await getPorFiltrado(tipo, titulo);
+            if(response.status === "success"){
+                setData(response.elementos);
+                setFiltro(false);
+            }
+
+            setData(() => {
+                if(response.status === "success") return response.elementos
+            });
+
+            setFiltro(() => {
+                if(response.status === "success") return false
+            });
+
+            setLoading(() => {
+                if(response.status === "success") return false
+            });
+    
+        }
+
+        catch(err){
+            console.log(err);
+        }
+    }
+
+    useEffect(() => {
+
+   
+        fetchData(() => {
+            if(filtro === true){
+                return ""
+            }
+        });
+        
+
+    }, [titulo]);
     
     return(
         <div className="contenedor-grid">
             <Titulo titulo={titulo} />
-            <Filtrado setTitulo={setTitulo} />
-            <Grid data={datos} tipo={tipo} />
+            <Filtrado setTitulo={setTitulo} setFiltro={setFiltro} />
+            <Grid data={datos} tipo={tipo} loading={loading} />
             <Paginacion 
                 currentPage={data.current_page}
-                from={data.from}
-                to={data.to}
                 lastPage={data.last_page}
-
+                prevUrl={data.prev_page_url}
+                nextUrl={data.next_page_url}
+                setData={setData}
+                setLoading={setLoading}
             />
 
         </div>

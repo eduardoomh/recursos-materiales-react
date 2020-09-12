@@ -1,9 +1,16 @@
 @import "../../../scss/index.scss";
-@import "../../../scss//formularios/formulario-basico.scss";
+@import "../../../scss/formularios/formulario-basico.scss";
+@import "../../../scss/imagenes/logo.scss";
 
 .login{
-    margin-top: 4rem;
-    padding-top: 2rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 8rem 1fr 1fr 1fr;
+    margin-top: 1rem;
     @include formularioBasico();
+
+    .logo{
+        @include logo();
+    }
 
 }

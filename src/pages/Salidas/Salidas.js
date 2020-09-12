@@ -5,20 +5,23 @@ import Banner from "../../components/reutilizables/Banner/Banner";
 import SolicitudGrid from "../../components/reutilizables/SolicitudGrid/SolicitudGrid";
 import { getSalidas } from "../../servicios/salida";
 import ModalBasic from "../../components/reutilizables/ModalBasic/ModalBasic";
+import { scrollTop } from "../../utils/reutilizables/scroll";
 
 export default function Salidas(){
     const [content, setContent ] = useState("");
     const [ loading, setLoading ] = useState(true);
-
     
     const fetchData = async () => {
         try{
             const salidas = await getSalidas();
-            if(salidas.status === "success"){
-                console.log(salidas.elementos);
-                setContent(salidas.elementos);
-                setLoading(false);
-            }
+
+            setContent(() => {
+                if(salidas.status === "success") return salidas.elementos
+            });
+
+            setLoading(() => {
+                if(salidas.status === "success") return false
+            });
 
         }
         catch(err){
@@ -27,19 +30,29 @@ export default function Salidas(){
     }
 
     useEffect( () => {
+        scrollTop();
         fetchData();
+
+        return () => {
+            setContent("");
+        }
     },[]);
 
-    if(loading) return (
-        <ModalBasic show={true}>
-            <Loader active={true} size="big">Cargando Pagina...</Loader>
-        </ModalBasic>
-    );
 
     return(
         <div className="salidas">
             <Banner titulo="Solicitudes de Salidas" />
-            <SolicitudGrid data={content} tipo="salidas" />
+            <SolicitudGrid 
+                data={content} 
+                setData={setContent} 
+                tipo="salidas"
+                loading={loading}
+                setLoading={setLoading} 
+            />
+
+            <ModalBasic show={loading}>
+                <Loader active={loading} size="big">Cargando Pagina...</Loader>
+            </ModalBasic>
         </div>
     )
 }

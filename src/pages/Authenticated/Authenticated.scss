@@ -3,16 +3,19 @@
 
 .authenticated{
     display: grid;
-    grid-template-columns: 1fr 40rem 1fr;
-    grid-template-rows: 6rem 1fr 4rem;
+    grid-template-columns: 1fr 35rem 1fr;
+    grid-template-rows: 4rem 1fr 4rem;
     @include min-h(100vh);
     @include formularioBasico();
-    padding: 3rem;
+    padding: 2rem;
 
     h1{
         grid-column: 2/3;
         grid-row: 1/2;
         text-align: center;
+        font-size: 1.7em;
+        @include min-h(100%);
+        @include min-w(100%);
 
     }
 

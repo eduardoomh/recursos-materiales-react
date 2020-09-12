@@ -30,3 +30,4 @@ export const updateEvento = async (data, id) => {
 
     return response;
 }
+

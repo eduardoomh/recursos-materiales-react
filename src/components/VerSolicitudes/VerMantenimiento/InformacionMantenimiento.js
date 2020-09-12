@@ -1,10 +1,16 @@
 import React from "react";
 import "./InformacionMantenimiento.scss";
 
-export default function InformacionMantenimiento(){
+export default function InformacionMantenimiento(props){
+    const { data } = props;
+
     return(
         <div className="informacion-mantenimiento">
-            <p>Informacion Mantenimiento</p>
+
+            <div>
+                <p>{data.trabajo_realizado || "cargando datos.."}</p>
+            </div>
+            
         </div>
     )
 }

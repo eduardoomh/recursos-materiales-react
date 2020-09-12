@@ -5,20 +5,23 @@ import Banner from "../../components/reutilizables/Banner/Banner";
 import SolicitudGrid from "../../components/reutilizables/SolicitudGrid/SolicitudGrid";
 import { getMantenimientos } from "../../servicios/mantenimiento";
 import ModalBasic from "../../components/reutilizables/ModalBasic/ModalBasic";
+import { scrollTop } from "../../utils/reutilizables/scroll";
 
 export default function Mantenimientos(){
     const [content, setContent ] = useState("");
     const [ loading, setLoading ] = useState(true);
-
     
     const fetchData = async () => {
         try{
             const mantenimientos = await getMantenimientos();
-            if(mantenimientos.status === "success"){
-                console.log(mantenimientos.elementos);
-                setContent(mantenimientos.elementos);
-                setLoading(false);
-            }
+
+            setContent(() => {
+                if(mantenimientos.status === "success") return mantenimientos.elementos
+            
+            });
+            setLoading(() => {
+                if(mantenimientos.status === "success") return false
+            });
 
         }
         catch(err){
@@ -27,19 +30,28 @@ export default function Mantenimientos(){
     }
 
     useEffect( () => {
+        scrollTop();
         fetchData();
-    },[]);
 
-    if(loading) return (
-        <ModalBasic show={true}>
-            <Loader active={true} size="big">Cargando Pagina...</Loader>
-        </ModalBasic>
-    );
+        return () => {
+            setContent("");
+        }
+    },[]);
 
     return(
         <div className="mantenimientos">
             <Banner titulo="Solicitudes de Mantenimientos" />
-            <SolicitudGrid  data={content} tipo="mantenimientos"  />
+            <SolicitudGrid 
+                data={content} 
+                setData={setContent} 
+                loading={loading} 
+                tipo="mantenimientos"  
+                setLoading={setLoading}
+            />
+
+            <ModalBasic show={loading}>
+                <Loader active={loading} size="big">Cargando Pagina...</Loader>
+            </ModalBasic>
         </div>
     )
 }

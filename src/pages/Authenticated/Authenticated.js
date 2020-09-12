@@ -12,7 +12,7 @@ export default function Authenticated(){
     }
     return(
         <div className="authenticated">
-            <h1>Sitema de Gestion de Recursos Materiales y Servicios</h1>
+            <h1>Sistema de Gestion de Recursos Materiales y Servicios</h1>
             {
                isLogin === true ? <Login  /> : <Register />
             }

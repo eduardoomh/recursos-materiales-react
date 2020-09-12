@@ -5,7 +5,7 @@ import { Icon } from "semantic-ui-react";
 import "./Header.scss";
 
 export default function Header(props){
-    const { show, setShow, setShowSubmenu, setShowSubmenuCrear } = props;
+    const { show, setShow, setShowSubmenu, setShowSubmenuCrear, setShowSubmenuUsuario } = props;
     const { logout, identity } = useIdentity();
 
     const userName = `${identity.name} ${identity.surname}`;
@@ -14,6 +14,7 @@ export default function Header(props){
         if(show === true){
             setShowSubmenu(false);
             setShowSubmenuCrear(false);
+            setShowSubmenuUsuario(false);
             return setShow(!show);
         }
         
@@ -30,15 +31,15 @@ export default function Header(props){
                     <ul className="solicitud-submenu">
                         <li><Link to="/eventos">Eventos</Link></li>
                         <li><Link to="/mantenimientos">Mantenimiento</Link></li>
-                        <li><Link to="salidas">Salidas</Link></li>
+                        <li><Link to="/salidas">Salidas</Link></li>
                         <li>Calendario</li>
                     </ul>
                 </li>
                 <li>Nuevo <Icon name="angle down" />
                     <ul className="solicitud-submenu">
-                            <li><Link to="/eventos/nuevo">Eventos</Link></li>
-                            <li><Link to="/mantenimientos/nuevo">Mantenimiento</Link></li>
-                            <li><Link to="/salidas/nuevo">Salidas</Link></li>
+                            <li><Link to="/nuevo/evento">Eventos</Link></li>
+                            <li><Link to="/nuevo/mantenimiento">Mantenimiento</Link></li>
+                            <li><Link to="/nuevo/salida">Salidas</Link></li>
                             <li>administrador</li>
                         </ul>
                 </li>

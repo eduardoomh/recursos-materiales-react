@@ -1,0 +1,15 @@
+@import "../index.scss";
+
+//Estilos de logotipo por defecto.
+@mixin logo(){
+    @include flexbox();
+    @include min-h(8rem);
+    @include min-w(100%);
+    margin-left: 1rem;
+
+    img{
+        @include min-h(8rem);
+    }
+        
+    
+}

@@ -46,37 +46,37 @@ const routes = [
         exact: true
     },
     {
-        path: "/mantenimientos/id",
+        path: "/mantenimientos/:id",
         layout: LayoutBasic,
         component: VerMantenimiento,
         exact: true
     },
     {
-        path: "/eventos/id",
+        path: "/eventos/:id",
         layout: LayoutBasic,
         component: VerEvento,
         exact: true
     },
     {
-        path: "/salidas/id",
+        path: "/salidas/:id",
         layout: LayoutBasic,
         component: VerSalida,
         exact: true
     },
     {
-        path: "/eventos/nuevo",
+        path: "/nuevo/evento",
         layout: LayoutBasic,
         component: CrearEvento,
         exact: true
     },
     {
-        path: "/mantenimientos/nuevo",
+        path: "/nuevo/mantenimiento",
         layout: LayoutBasic,
         component: CrearMantenimiento,
         exact: true
     },
     {
-        path: "/salidas/nuevo",
+        path: "/nuevo/salida",
         layout: LayoutBasic,
         component: CrearSalida,
         exact: true

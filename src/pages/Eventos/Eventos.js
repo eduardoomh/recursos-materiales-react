@@ -5,19 +5,23 @@ import Banner from "../../components/reutilizables/Banner/Banner";
 import SolicitudGrid from "../../components/reutilizables/SolicitudGrid/SolicitudGrid";
 import { getEventos } from "../../servicios/evento";
 import ModalBasic from "../../components/reutilizables/ModalBasic/ModalBasic";
+import { scrollTop } from "../../utils/reutilizables/scroll";
 
 export default function Eventos(){
     const [ content, setContent] = useState("");
     const [loading, setLoading] = useState(true);
+    
 
     const fetchData = async () => {
         try{
             const eventos = await getEventos();
-            if(eventos.status === "success"){
-                console.log(eventos.elementos);
-                setContent(eventos.elementos);
-                setLoading(false);
-            }
+            setContent(() => {
+                if(eventos.status === "success") return eventos.elementos
+            })  
+
+            setLoading(() => {
+                if(eventos.status === "success") return false
+            });
 
         }
         catch(err){
@@ -26,24 +30,30 @@ export default function Eventos(){
     }
 
     useEffect( () => {
+        scrollTop();
         fetchData();
+
+        return () => {
+            setContent("");
+        }
     },[]);
 
-    
-
-
-    if(loading) return (
-        <ModalBasic show={true}>
-            <Loader active={true} size="big">Cargando Pagina...</Loader>
-        </ModalBasic>
-    );
 
 
     return(
         <div className="eventos">
             <Banner titulo="Solicitudes de Eventos" />
+            <SolicitudGrid 
+                data={content} 
+                setData={setContent} 
+                tipo="eventos" 
+                loading={loading} 
+                setLoading={setLoading} 
+            />
 
-            <SolicitudGrid data={content} tipo="eventos" />
+            <ModalBasic show={loading}>
+                <Loader active={loading} size="big">Cargando Pagina...</Loader>
+            </ModalBasic>
 
         </div>
     )

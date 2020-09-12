@@ -7,6 +7,7 @@
     color: white;
     background-color: $guindo;
     @include min-w(100%);
+    @include min-h(3rem);
     margin: 2em 0;
 
     &:hover{
