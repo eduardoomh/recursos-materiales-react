@@ -1,10 +1,9 @@
 import React from "react";
-import { Loader } from "semantic-ui-react";
 import Card from "../Card/Card";
 import "./Grid.scss";
 
 export default function Grid(props){
-    const {data, tipo, loading} = props;
+    const {data, tipo } = props;
     return(
         <div className="grid">
             {   data && data.length !== 0  ?

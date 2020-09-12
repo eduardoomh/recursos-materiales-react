@@ -1,16 +1,63 @@
 import React from "react";
 import "./InformacionEvento.scss";
 
-export default function InformacionEvento(props){
-    const { data } = props;
+export default function InformacionEvento(props) {
+    const { data, loading } = props;
 
-    return(
+
+    const cargando = "cargando";
+
+
+    return (
         <div className="informacion-evento">
 
             <div>
-                <p>{data.evento || "cargando datos.."}</p>
+                {
+                    data !== "cargando ...." && loading === false ? (
+                        <>
+                            <article>
+                                <p>Actividades Realizadas </p>
+                                <p>{data.actividades || cargando}</p>
+                            </article>
+
+                            <article>
+                                <p>Pedido por el departamento</p>
+                                <p>{data.departamento.departamento || cargando}</p>
+                            </article>
+
+                            <article>
+                                <p>Lugar del evento</p>
+                                <p>{data.espacio.espacio || cargando}</p>
+                            </article>
+
+                            <article>
+                                <p>Horario</p>
+                                <p>{`Empieza a las ${data.hora_inicio} y termina a las ${data.hora_final}` || cargando}</p>
+                            </article>
+
+                            <article>
+                                <p>Solicitud creada por</p>
+                                <p>{`${data.user.name} ${data.user.surname}` || cargando}</p>
+                            </article>
+
+                            <article>
+                                <p>Estado</p>
+                                <p>{data.status || cargando}</p>
+                            </article>
+                        </>
+                    )
+                    :
+                    (
+                        "cargando..."
+                    )
+
+
+
+                }
+
+
             </div>
-            
+
         </div>
     )
 }

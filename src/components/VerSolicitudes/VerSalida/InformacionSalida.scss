@@ -3,5 +3,5 @@
 
 
 .informacion-salida{
-    @include solicitudCaja();
+    @include solicitudCaja(7);
 }

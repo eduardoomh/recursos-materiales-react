@@ -15,34 +15,36 @@ export default function Container(props){
     const [arrayMantenimientos, setArrayMantenimientos] = useState(mantenimientosRecientes);
     const [arraySalidas, setArraySalidas] = useState(salidasRecientes);
 
-    const fetchData = async () => {
-        try {
-            const eventos = await getEventos()
-            const mantenimientos = await getMantenimientos();
-            const salidas = await getSalidas();
-
-            if(eventos.status === "success"){
-                await saveStorage("eventos", eventos.elementos.data);   
-                setArrayEventos(eventos.elementos.data);        
+            const fetchData = async () => {
+            try {
+                const eventos = await getEventos()
+                const mantenimientos = await getMantenimientos();
+                const salidas = await getSalidas();
+    
+                if(eventos.status === "success"){
+                    await saveStorage("eventos", eventos.elementos.data);   
+                    setArrayEventos(eventos.elementos.data);        
+                }
+    
+                if(mantenimientos.status === "success"){
+                    await saveStorage("mantenimientos", mantenimientos.elementos.data);
+                    setArrayMantenimientos(mantenimientos.elementos.data);            
+                }
+    
+                if(salidas.status === "success"){
+                    await saveStorage("salidas", salidas.elementos.data);
+                    setArraySalidas(salidas.elementos.data);             
+                }
+                setLoading(false);
+                
+                
+    
             }
-
-            if(mantenimientos.status === "success"){
-                await saveStorage("mantenimientos", mantenimientos.elementos.data);
-                setArrayMantenimientos(mantenimientos.elementos.data);            
+            catch (err) {
+                console.log(err);
             }
-
-            if(salidas.status === "success"){
-                await saveStorage("salidas", salidas.elementos.data);
-                setArraySalidas(salidas.elementos.data);             
-            }
-            
-            setLoading(false);
-
         }
-        catch (err) {
-            console.log(err);
-        }
-    }
+
     
     useEffect( () => {
 
@@ -53,6 +55,7 @@ export default function Container(props){
             setArrayMantenimientos(mantenimientosRecientes);
             setArraySalidas(salidasRecientes);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
      

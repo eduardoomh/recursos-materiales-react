@@ -7,58 +7,56 @@ import Paginacion from "../Paginacion/Paginacion";
 import { getPorFiltrado } from "../../../servicios/filtrado";
 
 export default function SolicitudGrid(props){
-    const {data, setData, tipo, loading, setLoading } = props;
+    const {data, setData, tipo, setLoading } = props;
     const { data: datos } = data;
     const textTitulo = tipo === "eventos" || "mantenimientos" || "salidas" ? "Solicitudes Mas Recientes" : "Mas Recientes"
 
     const [titulo, setTitulo] = useState(textTitulo);
     const [filtro, setFiltro] = useState(false);
 
-    const fetchData = async () => {
-        try{
-            setLoading(true);
-            const response = await getPorFiltrado(tipo, titulo);
-            if(response.status === "success"){
-                setData(response.elementos);
-                setFiltro(false);
-            }
-
-            setData(() => {
-                if(response.status === "success") return response.elementos
-            });
-
-            setFiltro(() => {
-                if(response.status === "success") return false
-            });
-
-            setLoading(() => {
-                if(response.status === "success") return false
-            });
-    
-        }
-
-        catch(err){
-            console.log(err);
-        }
-    }
-
     useEffect(() => {
 
-   
-        fetchData(() => {
-            if(filtro === true){
-                return ""
-            }
-        });
+        const fetchData = async () => {
+            try{
+                setLoading(true);
+                const response = await getPorFiltrado(tipo, titulo);
+                if(response.status === "success"){
+                    setData(response.elementos);
+                    setFiltro(false);
+                }
+    
+                setData(() => {
+                    if(response.status === "success") return response.elementos
+                });
+    
+                setFiltro(() => {
+                    if(response.status === "success") return false
+                });
+    
+                setLoading(() => {
+                    if(response.status === "success") return false
+                });
         
+            }
+    
+            catch(err){
+                console.log(err);
+            }
+        }
 
+
+        if(filtro === true){
+          fetchData();  
+        }
+        
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [titulo]);
     
     return(
         <div className="contenedor-grid">
             <Titulo titulo={titulo} />
             <Filtrado setTitulo={setTitulo} setFiltro={setFiltro} />
-            <Grid data={datos} tipo={tipo} loading={loading} />
+            <Grid data={datos} tipo={tipo}/>
             <Paginacion 
                 currentPage={data.current_page}
                 lastPage={data.last_page}

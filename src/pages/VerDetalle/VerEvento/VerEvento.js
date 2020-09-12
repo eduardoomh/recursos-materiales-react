@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { Loader } from "semantic-ui-react";
 import "./VerEvento.scss";
 import Banner from "../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../components/reutilizables/Titulo/Titulo";
@@ -8,30 +9,36 @@ import InformacionEvento from "../../../components/VerSolicitudes/VerEvento/Info
 import { scrollTop } from "../../../utils/reutilizables/scroll";
 import { getEvento } from "../../../servicios/evento";
 import { getStorage } from "../../../servicios/reutilizables/localStorage";
+import ModalBasic from "../../../components/reutilizables/ModalBasic/ModalBasic";
 
 export default function VerEvento(){
     const [content, setContent] = useState("cargando ....");
+    const [loading, setLoading] = useState(false);
     const { id } = useParams();
 
     const eventos = getStorage("eventos");
-    const fetchData = async () => {
-        try{
-            const evento = await getEvento(id);
-            
-            setContent( () => {
-                if(evento.status === "success"){
-                    return evento.elemento
-                }
-            });
-            
 
-        }
-        catch(err){
-            console.log(err);
-        }
-    }
 
     useEffect( () => {
+        const fetchData = async () => {
+            try{
+                setLoading(true);
+                const evento = await getEvento(id);
+                
+                setContent( () => {
+                    if(evento.status === "success"){
+                        return evento.elemento
+                    }
+                });
+                setLoading(false);
+                
+    
+            }
+            catch(err){
+                console.log(err);
+            }
+        }
+        
         scrollTop();
         fetchData();
 
@@ -46,8 +53,12 @@ export default function VerEvento(){
         <div className="ver-evento">
             <Banner titulo={content.evento || "cargando"} />
             <Titulo titulo={content.fecha || "cargando"} />
-            <InformacionEvento data={content || "cargando..."} />
+            <InformacionEvento data={content || "cargando"} loading={loading} />
             <CardCarrousel titulo="Eventos" data={eventos} />
+
+            <ModalBasic show={loading}>
+                <Loader active={loading} size="big">Cargando Pagina...</Loader>
+            </ModalBasic>
 
         </div>
     )
