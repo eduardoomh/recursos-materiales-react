@@ -1,4 +1,5 @@
 import React from "react";
+import { Icon } from "semantic-ui-react";
 import "./InformacionEvento.scss";
 
 export default function InformacionEvento(props) {
@@ -42,7 +43,10 @@ export default function InformacionEvento(props) {
 
                             <article>
                                 <p>Estado</p>
-                                <p>{data.status || cargando}</p>
+                                <p>
+                                    {data.status || cargando} 
+                                    { data.status === "aprobado" ? <Icon name="check"/> : <Icon name={ data.status === "pendiente" ? "exclamation triangle" : "key"} className="pendiente" />}
+                                </p>
                             </article>
                         </>
                     )

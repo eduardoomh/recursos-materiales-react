@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import "./VerSalida.scss";
+import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import Banner from "../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../components/reutilizables/Titulo/Titulo";
 import CardCarrousel from "../../../components/reutilizables/CardCarrousel/CardCarrousel";
@@ -24,6 +25,7 @@ export default function VerSalida(){
             try{
                 setLoading(true);
                 const salida = await getSalida(id);
+                salida.elemento.fecha = transformarFecha(salida.elemento.fecha);
                 
                 setContent( () => {
                     if(salida.status === "success"){

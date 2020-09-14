@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Icon } from "semantic-ui-react";
 import "./CardCarrousel.scss";
+import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import Card from "../Card/Card";
 
 export default function CardCarrousel(props) {
@@ -31,7 +32,7 @@ export default function CardCarrousel(props) {
                     elementos.map(e => 
                         <Card 
                             key={e.id} 
-                            fecha={e.fecha} 
+                            fecha={transformarFecha(e.fecha)} 
                             contenido={e.evento || e.trabajo_realizado || e.destino} status={e.status} tipo={titulo.toLowerCase()}
                             id={e.id}
                         />

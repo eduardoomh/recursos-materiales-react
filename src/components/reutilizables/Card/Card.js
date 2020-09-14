@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useHistory} from "react-router-dom";
 import { Icon } from "semantic-ui-react";
 import "./Card.scss";
@@ -11,12 +11,13 @@ export default function Card(props){
         history.push(`/${tipo}/${id}`);
     }
 
+
     return(
         <article className="card" onClick={() => cardClick()}>
             <p className="fecha">{fecha}</p>
             <p className="contenido">{contenido}</p>
             <p className="status">
-                { status === "aprobada" ? <Icon name="check"/> : <Icon name="warning" className="pendiente" />}
+                { status === "aprobado" ? <Icon name="check"/> : <Icon name={ status === "pendiente" ? "exclamation triangle" : "key"} className="pendiente" />}
                 
             </p>
         </article>

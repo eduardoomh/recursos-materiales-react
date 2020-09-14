@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import "./VerMantenimiento.scss";
+import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import Banner from "../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../components/reutilizables/Titulo/Titulo";
 import CardCarrousel from "../../../components/reutilizables/CardCarrousel/CardCarrousel";
@@ -24,6 +25,7 @@ export default function VerMantenimiento(){
             try{
                 setLoading(true);
                 const mantenimiento = await getMantenimiento(id);
+                mantenimiento.elemento.fecha = transformarFecha(mantenimiento.elemento.fecha);
                 
                 setContent( () => {
                     if(mantenimiento.status === "success"){

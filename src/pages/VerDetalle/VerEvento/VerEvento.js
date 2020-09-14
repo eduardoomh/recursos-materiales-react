@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import "./VerEvento.scss";
+import { transformarFecha } from "../../../utils/reutilizables/fecha"
 import Banner from "../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../components/reutilizables/Titulo/Titulo";
 import CardCarrousel from "../../../components/reutilizables/CardCarrousel/CardCarrousel";
@@ -24,6 +25,7 @@ export default function VerEvento(){
             try{
                 setLoading(true);
                 const evento = await getEvento(id);
+                evento.elemento.fecha = transformarFecha(evento.elemento.fecha);
                 
                 setContent( () => {
                     if(evento.status === "success"){
@@ -52,7 +54,7 @@ export default function VerEvento(){
     return(
         <div className="ver-evento">
             <Banner titulo={content.evento || "cargando"} />
-            <Titulo titulo={content.fecha || "cargando"} />
+            <Titulo titulo={ content.fecha || "cargando"} />
             <InformacionEvento data={content || "cargando"} loading={loading} />
             <CardCarrousel titulo="Eventos" data={eventos} />
 

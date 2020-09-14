@@ -42,6 +42,18 @@
                     @include min-h(100%);
                     font-size: 1.2em;
                 }
+
+                i{
+                    @include flexbox();
+                    @include min-h(100%);
+                    margin-left: 1em;
+                    color: $azul !important;
+                }
+
+                i.pendiente{
+                    color: $guindo !important;
+                }
+        
             }
             
         }
