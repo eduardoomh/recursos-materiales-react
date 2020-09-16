@@ -4,7 +4,7 @@
 
 @mixin botonSubmit(){
     font-size: 1.2em;
-    color: white;
+    color: $dorado-claro;
     background-color: $guindo;
     @include min-w(100%);
     @include min-h(3rem);

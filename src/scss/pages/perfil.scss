@@ -1,0 +1,8 @@
+
+//Estilos de la pagina de ver perfil
+
+@mixin perfil(){
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 10rem 3em 1fr;
+}

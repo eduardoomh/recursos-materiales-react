@@ -1,9 +1,17 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+import { Icon, Button } from "semantic-ui-react";
+import BoxFormData from "../../reutilizables/BoxFormData/BoxFormData";
 import "./InformacionMantenimiento.scss";
 
 export default function InformacionMantenimiento(props) {
     const { data, loading } = props;
+    const history = useHistory();
     const cargando = "cargando";
+
+    const gotoUpdate = (id) => {
+        history.push(`/actualizar/mantenimiento/${id}`);
+    }
 
     return (
         <div className="informacion-mantenimiento">
@@ -12,45 +20,48 @@ export default function InformacionMantenimiento(props) {
                 {
                     data !== "cargando ...." && loading === false ? (
                         <>
-                            <article>
-                                <p>Tipo de Mantenimiento </p>
-                                <p>{data.tipo || cargando}</p>
-                            </article>
+                            <BoxFormData
+                                titulo="Tipo de Mantenimiento"
+                                data={data.tipo}
+                            />
+                            <BoxFormData
+                                titulo="Asignado a personal"
+                                data={data.asignado_a}
+                            />
+                            <BoxFormData
+                                titulo="Pedido por el departamento"
+                                data={data.departamento.departamento}
+                            />
+                            <BoxFormData
+                                titulo="Tipo de Servicio"
+                                data={data.servicio.status}
+                            />
+                            <BoxFormData
+                                titulo="Equipo de proteccion personal"
+                                data={data.equipo_proteccion}
+                            />
+                            <BoxFormData
+                                titulo="Horario"
+                                data={`Empieza a las ${data.hora_inicio} y termina a las ${data.hora_final}`}
+                            />
+                            <BoxFormData
+                                titulo="Solicitud creada por"
+                                data={`${data.user.name} ${data.user.surname}`}
+                            />
 
-                            <article>
-                                <p>Asignado a personal </p>
-                                <p>{data.asignado_a || cargando}</p>
-                            </article>
-
-                            <article>
-                                <p>Pedido por el departamento</p>
-                                <p>{data.departamento.departamento || cargando}</p>
-                            </article>
-
-                            <article>
-                                <p>Tipo de Servicio</p>
-                                <p>{data.servicio.status || cargando}</p>
-                            </article>
-
-                            <article>
-                                <p>Equipo de proteccion personal</p>
-                                <p>{data.equipo_proteccion || "No aplica"}</p>
-                            </article>
-
-                            <article>
-                                <p>Horario</p>
-                                <p>{`Empieza a las ${data.hora_inicio} y termina a las ${data.hora_final}` || cargando}</p>
-                            </article>
-
-                            <article>
-                                <p>Solicitud creada por</p>
-                                <p>{`${data.user.name} ${data.user.surname}` || cargando}</p>
-                            </article>
 
                             <article>
                                 <p>Estado</p>
-                                <p>{data.status || cargando}</p>
+                                <p>
+                                    {data.status || cargando} 
+                                    { data.status === "aprobado" ? <Icon name="check"/> : <Icon name={ data.status === "pendiente" ? "exclamation triangle" : "key"} className="pendiente" />}
+                                </p>
                             </article>
+
+                            <BoxFormData
+                                titulo=""
+                                data={<Button onClick={() => gotoUpdate(data.id)}>Actualizar solicitud</Button>}
+                            />
 
                         </>
                     )

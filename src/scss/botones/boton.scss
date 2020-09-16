@@ -1,8 +1,9 @@
+
 //mixin con estilos de un boton normal
 
 @mixin boton(){
     font-size: 1.2em;
-    color: white;
+    color: $dorado-claro;
     background-color: $guindo;
 
     &:hover{

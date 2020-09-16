@@ -18,10 +18,10 @@ export default function Login(){
         },
         validationSchema: Yup.object({
             email: Yup.string().email("El correo ingresado no es valido.").required("El correo es obligatorio."),
-            password: Yup.string().required("La cotrasena es obligatoria.")
+            password: Yup.string().required("La contrasena es obligatoria.")
         }),
         onSubmit: async (data) => {
-
+ 
             try{       
                 const response = await loginService(data);
 
@@ -30,8 +30,8 @@ export default function Login(){
                     saveStorage("usuario", response.usuario);
                     saveStorage("token", response.acceso.token);
 
-                    login();
                     toast.success("Ha ingresado al sistema correctamente");
+                    login();
 
                 }else{
                     toast.error("Sus datos son incorrectos.");

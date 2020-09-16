@@ -18,7 +18,7 @@ export const getEvento = async (id) => {
 }
 
 export const newEvento = async (data) => {
-    const petition = await postFetch("/eventos")
+    const petition = await postFetch("/eventos", data)
     const response = await petition.json();
 
     return response;

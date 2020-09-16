@@ -9,7 +9,7 @@ import CardCarrousel from "../../../components/reutilizables/CardCarrousel/CardC
 import InformacionEvento from "../../../components/VerSolicitudes/VerEvento/InformacionEvento";
 import { scrollTop } from "../../../utils/reutilizables/scroll";
 import { getEvento } from "../../../servicios/evento";
-import { getStorage } from "../../../servicios/reutilizables/localStorage";
+import { getStorage, saveStorage } from "../../../servicios/reutilizables/localStorage";
 import ModalBasic from "../../../components/reutilizables/ModalBasic/ModalBasic";
 
 export default function VerEvento(){
@@ -25,7 +25,9 @@ export default function VerEvento(){
             try{
                 setLoading(true);
                 const evento = await getEvento(id);
+                saveStorage("solicitud", evento.elemento);
                 evento.elemento.fecha = transformarFecha(evento.elemento.fecha);
+                
                 
                 setContent( () => {
                     if(evento.status === "success"){

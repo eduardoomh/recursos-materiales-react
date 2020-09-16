@@ -1,9 +1,17 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+import { Icon, Button } from "semantic-ui-react";
+import BoxFormData from "../../reutilizables/BoxFormData/BoxFormData";
 import "./InformacionSalida.scss";
 
 export default function InformacionSalida(props) {
     const { data, loading } = props;
+    const history = useHistory();
     const cargando = "cargando";
+
+    const gotoUpdate = (id) => {
+        history.push(`/actualizar/salida/${id}`);
+    }
 
     return (
         <div className="informacion-salida">
@@ -12,40 +20,48 @@ export default function InformacionSalida(props) {
                 {
                     data !== "cargando ...." && loading === false ? (
                         <>
-                            <article>
-                                <p>Actividades a realizar </p>
-                                <p>{data.descripcion || "No hay ectividades registradas aun."}</p>
-                            </article>
 
-                            <article>
-                                <p>Pedido por el departamento</p>
-                                <p>{data.departamento.departamento || cargando}</p>
-                            </article>
+                            <BoxFormData
+                                titulo="Actividades a realizar"
+                                data={data.descripcion || "No hay ectividades registradas aun."}
+                            />
+                            <BoxFormData
+                                titulo="Pedido por el departamento"
+                                data={data.departamento.departamento}
+                            />
 
-                            <article>
-                                <p>Vehiculo elegido</p>
-                                <p>{data.vehiculo.vehiculo || cargando}</p>
-                            </article>
+                            <BoxFormData
+                                titulo="Vehiculo elegido"
+                                data={data.vehiculo.vehiculo}
+                            />
 
-                            <article>
-                                <p>Chofer asignado</p>
-                                <p>{data.chofer || cargando}</p>
-                            </article>
+                            <BoxFormData
+                                titulo="Chofer asignado"
+                                data={data.chofer}
+                            />
+                            <BoxFormData
+                                titulo="Horario"
+                                data={`Empieza a las ${data.hora_salida} y termina a las ${data.hora_llegada}`}
+                            />                        
+                            
+                            <BoxFormData
+                                titulo="Solicitud creada por"
+                                data={`${data.user.name} ${data.user.surname}`}
+                            />
 
-                            <article>
-                                <p>Horario</p>
-                                <p>{`Empieza a las ${data.hora_salida} y termina a las ${data.hora_llegada}` || cargando}</p>
-                            </article>
-
-                            <article>
-                                <p>Solicitud creada por</p>
-                                <p>{`${data.user.name} ${data.user.surname}` || cargando}</p>
-                            </article>
 
                             <article>
                                 <p>Estado</p>
-                                <p>{data.status || cargando}</p>
+                                <p>
+                                    {data.status || cargando}
+                                    {data.status === "aprobado" ? <Icon name="check" /> : <Icon name={data.status === "pendiente" ? "exclamation triangle" : "key"} className="pendiente" />}
+                                </p>
                             </article>
+
+                            <BoxFormData
+                                titulo=""
+                                data={<Button onClick={() => gotoUpdate(data.id)}>Actualizar solicitud</Button>}
+                            />
 
                         </>
                     )

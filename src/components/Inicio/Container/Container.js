@@ -3,7 +3,11 @@ import "./Container.scss";
 import { getEventos } from "../../../servicios/evento";
 import { getMantenimientos } from "../../../servicios/mantenimiento";
 import { getSalidas } from "../../../servicios/salida";
-import { saveStorage } from "../../../servicios/reutilizables/localStorage";
+import { getDepartamentos } from "../../../servicios/departamento";
+import { getVehiculos } from "../../../servicios/vehiculo";
+import { getEspacios } from "../../../servicios/espacio";
+import { getStatusorders } from "../../../servicios/statusorder";
+import { saveStorage, getStorage } from "../../../servicios/reutilizables/localStorage";
 import CardCarrousel from "../../reutilizables/CardCarrousel/CardCarrousel";
 import Titulo from "../../reutilizables/Titulo/Titulo";
 import { eventosRecientes, mantenimientosRecientes, salidasRecientes } from "../../../api/data";
@@ -35,20 +39,54 @@ export default function Container(props){
                     await saveStorage("salidas", salidas.elementos.data);
                     setArraySalidas(salidas.elementos.data);             
                 }
+
                 setLoading(false);
-                
-                
-    
             }
             catch (err) {
                 console.log(err);
             }
         }
 
+        const fetchDataAdmin = async () => {
+            try{
+                const departamentos = await getDepartamentos();
+                const vehiculos = await getVehiculos();
+                const statusorders = await getStatusorders();
+                const espacios = await getEspacios();
+    
+                if(departamentos.status === "success"){
+                    await saveStorage("departamentos", departamentos.elementos.data);         
+                }
+    
+                if(vehiculos.status === "success"){
+                    await saveStorage("vehiculos", vehiculos.elementos);         
+                }
+    
+                if(statusorders.status === "success"){
+                    await saveStorage("statusorders", statusorders.elementos);           
+                }
+    
+                if(espacios.status === "success"){
+                    await saveStorage("espacios", espacios.elementos);          
+                }
+
+            }
+            catch(err){
+                console.log(err);
+            }
+
+        }
+
     
     useEffect( () => {
 
         fetchData();
+
+        if(!getStorage("departamentos") && !getStorage("vehiculos") && !getStorage("espacios") && !getStorage("statusorders")){
+           fetchDataAdmin(); 
+           console.log("Esto no deberia de pasar");
+        }
+        
 
         return () => {
             setArrayEventos(eventosRecientes);

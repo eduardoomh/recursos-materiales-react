@@ -25,6 +25,14 @@
     
         .select{
             @include min-h(2.5rem);
+            padding: 0 !important;
+            margin: 0 !important;
+
+
+            option{
+                @include min-h(10rem);
+
+            }
         }
     
         .textarea{

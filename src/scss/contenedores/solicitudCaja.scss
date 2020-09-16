@@ -1,17 +1,31 @@
 @import "../index.scss";
+@import "./minicaja.scss";
+
 
 //Estilos de contenedor para todas las paginas para ver solicitudes
-@mixin solicitudCaja($value){
+@mixin solicitudCaja($value, $tipo){
     display: grid;
     grid-template-columns: 1fr 50rem 1fr;
-    grid-template-rows: 1fr;
-    
+    grid-template-rows: 1fr 3rem;
+     
     div{
         grid-column: 2/3;
         grid-row: 1/2;
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: repeat($value, 1fr);
+
+        @if $tipo == "salida"{
+            grid-template-rows: 1.5fr repeat($value -1, 1fr);
+        }
+
+        @if $tipo == "evento"{
+            grid-template-rows: repeat($value, 1fr);
+        }
+
+        @if $tipo == "mantenimiento"{
+            grid-template-rows: repeat($value, 1fr);
+        }
+        
         border: 1px solid $borde-gris-claro;
         box-shadow: $box-shadow;
         border-radius: 6px;
@@ -20,42 +34,7 @@
         margin-bottom: 3rem;
         @include min-h(64rem);
 
-        article{
-            display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: 2.4rem 1fr;
-
-            @include flexbox(false, "center", "center");
-
-            p{
-                @include flexbox();
-                &:nth-child(1){
-                    @include min-h(2.4rem);
-                    font-size: 1.3em;
-                    background-color: #eadbdb2e;
-                    color: $guindo;
-                    border-top: 1px solid $borde-gris-claro;
-                    border-bottom: 1px solid $borde-gris-claro;
-                }
-
-                &:nth-child(2){
-                    @include min-h(100%);
-                    font-size: 1.2em;
-                }
-
-                i{
-                    @include flexbox();
-                    @include min-h(100%);
-                    margin-left: 1em;
-                    color: $azul !important;
-                }
-
-                i.pendiente{
-                    color: $guindo !important;
-                }
-        
-            }
-            
-        }
+        @include minicaja();
     }
+
 }

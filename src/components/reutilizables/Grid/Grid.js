@@ -16,16 +16,14 @@ export default function Grid(props) {
                 data.map(
 
                     d => (
-                        <>
-                            <Card
-                                fecha={fechha(d.fecha) || "2020-05-17"}
-                                contenido={d.evento || d.destino || d.trabajo_realizado}
-                                status={d.status}
-                                tipo={tipo}
-                                key={d.id}
-                                id={d.id}
-                            />
-                        </>
+                        <Card
+                            fecha={fechha(d.fecha) || "2020-05-17"}
+                            contenido={d.evento || d.destino || d.trabajo_realizado}
+                            status={d.status}
+                            tipo={tipo}
+                            key={d.id}
+                            id={d.id}
+                        />
                     )
                 )
                 :
@@ -34,16 +32,16 @@ export default function Grid(props) {
             {
                 data && data.length !== 0 ? (
                     <>
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
+                        <Card key={1} />
+                        <Card key={2} />
+                        <Card key={3} />
+                        <Card key={4} />
+                        <Card key={5} />
                     </>
 
-                ):(
-                    ""
-                )
+                ) : (
+                        ""
+                    )
 
             }
 

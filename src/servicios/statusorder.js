@@ -3,7 +3,7 @@ import { postFetch } from "./reutilizables/postService";
 import { updateFetch } from "./reutilizables/updateService";
 
 //servicios pedir datos a la base de datos a travez de un endpoint.
-export const geStatusorders = async () => {
+export const getStatusorders = async () => {
     const petition = await getFetch("/statusorders")
     const response = await petition.json();
 

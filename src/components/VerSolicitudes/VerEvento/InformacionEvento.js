@@ -1,12 +1,17 @@
 import React from "react";
-import { Icon } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
+import { Icon, Button } from "semantic-ui-react";
+import BoxFormData from "../../reutilizables/BoxFormData/BoxFormData";
 import "./InformacionEvento.scss";
 
 export default function InformacionEvento(props) {
     const { data, loading } = props;
-
-
+    const history = useHistory();
     const cargando = "cargando";
+
+    const gotoUpdate = (id) => {
+        history.push(`/actualizar/evento/${id}`);
+    }
 
 
     return (
@@ -16,52 +21,58 @@ export default function InformacionEvento(props) {
                 {
                     data !== "cargando ...." && loading === false ? (
                         <>
-                            <article>
-                                <p>Actividades Realizadas </p>
-                                <p>{data.actividades || cargando}</p>
-                            </article>
 
-                            <article>
-                                <p>Pedido por el departamento</p>
-                                <p>{data.departamento.departamento || cargando}</p>
-                            </article>
+                            <BoxFormData
+                                titulo="Actividades Realizadas"
+                                data={data.actividades}
+                            />
 
-                            <article>
-                                <p>Lugar del evento</p>
-                                <p>{data.espacio.espacio || cargando}</p>
-                            </article>
+                            <BoxFormData
+                                titulo="Pedido por el departamento"
+                                data={data.departamento.departamento}
+                            />
 
-                            <article>
-                                <p>Horario</p>
-                                <p>{`Empieza a las ${data.hora_inicio} y termina a las ${data.hora_final}` || cargando}</p>
-                            </article>
+                            <BoxFormData
+                                titulo="Lugar del evento"
+                                data={data.espacio.espacio}
+                            />
 
-                            <article>
-                                <p>Solicitud creada por</p>
-                                <p>{`${data.user.name} ${data.user.surname}` || cargando}</p>
-                            </article>
+                            <BoxFormData
+                                titulo="Horario"
+                                data={`Empieza a las ${data.hora_inicio} y termina a las ${data.hora_final}`}
+                            />
+
+                            <BoxFormData
+                                titulo="Solicitud creada por"
+                                data={`${data.user.name} ${data.user.surname}`}
+                            />
 
                             <article>
                                 <p>Estado</p>
                                 <p>
-                                    {data.status || cargando} 
-                                    { data.status === "aprobado" ? <Icon name="check"/> : <Icon name={ data.status === "pendiente" ? "exclamation triangle" : "key"} className="pendiente" />}
+                                    {data.status || cargando}
+                                    {data.status === "aprobado" ? <Icon name="check" /> : <Icon name={data.status === "pendiente" ? "exclamation triangle" : "key"} className="pendiente" />}
                                 </p>
                             </article>
+
+                            <BoxFormData
+                                titulo=""
+                                data={<Button onClick={() => gotoUpdate(data.id)}>Actualizar solicitud</Button>}
+                            />
                         </>
                     )
-                    :
-                    (
-                        "cargando..."
-                    )
+                        :
+                        (
+                            "cargando..."
+                        )
 
 
 
                 }
 
-
             </div>
 
         </div>
+
     )
 }

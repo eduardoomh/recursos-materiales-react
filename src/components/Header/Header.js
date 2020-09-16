@@ -48,9 +48,9 @@ export default function Header(props){
             <div>
                 <div className="user-name">{userName} <Icon name="angle down" />
                     <ul className="user-submenu">
-                            <li>Perfil</li>
-                            <li>Editar Perfil</li>
-                            <li>Solicitudes</li>
+                            <li><Link to="/usuario/perfil">Perfil</Link></li>
+                            <li><Link to="/usuario/perfil/editar">Editar Perfil</Link></li>
+                            <li><Link to="/usuario/solicitudes">Solicitudes</Link></li>
                             <li onClick={() => logout()}>Cerrar Sesion</li>
                         </ul>
                 </div>

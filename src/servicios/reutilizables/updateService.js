@@ -14,3 +14,17 @@ export const updateFetch = (ruta, data, id) => {
         )
     })
 }
+
+export const updateAuth = (ruta, data, id) => {
+
+    return fetch(`${endpoint.url}${ruta}/${id}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            
+        },
+        body: JSON.stringify(
+            data
+        )
+    })
+}

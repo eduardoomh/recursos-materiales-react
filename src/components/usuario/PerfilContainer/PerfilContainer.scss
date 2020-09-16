@@ -1,0 +1,8 @@
+@import "../../../scss/index.scss";
+@import "../../../scss/contenedores/solicitudCaja.scss";
+@import "../../../scss/botones/boton.scss";
+
+.perfil-container{
+    @include solicitudCaja(6, "evento");
+
+}

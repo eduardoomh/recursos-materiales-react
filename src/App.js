@@ -17,6 +17,11 @@ function App() {
 
   const login = () => {
     setIdentity(getStorage("usuario"));
+    
+  }
+
+  const updateIdentity = (data) => {
+    setIdentity(data);
   }
 
   const token = () => {
@@ -26,6 +31,7 @@ function App() {
   const identityData = useMemo(
     () =>  ({
       identity,
+      updateIdentity,
       logout,
       login,
       token

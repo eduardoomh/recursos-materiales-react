@@ -1,3 +1,5 @@
+@import "./scss/colors.scss";
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -8,6 +10,17 @@ body {
 
   #root{
     min-width: 100vw;
+
+    button{
+      background-color: $guindo;
+      color: $dorado-claro;
+    
+      &:hover{
+        background-color: $dorado-claro;
+        color: $guindo;
+      }
+    }
+    
   }
 }
 
@@ -40,3 +53,4 @@ a {
 
   &:hover { text-decoration : underline }
 }
+

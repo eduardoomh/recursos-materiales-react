@@ -13,6 +13,9 @@ import CrearSalida from "../pages/CrearSolicitud/CrearSalida/CrearSalida";
 import ActualizarEvento from "../pages/ActualizarSolicitud/ActualizarEvento/ActualizarEvento";
 import ActualizarMantenimiento from "../pages/ActualizarSolicitud/ActualizarMantenimiento/ActualizarMantenimiento";
 import ActualizarSalida from "../pages/ActualizarSolicitud/ActualizarSalida/ActualizarSalida";
+import Perfil from "../pages/usuario/Perfil/Perfil";
+import EditarPerfil from "../pages/usuario/EditarPerfil/EditarPerfil";
+import MisSolicitudes from "../pages/usuario/MisSolicitudes/MisSolicitudes";
 
 const routes = [
     {
@@ -82,21 +85,39 @@ const routes = [
         exact: true
     },
     {
-        path: "/eventos/actualizar/id",
+        path: "/actualizar/evento/:id",
         layout: LayoutBasic,
         component: ActualizarEvento,
         exact: true
     },
     {
-        path: "/mantenimientos/actualizar/id",
+        path: "/actualizar/mantenimiento/:id",
         layout: LayoutBasic,
         component: ActualizarMantenimiento,
         exact: true
     },
     {
-        path: "/salidas/actualizar/id",
+        path: "/actualizar/salida/:id",
         layout: LayoutBasic,
         component: ActualizarSalida,
+        exact: true
+    },
+    {
+        path: "/usuario/perfil",
+        layout: LayoutBasic,
+        component: Perfil,
+        exact: true
+    },
+    {
+        path: "/usuario/perfil/editar",
+        layout: LayoutBasic,
+        component: EditarPerfil,
+        exact: true
+    },
+    {
+        path: "/usuario/solicitudes",
+        layout: LayoutBasic,
+        component: MisSolicitudes,
         exact: true
     }
 ];

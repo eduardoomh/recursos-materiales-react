@@ -1,0 +1,6 @@
+@import "../../../scss/index.scss";
+@import "../../../scss//pages/perfil.scss";
+
+.mis-solicitudes{
+    @include perfil();
+}

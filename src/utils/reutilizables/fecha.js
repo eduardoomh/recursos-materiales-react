@@ -2,12 +2,11 @@ import { format } from 'date-fns';
 import { es } from 'date-fns/locale'
 
 export const transformarFecha = (fecha) => {
-    console.log(fecha)
     const year = fecha.substring(0,4);
     const month = fecha.substring(5,7);
     const day = fecha.substring(10, fecha.length-2);
 
-    const fechaFinal = ""+`${year}-${month}-${parseInt(day)}`+"";
+    const fechaFinal = `${year}-${month}-${parseInt(day)}`;
 
     const result = format(new Date(fechaFinal), "dd' de ' MMMM' del 'yyyy" , { locale: es });
 

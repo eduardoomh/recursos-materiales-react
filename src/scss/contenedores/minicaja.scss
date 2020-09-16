@@ -1,0 +1,44 @@
+//mixin con estilos de contenedor miniatura para el contenedor de solicitudes de esta misma carpeta.
+
+@mixin minicaja(){
+    article{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 2.4rem 1fr;
+        padding:  0 .5rem;
+
+        @include flexbox(false, "center", "center");
+
+        p{
+            text-align: center;
+            @include flexbox();
+            &:nth-child(1){
+                @include min-h(2.4rem);
+                font-size: 1.3em;
+                background-color: #eadbdb2e;
+                color: $guindo;
+                border-top: 1px solid $borde-gris-claro;
+                border-bottom: 1px solid $borde-gris-claro;
+            }
+
+            &:nth-child(2){
+                @include min-h(100%);
+                font-size: 1.2em;
+                padding: .5rem;
+            }
+
+            i{
+                @include flexbox();
+                @include min-h(100%);
+                margin-left: 1em;
+                color: $azul !important;
+            }
+
+            i.pendiente{
+                color: $guindo !important;
+            }
+    
+        }
+        
+    }
+}
