@@ -1,0 +1,6 @@
+@import "../../../../scss/pages/actualizar-solicitud.scss";
+
+//Estilos de la pagina para actualizar solicitudes de Eventos.
+.actualizar-vehiculo{
+    @include ActualizarSolicitud();
+}

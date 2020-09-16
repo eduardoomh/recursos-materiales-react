@@ -25,9 +25,27 @@ import Puestos from "../pages/administrador/ver/puestos/Puestos";
 import Statusvehiculos from "../pages/administrador/ver/statusvehiculos/Statusvehiculos";
 import Subdirecciones from "../pages/administrador/ver/subdirecciones/Subdirecciones";
 import Ubicaciones from "../pages/administrador/ver/ubicaciones/Ubicaciones";
+import CrearCargo from "../pages/administrador/crear/cargos/CrearCargo";
+import CrearDepartamento from "../pages/administrador/crear/departamentos/CrearDepartamento";
+import CrearEspacio from "../pages/administrador/crear/espacios/CrearEspacio";
+import CrearPuesto from "../pages/administrador/crear/puestos/CrearPuesto";
+import CrearStatusorder from "../pages/administrador/crear/statusorders/CrearStatusorder";
+import CrearStatusvehiculo from "../pages/administrador/crear/statusvehiculos/CrearStatusvehiculo";
+import CrearSubdireccion from "../pages/administrador/crear/subdirecciones/CrearSubdireccion";
+import CrearUbicacion from "../pages/administrador/crear/ubicaciones/CrearUbicacion";
+import CrearVehiculo from "../pages/administrador/crear/vehiculos/CrearVehiculo";
+import EditCargo from "../pages/administrador/actualizar/cargos/EditCargo";
+import EditDepartamento from "../pages/administrador/actualizar/departamentos/EditDepartamento";
+import EditEspacio from "../pages/administrador/actualizar/espacios/EditEspacio";
+import EditPuesto from "../pages/administrador/actualizar/puestos/EditPuesto";
+import EditStatusorder from "../pages/administrador/actualizar/statusorders/EditStatusorder";
+import EditStatusvehiculo from "../pages/administrador/actualizar/statusvehiculos/EditStatusvehiculo";
+import EditSubdireccion from "../pages/administrador/actualizar/subdirecciones/EditSubdireccion";
+import EditUbicacion from "../pages/administrador/actualizar/ubicaciones/EditUbicacion";
+import EditVehiculo from "../pages/administrador/actualizar/vehiculos/EditVehiculo";
 
 
-const routes = [
+export const routes = [
     {
         path: "/",
         layout: LayoutBasic,
@@ -129,61 +147,203 @@ const routes = [
         layout: LayoutBasic,
         component: MisSolicitudes,
         exact: true
-    },
+    }
+];
+
+export const routesAdmin = [
     {
         path: "/admin/departamentos",
         layout: LayoutBasic,
         component: Departamentos,
-        exact: true
+        exact: true,
+        admin: true
     },
     {
         path: "/admin/vehiculos",
         layout: LayoutBasic,
         component: Vehiculos,
-        exact: true
+        exact: true,
+        admin: true
     },
     {
         path: "/admin/statusorders",
         layout: LayoutBasic,
         component: Statusorders,
-        exact: true
+        exact: true,
+        admin: true
     },
     {
         path: "/admin/locaciones",
         layout: LayoutBasic,
         component: Espacios,
-        exact: true
+        exact: true,
+        admin: true
     },
     {
         path: "/admin/cargos",
         layout: LayoutBasic,
         component: Cargos,
-        exact: true
+        exact: true,
+        admin: true
     },
     {
         path: "/admin/puestos",
         layout: LayoutBasic,
         component: Puestos,
-        exact: true
+        exact: true,
+        admin: true
     },
     {
         path: "/admin/statusvehiculos",
         layout: LayoutBasic,
         component: Statusvehiculos,
-        exact: true
+        exact: true,
+        admin: true
     },
     {
         path: "/admin/subdirecciones",
         layout: LayoutBasic,
         component: Subdirecciones,
-        exact: true
+        exact: true,
+        admin: true
     },
     {
         path: "/admin/ubicaciones",
         layout: LayoutBasic,
         component: Ubicaciones,
-        exact: true
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/crear/cargo",
+        layout: LayoutBasic,
+        component: CrearCargo,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/crear/departamento",
+        layout: LayoutBasic,
+        component: CrearDepartamento,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/crear/vehiculo",
+        layout: LayoutBasic,
+        component: CrearVehiculo,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/crear/statusorder",
+        layout: LayoutBasic,
+        component: CrearStatusorder,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/crear/locacion",
+        layout: LayoutBasic,
+        component: CrearEspacio,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/crear/puesto",
+        layout: LayoutBasic,
+        component: CrearPuesto,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/crear/statusvehiculo",
+        layout: LayoutBasic,
+        component: CrearStatusvehiculo,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/crear/subdireccion",
+        layout: LayoutBasic,
+        component: CrearSubdireccion,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/crear/ubicacion",
+        layout: LayoutBasic,
+        component: CrearUbicacion,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/actualizar/cargo/:id",
+        layout: LayoutBasic,
+        component: EditCargo,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/actualizar/departamento/:id",
+        layout: LayoutBasic,
+        component: EditDepartamento,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/actualizar/espacio/:id",
+        layout: LayoutBasic,
+        component: EditEspacio,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/actualizar/puesto/:id",
+        layout: LayoutBasic,
+        component: EditPuesto,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/actualizar/statusorder/:id",
+        layout: LayoutBasic,
+        component: EditStatusorder,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/actualizar/statusvehiculo/:id",
+        layout: LayoutBasic,
+        component: EditStatusvehiculo,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/actualizar/subdireccion/:id",
+        layout: LayoutBasic,
+        component: EditSubdireccion,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/actualizar/ubicacion/:id",
+        layout: LayoutBasic,
+        component: EditUbicacion,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/actualizar/vehiculo/:id",
+        layout: LayoutBasic,
+        component: EditVehiculo,
+        exact: true,
+        admin: true
+    },
+    {
+        layout: LayoutBasic,
+        component: Inicio
     }
+
 ];
 
-export default routes;
