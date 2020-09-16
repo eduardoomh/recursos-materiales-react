@@ -6,10 +6,12 @@ import Filtrado from "../Filtrado/Filtrado";
 import Paginacion from "../Paginacion/Paginacion";
 import { getPorFiltrado } from "../../../servicios/filtrado";
 
-export default function SolicitudGrid(props){
-    const {data, setData, tipo, setLoading } = props;
+export default function SolicitudGrid(props) {
+    const { data, setData, tipo, setLoading, paginate = true, admin } = props;
     const { data: datos } = data;
-    const textTitulo = tipo === "eventos" || "mantenimientos" || "salidas" ? "Solicitudes Mas Recientes" : "Mas Recientes"
+
+    
+    const textTitulo = tipo === "eventos" || "mantenimientos" || "salidas" ? "Solicitudes Mas Recientes" : "Mas Recientes";
 
     const [titulo, setTitulo] = useState(textTitulo);
     const [filtro, setFiltro] = useState(false);
@@ -17,54 +19,65 @@ export default function SolicitudGrid(props){
     useEffect(() => {
 
         const fetchData = async () => {
-            try{
+            try {
                 setLoading(true);
                 const response = await getPorFiltrado(tipo, titulo);
-                if(response.status === "success"){
+                if (response.status === "success") {
                     setData(response.elementos);
                     setFiltro(false);
                 }
-    
+
                 setData(() => {
-                    if(response.status === "success") return response.elementos
+                    if (response.status === "success") return response.elementos
                 });
-    
+
                 setFiltro(() => {
-                    if(response.status === "success") return false
+                    if (response.status === "success") return false
                 });
-    
+
                 setLoading(() => {
-                    if(response.status === "success") return false
+                    if (response.status === "success") return false
                 });
-        
+
             }
-    
-            catch(err){
+
+            catch (err) {
                 console.log(err);
             }
         }
 
 
-        if(filtro === true){
-          fetchData();  
+        if (filtro === true) {
+            fetchData();
         }
-        
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [titulo]);
-    
-    return(
+
+    return (
         <div className="contenedor-grid">
             <Titulo titulo={titulo} />
-            <Filtrado setTitulo={setTitulo} setFiltro={setFiltro} />
-            <Grid data={datos} tipo={tipo}/>
-            <Paginacion 
-                currentPage={data.current_page}
-                lastPage={data.last_page}
-                prevUrl={data.prev_page_url}
-                nextUrl={data.next_page_url}
-                setData={setData}
-                setLoading={setLoading}
-            />
+            {
+                paginate !== false ? 
+                    <Filtrado setTitulo={setTitulo} setFiltro={setFiltro} />
+                    :
+                    <p></p>
+            }
+            
+            <Grid data={paginate !== false ? datos : data} tipo={tipo} admin={admin} paginate={paginate} />
+            {
+                paginate !== false && (
+                    <Paginacion
+                        currentPage={data.current_page}
+                        lastPage={data.last_page}
+                        prevUrl={data.prev_page_url}
+                        nextUrl={data.next_page_url}
+                        setData={setData}
+                        setLoading={setLoading}
+                    />
+
+                )
+            }
 
         </div>
     )

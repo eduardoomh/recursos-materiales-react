@@ -49,6 +49,7 @@ export default function Eventos(){
                 tipo="eventos" 
                 loading={loading} 
                 setLoading={setLoading} 
+                paginate={true}
             />
 
             <ModalBasic show={loading}>

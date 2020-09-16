@@ -16,6 +16,16 @@ import ActualizarSalida from "../pages/ActualizarSolicitud/ActualizarSalida/Actu
 import Perfil from "../pages/usuario/Perfil/Perfil";
 import EditarPerfil from "../pages/usuario/EditarPerfil/EditarPerfil";
 import MisSolicitudes from "../pages/usuario/MisSolicitudes/MisSolicitudes";
+import Departamentos from "../pages/administrador/ver/departamentos/Departamentos";
+import Vehiculos from "../pages/administrador/ver/vehiculos/Vehiculos";
+import Espacios from "../pages/administrador/ver/espacios/Espacios";
+import Statusorders from "../pages/administrador/ver/statusorders/Statusorders";
+import Cargos from "../pages/administrador/ver/cargos/Cargos";
+import Puestos from "../pages/administrador/ver/puestos/Puestos";
+import Statusvehiculos from "../pages/administrador/ver/statusvehiculos/Statusvehiculos";
+import Subdirecciones from "../pages/administrador/ver/subdirecciones/Subdirecciones";
+import Ubicaciones from "../pages/administrador/ver/ubicaciones/Ubicaciones";
+
 
 const routes = [
     {
@@ -118,6 +128,60 @@ const routes = [
         path: "/usuario/solicitudes",
         layout: LayoutBasic,
         component: MisSolicitudes,
+        exact: true
+    },
+    {
+        path: "/admin/departamentos",
+        layout: LayoutBasic,
+        component: Departamentos,
+        exact: true
+    },
+    {
+        path: "/admin/vehiculos",
+        layout: LayoutBasic,
+        component: Vehiculos,
+        exact: true
+    },
+    {
+        path: "/admin/statusorders",
+        layout: LayoutBasic,
+        component: Statusorders,
+        exact: true
+    },
+    {
+        path: "/admin/locaciones",
+        layout: LayoutBasic,
+        component: Espacios,
+        exact: true
+    },
+    {
+        path: "/admin/cargos",
+        layout: LayoutBasic,
+        component: Cargos,
+        exact: true
+    },
+    {
+        path: "/admin/puestos",
+        layout: LayoutBasic,
+        component: Puestos,
+        exact: true
+    },
+    {
+        path: "/admin/statusvehiculos",
+        layout: LayoutBasic,
+        component: Statusvehiculos,
+        exact: true
+    },
+    {
+        path: "/admin/subdirecciones",
+        layout: LayoutBasic,
+        component: Subdirecciones,
+        exact: true
+    },
+    {
+        path: "/admin/ubicaciones",
+        layout: LayoutBasic,
+        component: Ubicaciones,
         exact: true
     }
 ];

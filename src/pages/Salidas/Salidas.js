@@ -48,6 +48,7 @@ export default function Salidas(){
                 tipo="salidas"
                 loading={loading}
                 setLoading={setLoading} 
+                paginate={true}
             />
 
             <ModalBasic show={loading}>

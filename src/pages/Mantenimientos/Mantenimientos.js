@@ -47,6 +47,7 @@ export default function Mantenimientos(){
                 loading={loading} 
                 tipo="mantenimientos"  
                 setLoading={setLoading}
+                paginate={true}
             />
 
             <ModalBasic show={loading}>
