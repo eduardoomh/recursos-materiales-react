@@ -6,6 +6,7 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 import { getUbicacion } from "../../../../servicios/ubicacion";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../../components/reutilizables/Titulo/Titulo";
+import FormUbicacion from "../../../../components/admin/actualizar/ubicaciones/FormUbicacion";
 import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 
 export default function EditUbicacion() {
@@ -39,6 +40,7 @@ export default function EditUbicacion() {
             <div className="actualizar-ubicacion">
                 <Banner titulo="Actualizar Ubicacion" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
+                <FormUbicacion data={solicitud} loading={loading} />
 
             </div>
             <ModalBasic show={loading}>

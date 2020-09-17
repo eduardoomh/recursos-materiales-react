@@ -6,6 +6,7 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 import { getStatusvehiculo } from "../../../../servicios/statusvehiculo";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../../components/reutilizables/Titulo/Titulo";
+import FormStatusvehiculo from "../../../../components/admin/actualizar/statusvehiculos/FormStatusvehiculo";
 import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 
 export default function EditStatusvehiculo() {
@@ -39,6 +40,7 @@ export default function EditStatusvehiculo() {
             <div className="actualizar-statusvehiculo">
                 <Banner titulo="Actualizar Estados de Vehiculos" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
+                <FormStatusvehiculo data={solicitud} loading={loading} />
 
             </div>
             <ModalBasic show={loading}>

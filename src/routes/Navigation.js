@@ -1,19 +1,20 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { routes, routesAdmin } from "./routes";
+import { routes, routesAdmin, errorRoute } from "./routes";
 import { map } from "lodash";
 import useIdentity from "../utils/hooks/useIdentity";
 
 export default function Navigation() {
     const { identity } = useIdentity();
-    const array = [...routes, ...routesAdmin];
+    const array = [...routes, ...errorRoute];
+    const adminArray = [...routes, ...routesAdmin, ...errorRoute];
 
     return (
         <Router>
             {
                 identity.role === "administrador" ? (
                     <Switch>
-                        {map(array, (route, index) => (
+                        {map(adminArray, (route, index) => (
                             <Route
                                 key={index}
                                 path={route.path}
@@ -30,7 +31,7 @@ export default function Navigation() {
                     :
                     (
                         <Switch>
-                            {map(routes, (route, index) => (
+                            {map(array, (route, index) => (
                                 <Route
                                     key={index}
                                     path={route.path}

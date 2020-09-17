@@ -6,6 +6,7 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 import { getStatusorder } from "../../../../servicios/statusorder";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../../components/reutilizables/Titulo/Titulo";
+import FormStatusorder from "../../../../components/admin/actualizar/statusorders/FormStatusorder";
 import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 
 export default function EditStatusorder() {
@@ -39,6 +40,7 @@ export default function EditStatusorder() {
             <div className="actualizar-statusorder">
                 <Banner titulo="Actualizar Estados de Mantenimiento" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
+                <FormStatusorder data={solicitud} loading={loading} />
 
             </div>
             <ModalBasic show={loading}>

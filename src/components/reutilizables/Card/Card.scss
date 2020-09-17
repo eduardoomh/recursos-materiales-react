@@ -7,12 +7,13 @@
     grid-template-columns: 1fr;
     grid-template-rows: 2rem 1fr 2rem;
     background-color: $dorado-claro-transparente !important;
+    box-shadow: $box-shadow;
     @include min-w(16rem);
     @include min-h(12rem);
-    border-radius: 6px;
     margin: 0;
     padding: 0;
-    border: 1px solid #e1bda8;
+    border-radius: 4px;
+    border: 1px solid rgb(194, 194, 194);
 
     .fecha{
         grid-column: 1/2;
@@ -21,8 +22,10 @@
         justify-content: center;
         align-items: center;
         @include min-h(2rem);
-        background-color: $card-top;
+        background-color: rgb(207, 202, 202);
+        color: black;
         font-size: 1em !important;
+        border-radius: 4px 4px 0 0;
 
     }
 
@@ -36,6 +39,7 @@
         font-size: 1.1em !important;
         padding: .5rem;
         text-align: center;
+        color: black !important;
     }
 
     .status{
@@ -64,6 +68,6 @@
     &:hover{
         transition: .3s;
         cursor: pointer;
-        background-color: rgba(255, 194, 53, 0.6) !important;
+        background-color: $dorado-claro !important;
     }
 }

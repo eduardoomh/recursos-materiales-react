@@ -69,6 +69,7 @@ export default function Grid(props) {
                             tipo={tipo}
                             key={d.id}
                             id={d.id}
+                            admin={admin}
                         />
                     )
                 )

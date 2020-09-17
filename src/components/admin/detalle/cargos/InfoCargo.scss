@@ -1,0 +1,7 @@
+@import "../../../../index.scss";
+@import "../../../../scss/contenedores/solicitudCaja.scss";
+
+.informacion-cargo{
+    @include solicitudCaja(4, "evento");
+     
+}

@@ -4,11 +4,15 @@ import { Icon } from "semantic-ui-react";
 import "./Card.scss";
 
 export default function Card(props){
-    const { fecha = "fecha", contenido = "contenido", status = "aprobada", tipo = "eventos", id} = props;
+    const { fecha = "fecha", contenido = "contenido", status = "aprobada", tipo = "eventos", id, admin = false} = props;
     const history = useHistory();
 
     const cardClick = () => {
-        history.push(`/${tipo}/${id}`);
+
+        if(admin === true){
+            return history.push(`/admin/${tipo}/${id}`);
+        }
+        return history.push(`/${tipo}/${id}`);
     }
 
 

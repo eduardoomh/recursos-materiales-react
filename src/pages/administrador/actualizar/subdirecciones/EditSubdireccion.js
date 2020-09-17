@@ -6,6 +6,7 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 import { getSubdireccion } from "../../../../servicios/subdireccion";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../../components/reutilizables/Titulo/Titulo";
+import FormSubdireccion from "../../../../components/admin/actualizar/subdirecciones/FormSubdireccion";
 import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 
 export default function EditSubdireccion() {
@@ -39,6 +40,7 @@ export default function EditSubdireccion() {
             <div className="actualizar-subdireccion">
                 <Banner titulo="Actualizar Subdireccion" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
+                <FormSubdireccion data={solicitud} loading={loading} />
 
             </div>
             <ModalBasic show={loading}>

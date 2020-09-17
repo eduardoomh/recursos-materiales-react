@@ -6,6 +6,7 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 import { getDepartamento } from "../../../../servicios/departamento";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../../components/reutilizables/Titulo/Titulo";
+import FormDepartamento from "../../../../components/admin/actualizar/departamentos/FormDepartamento";
 import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 
 export default function EditDepartamento() {
@@ -39,6 +40,7 @@ export default function EditDepartamento() {
             <div className="actualizar-departamento">
                 <Banner titulo="Actualizar Departamento" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
+                <FormDepartamento data={solicitud} loading={loading} />
 
             </div>
             <ModalBasic show={loading}>

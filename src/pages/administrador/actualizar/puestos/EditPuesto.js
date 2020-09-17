@@ -6,6 +6,7 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 import { getPuesto } from "../../../../servicios/puesto";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../../components/reutilizables/Titulo/Titulo";
+import FormPuesto from "../../../../components/admin/actualizar/puestos/FormPuesto";
 import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 
 export default function EditPuesto() {
@@ -39,6 +40,7 @@ export default function EditPuesto() {
             <div className="actualizar-puesto">
                 <Banner titulo="Actualizar Puesto" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
+                <FormPuesto data={solicitud} loading={loading} />
 
             </div>
             <ModalBasic show={loading}>

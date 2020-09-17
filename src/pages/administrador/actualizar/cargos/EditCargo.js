@@ -6,6 +6,7 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 import { getCargo } from "../../../../servicios/cargo";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../../components/reutilizables/Titulo/Titulo";
+import FormCargo from "../../../../components/admin/actualizar/cargos/FormCargo";
 import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 
 export default function EditCargo() {
@@ -39,6 +40,7 @@ export default function EditCargo() {
             <div className="actualizar-cargo">
                 <Banner titulo="Actualizar Cargo" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
+                <FormCargo data={solicitud} loading={loading} />
 
             </div>
             <ModalBasic show={loading}>

@@ -1,0 +1,18 @@
+@import "../../../../scss/index.scss";
+@import "../../../../scss/formularios/formulario-basico.scss";
+
+.formulario-admin{
+    display: grid;
+    grid-template-columns: 1fr 50rem 1fr;
+    grid-template-rows: 1fr 10rem;
+    margin-top: 4rem;
+
+    .ui.message{
+        grid-column: 2/3;
+        grid-row: 2/3;
+        border: 1px solid $borde-gris-claro;
+
+    }
+
+    @include formularioBasico();
+}

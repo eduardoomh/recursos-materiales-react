@@ -43,6 +43,15 @@ import EditStatusvehiculo from "../pages/administrador/actualizar/statusvehiculo
 import EditSubdireccion from "../pages/administrador/actualizar/subdirecciones/EditSubdireccion";
 import EditUbicacion from "../pages/administrador/actualizar/ubicaciones/EditUbicacion";
 import EditVehiculo from "../pages/administrador/actualizar/vehiculos/EditVehiculo";
+import DetalleCargo from "../pages/administrador/detalle/cargos/DetalleCargo";
+import DetalleDepartamento from "../pages/administrador/detalle/departamentos/DetalleDepartamento";
+import DetalleEspacio from "../pages/administrador/detalle/espacios/DetalleEspacio";
+import DetallePuesto from "../pages/administrador/detalle/puestos/DetallePuesto";
+import DetalleStatusorder from "../pages/administrador/detalle/statusorders/DetalleStatusorder";
+import DetalleStatusvehiculo from "../pages/administrador/detalle/statusvehiculos/DetalleStatusvehiculo";
+import DetalleSubdireccion from "../pages/administrador/detalle/subdirecciones/DetalleSubdireccion";
+import DetalleUbicacion from "../pages/administrador/detalle/ubicaciones/DetalleUbicacion";
+import DetalleVehiculo from "../pages/administrador/detalle/vehiculos/DetalleVehiculo";
 
 
 export const routes = [
@@ -341,9 +350,83 @@ export const routesAdmin = [
         admin: true
     },
     {
+        path: "/admin/cargos/:id",
+        layout: LayoutBasic,
+        component: DetalleCargo,
+        exact: true,
+        admin: true  
+    },
+    {
+        path: "/admin/departamentos/:id",
+        layout: LayoutBasic,
+        component: DetalleDepartamento,
+        exact: true,
+        admin: true  
+
+    },
+    {
+        path: "/admin/espacios/:id",
+        layout: LayoutBasic,
+        component: DetalleEspacio,
+        exact: true,
+        admin: true  
+
+    },
+    {
+        path: "/admin/puestos/:id",
+        layout: LayoutBasic,
+        component: DetallePuesto,
+        exact: true,
+        admin: true  
+
+    },
+    {
+        path: "/admin/statusorders/:id",
+        layout: LayoutBasic,
+        component: DetalleStatusorder,
+        exact: true,
+        admin: true  
+
+    },
+    {
+        path: "/admin/statusvehiculos/:id",
+        layout: LayoutBasic,
+        component: DetalleStatusvehiculo,
+        exact: true,
+        admin: true  
+
+    },
+    {
+        path: "/admin/subdirecciones/:id",
+        layout: LayoutBasic,
+        component: DetalleSubdireccion,
+        exact: true,
+        admin: true  
+
+    },
+    {
+        path: "/admin/ubicaciones/:id",
+        layout: LayoutBasic,
+        component: DetalleUbicacion,
+        exact: true,
+        admin: true 
+
+    },
+    {
+        path: "/admin/vehiculos/:id",
+        layout: LayoutBasic,
+        component: DetalleVehiculo,
+        exact: true,
+        admin: true 
+
+    }
+
+];
+
+export const errorRoute = [
+    {
         layout: LayoutBasic,
         component: Inicio
     }
-
 ];
 

@@ -3,7 +3,7 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    background-color: $dorado-claro;
+    background-color: $dorado-claro !important;
     color: $guindo;
     transform: scale(0,0);
     width: 15rem;
@@ -11,7 +11,7 @@
     top: 4em;
     grid-gap: 0;
     margin: 0;
-    border: 1px solid $dorado-claro-hover;
+    border: 1px solid $dorado-claro-border !important;
     border-radius: 0 0 6px 6px;
     box-shadow: $box-shadow;
     z-index: 10;
@@ -22,8 +22,7 @@
         align-items: center;
 
         &:hover{
-            transition: .4s;
-            background-color: $dorado-claro-hover;
+            transition: .1s;
             color: $guindo;
             
         }

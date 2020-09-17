@@ -6,6 +6,7 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 import { getEspacio } from "../../../../servicios/espacio";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../../components/reutilizables/Titulo/Titulo";
+import FormEspacio from "../../../../components/admin/actualizar/espacios/FormEspacio";
 import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 
 export default function EditEspacio() {
@@ -39,6 +40,7 @@ export default function EditEspacio() {
             <div className="actualizar-espacio">
                 <Banner titulo="Actualizar Espacio" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
+                <FormEspacio data={solicitud} loading={loading} />
 
             </div>
             <ModalBasic show={loading}>
