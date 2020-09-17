@@ -1,32 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import { Form, Button, Loader } from "semantic-ui-react";
+import { Form, Button } from "semantic-ui-react";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { newCargo } from "../../../../servicios/cargo";
+import { updateCargo } from "../../../../servicios/cargo";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
-import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
 import "./FormCargo.scss";
 
-export default function FormCargo() {
-    const [loading, setLoading] = useState(false);
+export default function FormCargo(props) {
+    const { setLoading, solicitud} = props;
     const history = useHistory();
 
     const formik = useFormik({
-        initialValues: emptyValues(),
+        initialValues: {
+            cargo: solicitud.cargo,
+        },
         validationSchema: validation(),
         onSubmit: async (data) => {
             try {
                 setLoading(true);
-                const response = await newCargo(data);
+                const response = await updateCargo(data, solicitud.id);
 
                 if (response.status === "success") {
                     scrollTop();
                     setLoading(false);
                     toast.success("Dato creado con exito");
-                    history.push(`/admin/cargos/${response.elemento_creado.id}`);
+                    history.push(`/admin/cargos/${solicitud.id}`);
 
                 } else {
                     scrollTop();
@@ -59,22 +60,13 @@ export default function FormCargo() {
                         error={formik.errors.cargo}
                     />
  
-                    <Button type="submit">Crear Cargo</Button>
+                    <Button type="submit">Actualizar Cargo</Button>
                 </Form>
                 <MessageForm />
 
             </div>
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
         </>
     )
-}
-
-function emptyValues() {
-    return {
-        cargo: "",
-    }
 }
 
 function validation() {

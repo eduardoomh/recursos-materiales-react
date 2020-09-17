@@ -40,7 +40,12 @@ export default function EditStatusvehiculo() {
             <div className="actualizar-statusvehiculo">
                 <Banner titulo="Actualizar Estados de Vehiculos" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
-                <FormStatusvehiculo data={solicitud} loading={loading} />
+                
+                {
+                    loading === false && (
+                        <FormStatusvehiculo solicitud={solicitud} setLoading={setLoading}/>
+                    )
+                }
 
             </div>
             <ModalBasic show={loading}>

@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { Form, Button, Loader } from "semantic-ui-react";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
 import { newDepartamento } from "../../../../servicios/departamento";
+import { getStorage } from "../../../../servicios/reutilizables/localStorage";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
 import "./FormDepartamento.scss";
@@ -13,6 +14,8 @@ import "./FormDepartamento.scss";
 export default function FormDepartamento() {
     const [loading, setLoading] = useState(false);
     const history = useHistory();
+
+    const subdirecciones = getStorage("subdirecciones");
 
     const formik = useFormik({
         initialValues: emptyValues(),
@@ -51,14 +54,47 @@ export default function FormDepartamento() {
             <div className="formulario-admin">
                 <Form onSubmit={formik.handleSubmit}>
                     <Form.Input
-                        label="Nombre de la locacion"
+                        label="Nombre del departamento"
                         name="departamento"
                         icon='clipboard outline'
                         value={formik.values.departamento}
                         onChange={formik.handleChange}
                         error={formik.errors.departamento}
                     />
- 
+                    <Form.Input
+                        label="Telefono de contacto"
+                        name="telefono"
+                        icon='clipboard outline'
+                        value={formik.values.telefono}
+                        onChange={formik.handleChange}
+                        error={formik.errors.telefono}
+                    />
+                    <Form.Input
+                        label="Correo electronico"
+                        name="correo"
+                        icon='clipboard outline'
+                        value={formik.values.correo}
+                        onChange={formik.handleChange}
+                        error={formik.errors.correo}
+                    />
+
+                    <div className="field">
+                        <label htmlFor="subdireccion_id">Pertenece a la subdireccion</label>
+                        <select
+                            className="ui selection"
+                            id="subdireccion_id"
+                            name="subdireccion_id"
+                            value={formik.values.subdireccion_id}
+                            onChange={formik.handleChange}
+                            error={formik.errors.subdireccion_id}
+                        >
+                            <option>Seleccione una opcion</option>
+                            {
+                                subdirecciones.map(d => <option key={d.id} value={d.id}>{d.subdireccion}</option>)
+                            }
+                        </select>
+                    </div>
+
                     <Button type="submit">Crear Departamento</Button>
                 </Form>
                 <MessageForm />
@@ -74,11 +110,17 @@ export default function FormDepartamento() {
 function emptyValues() {
     return {
         departamento: "",
+        subdireccion_id: "",
+        telefono: "",
+        correo: ""
     }
 }
 
 function validation() {
     return Yup.object({
-        departamento: Yup.string().required("Este campo es obligatorio")
+        departamento: Yup.string().required("Este campo es obligatorio"),
+        subdireccion_id: Yup.number().required("Este campo es obligatorio"),
+        telefono: Yup.string().required("Este campo es obligatorio"),
+        correo: Yup.string().email("Este correo no es valido").required("Este campo es obligatorio")
     })
 }

@@ -44,8 +44,6 @@ export default function FormCargo() {
         }
     })
 
-
-
     return (
         <>
             <div className="formulario-admin">
@@ -58,7 +56,7 @@ export default function FormCargo() {
                         onChange={formik.handleChange}
                         error={formik.errors.cargo}
                     />
- 
+
                     <Button type="submit">Crear Cargo</Button>
                 </Form>
                 <MessageForm />
@@ -73,7 +71,7 @@ export default function FormCargo() {
 
 function emptyValues() {
     return {
-        cargo: "",
+        cargo: ""
     }
 }
 

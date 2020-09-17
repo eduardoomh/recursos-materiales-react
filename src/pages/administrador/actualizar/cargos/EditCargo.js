@@ -20,7 +20,7 @@ export default function EditCargo() {
         const getData = async () => {
             const data = await getCargo(id);
 
-            setSolicitud(() => {
+            await setSolicitud(() => {
                 if (data.status === "success") return data.cargo
             });
             console.log(data.cargo);
@@ -40,7 +40,11 @@ export default function EditCargo() {
             <div className="actualizar-cargo">
                 <Banner titulo="Actualizar Cargo" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
-                <FormCargo data={solicitud} loading={loading} />
+                {
+                    loading === false && (
+                        <FormCargo solicitud={solicitud} setLoading={setLoading} /> 
+                    )
+                }
 
             </div>
             <ModalBasic show={loading}>

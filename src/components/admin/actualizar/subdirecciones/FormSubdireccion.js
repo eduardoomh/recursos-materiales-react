@@ -1,32 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import { Form, Button, Loader } from "semantic-ui-react";
+import { Form, Button } from "semantic-ui-react";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { newSubdireccion } from "../../../../servicios/subdireccion";
+import { updateSubdireccion } from "../../../../servicios/subdireccion";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
-import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
 import "./FormSubdireccion.scss";
 
-export default function FormSubdireccion() {
-    const [loading, setLoading] = useState(false);
+export default function FormSubdireccion(props) {
+    const { setLoading, solicitud} = props;
     const history = useHistory();
 
     const formik = useFormik({
-        initialValues: emptyValues(),
+        initialValues: {
+            subdireccion: solicitud.subdireccion,
+        },
         validationSchema: validation(),
         onSubmit: async (data) => {
             try {
                 setLoading(true);
-                const response = await newSubdireccion(data);
+                const response = await updateSubdireccion(data, solicitud.id);
 
                 if (response.status === "success") {
                     scrollTop();
                     setLoading(false);
                     toast.success("Dato creado con exito");
-                    history.push(`/admin/subdirecciones/${response.elemento_creado.id}`);
+                    history.push(`/admin/subdirecciones/${solicitud.id}`);
 
                 } else {
                     scrollTop();
@@ -59,23 +60,15 @@ export default function FormSubdireccion() {
                         error={formik.errors.subdireccion}
                     />
  
-                    <Button type="submit">Crear Subdireccion</Button>
+                    <Button type="submit">Actualizar Subdireccion</Button>
                 </Form>
                 <MessageForm />
 
             </div>
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
         </>
     )
 }
 
-function emptyValues() {
-    return {
-        subdireccion: "",
-    }
-}
 
 function validation() {
     return Yup.object({

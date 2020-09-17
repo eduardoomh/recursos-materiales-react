@@ -1,12 +1,20 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Button } from "semantic-ui-react";
+import { getStorage } from "../../../../servicios/reutilizables/localStorage";
 import BoxFormData from "../../../reutilizables/BoxFormData/BoxFormData";
 import "./InfoPuesto.scss";
 
 export default function InfoPuesto(props) {
     const { data, loading } = props;
     const history = useHistory();
+    const users = getStorage("users");
+    const cargos = getStorage("cargos");
+    const departamentos = getStorage("departamentos");
+
+    const userSelected = users.find(user =>  user.id === data.usuario_id);
+    const cargoSelected = cargos.find(cargo => cargo.id === data.cargo_id);
+    const departamentoSelected = departamentos.find(dep => dep.id === data.departamento_id);
 
     const gotoUpdate = (id) => {
         history.push(`/admin/actualizar/puesto/${id}`);
@@ -22,15 +30,15 @@ export default function InfoPuesto(props) {
 
                             <BoxFormData
                                 titulo="Usuario"
-                                data={data.usuario_id}
+                                data={`${userSelected.name} ${userSelected.surname}`}
                             />
                             <BoxFormData
                                 titulo="cargo"
-                                data={data.cargo_id}
+                                data={cargoSelected.cargo}
                             />
                             <BoxFormData
                                 titulo="departamento"
-                                data={data.departamento_id}
+                                data={departamentoSelected.departamento}
                             />
 
                             <BoxFormData

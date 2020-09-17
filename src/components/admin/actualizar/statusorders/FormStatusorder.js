@@ -1,26 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import { Form, Button, Loader } from "semantic-ui-react";
+import { Form, Button } from "semantic-ui-react";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { newStatusorder } from "../../../../servicios/statusorder";
+import { updateStatusorder } from "../../../../servicios/statusorder";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
-import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
 import "./FormStatusorder.scss";
 
-export default function FormStatusorder() {
-    const [loading, setLoading] = useState(false);
+export default function FormStatusorder(props) {
+    const { setLoading, solicitud} = props;
     const history = useHistory();
 
     const formik = useFormik({
-        initialValues: emptyValues(),
+        initialValues: {
+            status: solicitud.status,
+        },
         validationSchema: validation(),
         onSubmit: async (data) => {
             try {
                 setLoading(true);
-                const response = await newStatusorder(data);
+                const response = await updateStatusorder(data, solicitud.id);
 
                 if (response.status === "success") {
                     scrollTop();
@@ -59,23 +60,16 @@ export default function FormStatusorder() {
                         error={formik.errors.status}
                     />
  
-                    <Button type="submit">Crear Estado</Button>
+                    <Button type="submit">Actualizar Estado</Button>
                 </Form>
                 <MessageForm />
 
             </div>
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
         </>
     )
 }
 
-function emptyValues() {
-    return {
-        status: "",
-    }
-}
+
 
 function validation() {
     return Yup.object({

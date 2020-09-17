@@ -40,7 +40,12 @@ export default function EditStatusorder() {
             <div className="actualizar-statusorder">
                 <Banner titulo="Actualizar Estados de Mantenimiento" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
-                <FormStatusorder data={solicitud} loading={loading} />
+                
+                {
+                    loading === false && (
+                        <FormStatusorder solicitud={solicitud} setLoading={setLoading}/>
+                    )
+                }
 
             </div>
             <ModalBasic show={loading}>

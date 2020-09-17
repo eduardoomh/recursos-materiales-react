@@ -3,6 +3,14 @@ import { getFetch } from "./reutilizables/getService";
 import { updateFetch } from "./reutilizables/updateService";
 
 
+export const getUsers = async () => {
+    const petition = await getFetch("/users");
+    const response = await petition.json();
+
+    return response;
+}
+
+
 export const loginService = async (data) => {
     const petition = await authFetch("/login", data);
     const response = await petition.json();

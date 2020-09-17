@@ -30,3 +30,10 @@ export const updatePuesto = async (data, id) => {
 
     return response;
 }
+
+export const getPuestoByUser = async (id) => {
+    const petition = await getFetchId("/puestobyuser", id)
+    const response = await petition.json();
+
+    return response;
+}

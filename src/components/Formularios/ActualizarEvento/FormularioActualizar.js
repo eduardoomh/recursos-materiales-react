@@ -86,7 +86,7 @@ export default function FormularioActualizar(props) {
                 <div className="field">
                     <label htmlFor="depto_solicitante">Departamento solicitante</label>
                     <select
-                        className="ui selection"
+                        className="ui search dropdown"
                         id="depto_solicitante"
                         name="depto_solicitante"
                         value={formik.values.depto_solicitante}

@@ -40,7 +40,12 @@ export default function EditEspacio() {
             <div className="actualizar-espacio">
                 <Banner titulo="Actualizar Espacio" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
-                <FormEspacio data={solicitud} loading={loading} />
+                
+                {
+                    loading === false && (
+                        <FormEspacio solicitud={solicitud} setLoading={setLoading}/>
+                    )
+                }
 
             </div>
             <ModalBasic show={loading}>

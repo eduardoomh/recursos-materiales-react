@@ -40,7 +40,12 @@ export default function EditUbicacion() {
             <div className="actualizar-ubicacion">
                 <Banner titulo="Actualizar Ubicacion" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
-                <FormUbicacion data={solicitud} loading={loading} />
+                
+                {
+                    loading === false && (
+                        <FormUbicacion solicitud={solicitud} setLoading={setLoading} />
+                    )
+                }
 
             </div>
             <ModalBasic show={loading}>

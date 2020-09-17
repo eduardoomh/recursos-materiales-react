@@ -40,7 +40,12 @@ export default function EditPuesto() {
             <div className="actualizar-puesto">
                 <Banner titulo="Actualizar Puesto" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
-                <FormPuesto data={solicitud} loading={loading} />
+                
+                {
+                    loading === false && (
+                     <FormPuesto solicitud={solicitud} setLoading={setLoading} />
+                    )
+                }
 
             </div>
             <ModalBasic show={loading}>

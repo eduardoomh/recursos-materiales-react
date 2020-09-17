@@ -40,7 +40,12 @@ export default function EditSubdireccion() {
             <div className="actualizar-subdireccion">
                 <Banner titulo="Actualizar Subdireccion" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
-                <FormSubdireccion data={solicitud} loading={loading} />
+                
+                {
+                    loading === false && (
+                     <FormSubdireccion solicitud={solicitud} setLoading={setLoading}/>
+                    )
+                }
 
             </div>
             <ModalBasic show={loading}>

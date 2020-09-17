@@ -1,32 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import { Form, Button, Loader } from "semantic-ui-react";
+import { Form, Button } from "semantic-ui-react";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { newUbicacion } from "../../../../servicios/ubicacion";
+import { updateUbicacion } from "../../../../servicios/ubicacion";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
-import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
 import "./FormUbicacion.scss";
 
-export default function FormUbicacion() {
-    const [loading, setLoading] = useState(false);
+export default function FormUbicacion(props) {
+    const { setLoading, solicitud} = props;
     const history = useHistory();
 
     const formik = useFormik({
-        initialValues: emptyValues(),
+        initialValues: {
+            ubicacion: solicitud.ubicacion,
+        },
         validationSchema: validation(),
         onSubmit: async (data) => {
             try {
                 setLoading(true);
-                const response = await newUbicacion(data);
+                const response = await updateUbicacion(data, solicitud.id);
 
                 if (response.status === "success") {
                     scrollTop();
                     setLoading(false);
                     toast.success("Dato creado con exito");
-                    history.push(`/admin/ubicaciones/${response.elemento_creado.id}`);
+                    history.push(`/admin/ubicaciones/${solicitud.id}`);
 
                 } else {
                     scrollTop();
@@ -59,23 +60,15 @@ export default function FormUbicacion() {
                         error={formik.errors.ubicacion}
                     />
  
-                    <Button type="submit">Crear Ubicacion</Button>
+                    <Button type="submit">Actualizar Ubicacion</Button>
                 </Form>
                 <MessageForm />
 
             </div>
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
         </>
     )
 }
 
-function emptyValues() {
-    return {
-        ubicacion: "",
-    }
-}
 
 function validation() {
     return Yup.object({

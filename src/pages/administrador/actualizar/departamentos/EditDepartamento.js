@@ -39,9 +39,12 @@ export default function EditDepartamento() {
         <>
             <div className="actualizar-departamento">
                 <Banner titulo="Actualizar Departamento" />
-                <Titulo titulo="Modifique los datos que requieran ser actualizados." />
-                <FormDepartamento data={solicitud} loading={loading} />
-
+                <Titulo titulo="Modifique los datos que requieran ser actualizados." />             
+                {
+                    loading === false && (
+                        <FormDepartamento solicitud={solicitud} setLoading={setLoading} />
+                    )
+                }
             </div>
             <ModalBasic show={loading}>
                 <Loader active={loading} size="big">Cargando Pagina...</Loader>

@@ -1,32 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import { Form, Button, Loader } from "semantic-ui-react";
+import { Form, Button } from "semantic-ui-react";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { newStatusvehiculo } from "../../../../servicios/statusvehiculo";
+import { updateStatusvehiculo } from "../../../../servicios/statusvehiculo";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
-import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
 import "./FormStatusvehiculo.scss";
 
-export default function FormStatusvehiculo() {
-    const [loading, setLoading] = useState(false);
+export default function FormStatusvehiculo(props) {
+    const { setLoading, solicitud} = props;
     const history = useHistory();
 
     const formik = useFormik({
-        initialValues: emptyValues(),
+        initialValues: {
+            status: solicitud.status,
+        },
         validationSchema: validation(),
         onSubmit: async (data) => {
             try {
                 setLoading(true);
-                const response = await newStatusvehiculo(data);
+                const response = await updateStatusvehiculo(data, solicitud.id);
 
                 if (response.status === "success") {
                     scrollTop();
                     setLoading(false);
                     toast.success("Dato creado con exito");
-                    history.push(`/admin/statusvehiculos/${response.elemento_creado.id}`);
+                    history.push(`/admin/statusvehiculos/${solicitud.id}`);
 
                 } else {
                     scrollTop();
@@ -59,23 +60,16 @@ export default function FormStatusvehiculo() {
                         error={formik.errors.status}
                     />
  
-                    <Button type="submit">Crear Estado</Button>
+                    <Button type="submit">Actualizar Estado</Button>
                 </Form>
                 <MessageForm />
 
             </div>
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
         </>
     )
 }
 
-function emptyValues() {
-    return {
-        status: "",
-    }
-}
+
 
 function validation() {
     return Yup.object({

@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { Form, Button, Loader } from "semantic-ui-react";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
 import { newEspacio } from "../../../../servicios/espacio";
+import { getStorage } from "../../../../servicios/reutilizables/localStorage";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
 import "./FormEspacio.scss";
@@ -13,6 +14,8 @@ import "./FormEspacio.scss";
 export default function FormEspacio() {
     const [loading, setLoading] = useState(false);
     const history = useHistory();
+
+    const ubicaciones = getStorage("ubicaciones");
 
     const formik = useFormik({
         initialValues: emptyValues(),
@@ -58,8 +61,25 @@ export default function FormEspacio() {
                         onChange={formik.handleChange}
                         error={formik.errors.espacio}
                     />
- 
-                    <Button type="submit">Crear Espacio</Button>
+
+                    <div className="field">
+                        <label htmlFor="ubicacion_id">Se ubica en</label>
+                        <select
+                            className="ui selection"
+                            id="ubicacion_id"
+                            name="ubicacion_id"
+                            value={formik.values.ubicacion_id}
+                            onChange={formik.handleChange}
+                            error={formik.errors.ubicacion_id}
+                        >
+                            <option>Seleccione una opcion</option>
+                            {
+                                ubicaciones.map(d => <option key={d.id} value={d.id}>{d.ubicacion}</option>)
+                            }
+                        </select>
+                    </div>
+
+                    <Button type="submit">Crear Locacion</Button>
                 </Form>
                 <MessageForm />
 
@@ -74,11 +94,13 @@ export default function FormEspacio() {
 function emptyValues() {
     return {
         espacio: "",
+        ubicacion_id: ""
     }
 }
 
 function validation() {
     return Yup.object({
-        espacio: Yup.string().required("Este campo es obligatorio")
+        espacio: Yup.string().required("Este campo es obligatorio"),
+        subdireccion_id: Yup.number().required("Este campo es obligatorio")
     })
 }
