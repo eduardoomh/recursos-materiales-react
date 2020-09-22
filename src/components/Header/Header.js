@@ -53,7 +53,7 @@ export default function Header(props) {
                         }
 
 
-                        <li>Calendario</li>
+                        <li><Link to="/calendario">Calendario</Link></li>
                     </ul>
                 </li>
                 <li>Nuevo <Icon name="angle down" />

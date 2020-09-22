@@ -1,0 +1,66 @@
+@import "../../../scss/index.scss";
+
+.container-calendar{
+    display: grid;
+    grid-template-columns: 1fr 60rem 1fr;
+    grid-template-rows: 1fr;
+    margin-top: 2rem;
+
+    #calendario{
+        grid-column: 2/3;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 4rem 1fr;
+        @include min-w(60rem);
+        @include min-h(30rem);
+        margin:0;
+        padding: 0;
+        bordeR: 1px solid $borde-gris;
+
+        .header-calendar{
+            grid-column: 1/2;
+            grid-row: 1/2;
+            display: grid;
+            grid-template-columns: 4rem 1fr 4rem;
+            grid-template-rows: 4rem !important;
+            @include min-h(4rem);
+            margin: 0;
+
+            button{
+                @include min-w(4em);
+                border-radius: 0;
+                padding: 0;
+                background-color: transparent;
+                color: $guindo;
+
+                &:hover{
+                    color: $dorado-oscuro;
+                }
+
+                i{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    @include min-w(100%);
+                    @include min-h(100%);
+                    padding: 0;
+                    margin: 0;
+
+                }
+            }
+
+            p{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                @include min-h(100%);
+            }
+        }
+
+        .box-calendar{
+            grid-column: 1/2;
+            grid-row: 2/3;
+        }
+    }
+    
+}
