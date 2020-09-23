@@ -12,7 +12,7 @@ export default function Navigation() {
     return (
         <Router>
             {
-                identity.role === "administrador" ? (
+                identity.estatus === "administrador" ? (
                     <Switch>
                         {map(adminArray, (route, index) => (
                             <Route
