@@ -10,19 +10,19 @@ import './App.scss';
 import Authenticated from "./pages/Authenticated/Authenticated";
 
 function App() {
-  const [identity, setIdentity] = useState(false);
+  const [identity, setIdentity] = useState(undefined);
 
   useEffect(() => {
     const token = getToken();
     if(!token){
-      setIdentity(false);
+      setIdentity(null);
     }else{
       setIdentity(decodeToken(token));
     }
   }, []);
 
   const logout = () => {
-    setIdentity(false);
+    setIdentity(null);
     clearStorage();
     removeToken();
 
@@ -52,13 +52,15 @@ function App() {
     [identity]
   );
 
+  if(identity === undefined) return null;
+
   return (
     <>
       <div className="app">
         <ApolloProvider client={client}>
           <IdentityContext.Provider value={identityData}>
             {
-              identity === false ? <Authenticated /> : <Navigation />
+              !identity ? <Authenticated /> : <Navigation />
             }
           </IdentityContext.Provider>
         </ApolloProvider>

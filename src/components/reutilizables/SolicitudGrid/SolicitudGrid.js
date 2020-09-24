@@ -8,7 +8,6 @@ import { getPorFiltrado } from "../../../servicios/filtrado";
 
 export default function SolicitudGrid(props) {
     const { data, setData, tipo, setLoading, paginate = true, admin } = props;
-    const { data: datos } = data;
 
     
     const textTitulo = tipo === "eventos" || "mantenimientos" || "salidas" ? "Solicitudes Mas Recientes" : "Mas Recientes";
@@ -64,7 +63,7 @@ export default function SolicitudGrid(props) {
                     <p></p>
             }
             
-            <Grid data={paginate !== false ? datos : data} tipo={tipo} admin={admin} paginate={paginate} />
+            <Grid data={paginate !== false ? data : data} tipo={tipo} admin={admin} paginate={paginate} />
             {
                 paginate !== false && (
                     <Paginacion

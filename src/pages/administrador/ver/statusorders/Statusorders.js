@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Loader } from "semantic-ui-react";
+import { useQuery } from "@apollo/client";
+import { OBTENER_TIPOORDERS } from "../../../../gql/tipoorder";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import SolicitudGrid from "../../../../components/reutilizables/SolicitudGrid/SolicitudGrid";
 import { getStatusorders } from "../../../../servicios/statusorder";
@@ -10,16 +12,25 @@ export default function Statusorders() {
     const [content, setContent ] = useState("");
     const [ loading, setLoading ] = useState(true);
 
+    const {data: tipoorders} = useQuery(OBTENER_TIPOORDERS, {
+        variables: {
+            input: {
+                cantidad: 15,
+                pagina: 1
+            }
+        }
+    })
+
+
     const fetchData = async () => {
         try{
-            const statusorders = await getStatusorders();
 
             setContent(() => {
-                if(statusorders.status === "success") return statusorders.elementos
+                if(tipoorders) return tipoorders.obtenerTipoorders
             });
 
             setLoading(() => {
-                if(statusorders.status === "success") return false
+                if(tipoorders) return false
             });
 
         }
@@ -28,6 +39,7 @@ export default function Statusorders() {
         }
     }
 
+
     useEffect( () => {
         scrollTop();
         fetchData();
@@ -35,7 +47,7 @@ export default function Statusorders() {
         return () => {
             setContent("");
         }
-    },[]);
+    },[tipoorders]);
 
     return (
         <>

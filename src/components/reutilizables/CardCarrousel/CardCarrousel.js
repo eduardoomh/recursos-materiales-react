@@ -6,7 +6,7 @@ import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import Card from "../Card/Card";
 
 export default function CardCarrousel(props) {
-    const { titulo, data, loading } = props;
+    const { titulo, data, loading, vacio = false } = props;
     const history = useHistory();
 
 
@@ -19,29 +19,37 @@ export default function CardCarrousel(props) {
     }
 
     const elementos = arraySolicitud(data);
-    
 
-    if(loading) return null;
+
+    if (loading) return null;
 
     return (
         <article className="card-carrousel">
             <p className="titulo">Solicitudes de {titulo}</p>
-            <div>
-                {
-                    elementos && elementos.length > 0 ? 
-                    elementos.map(e => 
-                        <Card 
-                            key={e.id} 
-                            fecha={transformarFecha(e.fecha)} 
-                            contenido={e.evento || e.trabajo_realizado || e.destino} status={e.status} tipo={titulo.toLowerCase()}
-                            id={e.id}
-                        />
-                    ) 
-                    : "El contenido se esta cargando.."
-                }
+            {
+                !vacio ? (
+                    <div>
+                        {
+                            elementos && elementos.length > 0 ?
+                                elementos.map(e =>
+                                    <Card
+                                        key={e.id}
+                                        fecha={transformarFecha(e.fecha)}
+                                        contenido={e.evento || e.trabajo_realizado || e.destino} status={e.status} tipo={titulo.toLowerCase()}
+                                        id={e.id}
+                                    />
+                                )
+                                : "El contenido se esta cargando.."
+                        }
 
-            </div>
-            <Icon name="angle right" size="big"  onClick={() => carrouselRoute() }/>
+                    </div>
+                ) : <>
+                        <p className="sin-datos">No hay datos aún.</p>
+                        
+                    </>
+            }
+
+            <Icon name="angle right" size="big" onClick={() => carrouselRoute()} />
 
         </article>
     )

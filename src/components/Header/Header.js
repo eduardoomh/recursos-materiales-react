@@ -8,7 +8,7 @@ export default function Header(props) {
     const { show, setShow, setShowSubmenu, setShowSubmenuCrear, setShowSubmenuUsuario, setShowAdminCrear, setShowAdminVer } = props;
     const { logout, identity } = useIdentity();
 
-    const userName = `${identity.name} ${identity.surname}`;
+    const userName = `${identity.nombre} ${identity.apellidos}`;
 
     const showModal = (show) => {
         if (show === true) {
@@ -35,7 +35,7 @@ export default function Header(props) {
                         <li><Link to="/mantenimientos">Mantenimiento</Link></li>
                         <li><Link to="/salidas">Salidas</Link></li>
                         {
-                            identity.role === "administrador" && (
+                            identity.estatus === "administrador" && (
                                 <li>Administrador
                                     <ul className="solicitud-submenu left">
                                         <li><Link to="/admin/departamentos">Departamentos</Link></li>
@@ -63,7 +63,7 @@ export default function Header(props) {
                         <li><Link to="/nuevo/salida">Salida</Link></li>
                         <li>Otros</li>
                         {
-                            identity.role === "administrador" && (
+                            identity.estatus === "administrador" && (
                                 <li>Administrador
                                     <ul className="solicitud-submenu left">
                                         <li><Link to="/admin/crear/departamento">Departamento</Link></li>

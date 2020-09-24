@@ -15,7 +15,7 @@ export default function SubmenuCrear(props){
             <li><Link to="/nuevo/mantenimiento">Mantenimiento</Link></li>
             <li><Link to="/nuevo/salida">Salida</Link></li>
             {
-                identity.role === "administrador" 
+                identity.estatus === "administrador" 
                 && 
                 <li onClick={() => setShowAdminCrear(true)}>Administrador <Icon name="angle right" /></li>
             }

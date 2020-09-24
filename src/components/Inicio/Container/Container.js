@@ -1,166 +1,148 @@
 import React, { useState, useEffect } from "react";
-import "./Container.scss";
-import { getEventos } from "../../../servicios/evento";
-import { getMantenimientos } from "../../../servicios/mantenimiento";
-import { getSalidas } from "../../../servicios/salida";
-import { getDepartamentos } from "../../../servicios/departamento";
-import { getVehiculos } from "../../../servicios/vehiculo";
-import { getEspacios } from "../../../servicios/espacio";
-import { getStatusvehiculos } from "../../../servicios/statusvehiculo";
-import { getStatusorders } from "../../../servicios/statusorder";
-import { getPuestoByUser, getPuestos } from "../../../servicios/puesto";
-import { getCargos } from "../../../servicios/cargo";
-import { getUbicaciones } from "../../../servicios/ubicacion";
-import { getSubdirecciones } from "../../../servicios/subdireccion";
-import { getUsers } from "../../../servicios/user";
+import { useQuery } from "@apollo/client";
+import { OBTENER_EVENTOS } from "../../../gql/evento";
+import { OBTENER_REPARACIONES, OBTENER_SERVICIOS, OBTENER_TRANSPORTES } from "../../../gql/mantenimiento";
+import { OBTENER_SALIDAS } from "../../../gql/salida";
 import useIdentity from "../../../utils/hooks/useIdentity";
 import { saveStorage, getStorage } from "../../../servicios/reutilizables/localStorage";
 import CardCarrousel from "../../reutilizables/CardCarrousel/CardCarrousel";
 import Titulo from "../../reutilizables/Titulo/Titulo";
 import { eventosRecientes, mantenimientosRecientes, salidasRecientes } from "../../../api/data";
+import "./Container.scss";
 
 export default function Container(props){
     const { loading, setLoading } = props;
-    const { identity } = useIdentity();
+    const [arrayEventos, setArrayEventos] = useState(false);
+    const [arrayTransportes, setArrayTransportes] = useState(false);
+    const [arrayServicios, setArrayServicios] = useState(false);
+    const [arrayReparaciones, setArrayReparaciones] = useState(false);
 
-    const [arrayEventos, setArrayEventos] = useState(eventosRecientes);
-    const [arrayMantenimientos, setArrayMantenimientos] = useState(mantenimientosRecientes);
-    const [arraySalidas, setArraySalidas] = useState(salidasRecientes);
-
-            const fetchData = async () => {
-            try {
-                const eventos = await getEventos();
-                const mantenimientos = await getMantenimientos();
-                const salidas = await getSalidas();
-    
-                if(eventos.status === "success"){
-                    await saveStorage("eventos", eventos.elementos.data);   
-                    setArrayEventos(eventos.elementos.data);        
-                }
-    
-                if(mantenimientos.status === "success"){
-                    await saveStorage("mantenimientos", mantenimientos.elementos.data);
-                    setArrayMantenimientos(mantenimientos.elementos.data);            
-                }
-    
-                if(salidas.status === "success"){
-                    await saveStorage("salidas", salidas.elementos.data);
-                    setArraySalidas(salidas.elementos.data);             
-                }
-
-                setLoading(false);
-            }
-            catch (err) {
-                console.log(err);
+    const { data: eventos, loading: loadingEventos } = useQuery(OBTENER_EVENTOS, {
+        variables: {
+            input: {
+                cantidad: 15,
+                pagina: 1
             }
         }
-
-        const fetchDataAdmin = async () => {
-            try{
-                const departamentos = await getDepartamentos();
-                const vehiculos = await getVehiculos();
-                const statusorders = await getStatusorders();
-                const espacios = await getEspacios();
-                const cargos = await getCargos();
-                const subdirecciones = await getSubdirecciones();
-                const ubicaciones = await getUbicaciones();
-                const statusvehiculos = await getStatusvehiculos();
-                const puestos = await getPuestos();
-                const permiso = await getPuestoByUser(identity.id);
-                const users = await getUsers();
-    
-                if(departamentos.status === "success"){
-                    await saveStorage("departamentos", departamentos.elementos.data);         
-                }
-    
-                if(vehiculos.status === "success"){
-                    await saveStorage("vehiculos", vehiculos.elementos);         
-                }
-    
-                if(statusorders.status === "success"){
-                    await saveStorage("statusorders", statusorders.elementos);           
-                }
-    
-                if(espacios.status === "success"){
-                    await saveStorage("espacios", espacios.elementos);          
-                }
-
-                if(cargos.status === "success"){
-                    await saveStorage("cargos", cargos.cargos);          
-                }
-                if(subdirecciones.status === "success"){
-                    await saveStorage("subdirecciones", subdirecciones.elementos);          
-                }
-                if(ubicaciones.status === "success"){
-                    await saveStorage("ubicaciones", ubicaciones.elementos);          
-                }
-                if(statusvehiculos.status === "success"){
-                    await saveStorage("statusvehiculos", statusvehiculos.elementos);          
-                }
-                if(puestos.status === "success"){
-                    await saveStorage("puestos", puestos.elementos.data);          
-                }
-                if(permiso.status === "success"){
-                    await saveStorage("permiso", permiso.elementos);          
-                }else{
-                    await saveStorage("permiso", "No hay permiso");
-                }
-                if(users.status === "success"){
-                    await saveStorage("users", users.usuarios);          
-                }
-
+    });
+    const { data: reparaciones, loading: loadingReparaciones } = useQuery(OBTENER_REPARACIONES, {
+        variables: {
+            input: {
+                cantidad: 15,
+                pagina: 1
             }
-            catch(err){
-                console.log(err);
-            }
-
         }
+    });
+    const { data: servicios, loading: loadingServicios } = useQuery(OBTENER_SERVICIOS, {
+        variables: {
+            input: {
+                cantidad: 15,
+                pagina: 1
+            }
+        }
+    });
 
+    const { data: transportes, loading: loadingTransportes } = useQuery(OBTENER_TRANSPORTES, {
+        variables: {
+            input: {
+                cantidad: 15,
+                pagina: 1
+            }
+        }
+    });
 
 
     useEffect( () => {
-        fetchData();
-
-        if(!getStorage("departamentos") && !getStorage("vehiculos") && !getStorage("espacios")
-        && !getStorage("subdirecciones") && !getStorage("statusorders") && !getStorage("statusvehiculos")
-        && !getStorage("permiso") && !getStorage("puestos") && !getStorage("cargos")&& !getStorage("locaciones"))
-        {
-            fetchDataAdmin();
-            console.log("Esto solo pasa una vez");
+        if(eventos && !loadingEventos){
+            saveStorage("eventos", eventos.obtenerEventos);   
+            setArrayEventos(eventos.obtenerEventos); 
         }
-
         
-
         return () => {
             setArrayEventos(eventosRecientes);
-            setArrayMantenimientos(mantenimientosRecientes);
-            setArraySalidas(salidasRecientes);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [identity.id])
+    }, [eventos])
 
-     
+
+    useEffect( () => {
+        if(reparaciones && !loadingReparaciones){
+            saveStorage("reparaciones", reparaciones.obtenerReparaciones);   
+            setArrayReparaciones(reparaciones.obtenerReparaciones); 
+        }
+        
+        
+        return () => {
+            setArrayReparaciones(mantenimientosRecientes);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [reparaciones])
+
+
+    useEffect( () => {
+        if(servicios && !loadingServicios){
+            saveStorage("servicios", servicios.obtenerServicios);   
+            setArrayServicios(servicios.obtenerServicios); 
+        }
+        
+        
+        return () => {
+            setArrayServicios(salidasRecientes);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [servicios])
+
+    useEffect( () => {
+        if(transportes && !loadingTransportes){
+            saveStorage("transportes", transportes.obtenerTransportes);   
+            setArrayTransportes(transportes.obtenerTransportes); 
+        }
+        
+        
+        return () => {
+            setArrayTransportes(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [transportes])
+
+    if(!arrayEventos || !arrayReparaciones || !arrayServicios || !arrayTransportes) return null;
+
+    setLoading(() => {
+        if(arrayEventos && arrayReparaciones && arrayServicios && arrayTransportes) return false
+    })
+
     return(
         <div className="container">
             <Titulo titulo="Solicitudes Mas Recientes" />
             <div>
-                {
-                    loading === false  ? 
-                    (
+
                         <>
-                            <CardCarrousel titulo="Eventos" data={arrayEventos} />
+                        {
+                           arrayEventos.length > 0 
+                           ? <CardCarrousel titulo="Eventos" data={arrayEventos} /> 
+                           : <CardCarrousel titulo="Eventos" data={arrayEventos} vacio={true} /> 
+                        }
 
-                            <CardCarrousel titulo="Mantenimientos" data={arrayMantenimientos} />
-                    
-                            <CardCarrousel titulo="Salidas" data={arraySalidas} />
+                        {
+                            arrayReparaciones.length > 0 
+                            ? <CardCarrousel titulo="Reparaciones" data={arrayReparaciones}  /> 
+                            : <CardCarrousel titulo="Reparaciones" data={arrayReparaciones} vacio={true} /> 
+                        }
+
+                        {
+                           arrayServicios.length > 0 
+                           ? <CardCarrousel titulo="Servicios" data={arrayServicios}  /> 
+                           : <CardCarrousel titulo="Servicios" data={arrayServicios} vacio={true} /> 
+                        }
+
+                        {
+                           arrayTransportes.length > 0 
+                           ? <CardCarrousel titulo="Transportes" data={arrayTransportes}  /> 
+                           : <CardCarrousel titulo="Transportes" data={arrayTransportes} vacio={true} /> 
+                        }
+                            
                         </>           
-                    )
-                    :
-                    (
-                        <p>Gargando datos...</p>
-                    )
-
-                }
+                
 
             </div>
         </div>

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Loader } from "semantic-ui-react";
+import { useQuery } from "@apollo/client";
+import { OBTENER_EDIFICIOS } from "../../../../gql/edificio";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import SolicitudGrid from "../../../../components/reutilizables/SolicitudGrid/SolicitudGrid";
 import { getUbicaciones } from "../../../../servicios/ubicacion";
@@ -10,16 +12,24 @@ export default function Espacios() {
     const [content, setContent ] = useState("");
     const [ loading, setLoading ] = useState(true);
 
+    const {data: edificios} = useQuery(OBTENER_EDIFICIOS, {
+        variables: {
+            input: {
+                cantidad: 15,
+                pagina: 1
+            }
+        }
+    })
+
     const fetchData = async () => {
         try{
-            const ubicaciones = await getUbicaciones();
 
             setContent(() => {
-                if(ubicaciones.status === "success") return ubicaciones.elementos
+                if(edificios) return edificios.obtenerEdificios
             });
 
             setLoading(() => {
-                if(ubicaciones.status === "success") return false
+                if(edificios) return false
             });
 
         }
@@ -35,7 +45,7 @@ export default function Espacios() {
         return () => {
             setContent("");
         }
-    },[]);
+    },[edificios]);
 
     return (
         <>

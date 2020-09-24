@@ -5,7 +5,7 @@ import "./Grid.scss";
 
 export default function Grid(props) {
     const { data, tipo, admin = false } = props;
-    let firstValue;
+    let firstValue = "ver detalle";
 
     const values = (d) => {
         switch (tipo) {
@@ -19,7 +19,7 @@ export default function Grid(props) {
 
             case "ubicaciones":
                 firstValue = "Editar"
-                return d.ubicacion;
+                return d.nombre;
 
             case "statusvehiculos":
                 firstValue = "Editar"
@@ -35,15 +35,15 @@ export default function Grid(props) {
 
             case "statusorders":
                 firstValue = "Editar"
-                return d.status;
+                return d.nombre;
 
             case "espacios":
                 firstValue = d.status === true ? "disponible" : "No disponible";
                 return d.espacio;
 
             case "subdirecciones":
-                firstValue = `${d.subdirector}`
-                return d.subdireccion;
+                firstValue = "Ver subdireccion"
+                return d.nombre;
 
             default:
                 break;

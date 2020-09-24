@@ -8,6 +8,7 @@ export default function Navigation() {
     const { identity } = useIdentity();
     const array = [...routes, ...errorRoute];
     const adminArray = [...routes, ...routesAdmin, ...errorRoute];
+    console.log(identity)
 
     return (
         <Router>

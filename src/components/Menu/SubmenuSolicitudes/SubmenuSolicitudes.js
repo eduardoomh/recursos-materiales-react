@@ -15,7 +15,7 @@ export default function SubmenuSolicitudes(props){
             <li><Link to="/mantenimientos">Mantenimientos</Link></li>
             <li><Link to="/salidas">Salidas</Link></li>
             {
-                identity.role === "administrador" 
+                identity.estatus === "administrador" 
                 && 
                 <li onClick={() => setShowAdminVer(true)}>Administrador <Icon name="angle right" /></li>
             }

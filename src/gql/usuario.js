@@ -26,6 +26,7 @@ export const OBTENER_USUARIO = gql`
             siteWeb
             description
             avatar
+            estatus
             createdAt
         }
   

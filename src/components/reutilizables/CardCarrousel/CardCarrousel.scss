@@ -27,6 +27,16 @@
         margin: 0;
     }
 
+    .sin-datos{
+        grid-column: 1/2;
+        grid-row: 2/3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: $gris-oscuro;
+    }
+
     .titulo{
         grid-column: 1/span 2;
         grid-row: 1/2;

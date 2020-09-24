@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Loader } from "semantic-ui-react";
+import { useQuery } from "@apollo/client";
+import { OBTENER_SUBDIRECCIONES } from "../../../../gql/subdireccion";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import SolicitudGrid from "../../../../components/reutilizables/SolicitudGrid/SolicitudGrid";
 import { getSubdirecciones } from "../../../../servicios/subdireccion";
@@ -10,16 +12,24 @@ export default function Espacios() {
     const [content, setContent ] = useState("");
     const [ loading, setLoading ] = useState(true);
 
+    const {data: subdirecciones} = useQuery(OBTENER_SUBDIRECCIONES, {
+        variables: {
+            input: {
+                cantidad: 15,
+                pagina: 1
+            }
+        }
+    })
+
     const fetchData = async () => {
         try{
-            const subdirecciones = await getSubdirecciones();
 
             setContent(() => {
-                if(subdirecciones.status === "success") return subdirecciones.elementos
+                if(subdirecciones) return subdirecciones.obtenerSubdirecciones
             });
 
             setLoading(() => {
-                if(subdirecciones.status === "success") return false
+                if(subdirecciones) return false
             });
 
         }
@@ -35,7 +45,7 @@ export default function Espacios() {
         return () => {
             setContent("");
         }
-    },[]);
+    },[subdirecciones]);
 
     return (
         <>
