@@ -1,106 +1,111 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useFormik } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
+import { useMutation } from "@apollo/client";
+import { CREAR_SITIO } from "../../../../gql/sitio";
 import { toast } from "react-toastify";
 import { Form, Button, Loader } from "semantic-ui-react";
-import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { newEspacio } from "../../../../servicios/espacio";
-import { getStorage } from "../../../../servicios/reutilizables/localStorage";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
+import SelectFormik from "../../../reutilizables/SelectFormik/SelectFormik";
+import ModalMensaje from "../../../reutilizables/ModalMensaje/ModalMensaje";
 import "./FormEspacio.scss";
 
-export default function FormEspacio() {
+export default function FormEspacio(props) {
+    const { edificios } = props;
     const [loading, setLoading] = useState(false);
+    const [abrir, setAbrir] = useState(false);
+    const [crearSitio] = useMutation(CREAR_SITIO);
     const history = useHistory();
 
-    const ubicaciones = getStorage("ubicaciones");
+    const abrirModal = () => {
+        setAbrir(true);
+    }
 
-    const formik = useFormik({
-        initialValues: emptyValues(),
-        validationSchema: validation(),
-        onSubmit: async (data) => {
-            try {
-                setLoading(true);
-                const response = await newEspacio(data);
+    const cerrarModal = () => {
+        setAbrir(false);
+        history.push("/admin/locaciones");
+    }
 
-                if (response.status === "success") {
-                    scrollTop();
-                    setLoading(false);
-                    toast.success("Dato creado con exito");
-                    history.push(`/admin/espacios/${response.elemento_creado.id}`);
-
-                } else {
-                    scrollTop();
-                    toast.error("Lo sentimos, los datos introducidos han sido incorrectos");
-                    setLoading(false);
-
-                }
-
-            }
-            catch (err) {
-                setLoading(false);
-                toast.error("Los datos no han podido ser guardados, intentelo mas tarde");
-                console.log(err);
-            }
-        }
+    const edificiosOptions = edificios.map(d => {
+        return { key: d.id, text: d.nombre, value: d.id }
     })
-
-
 
     return (
         <>
-            <div className="formulario-admin">
-                <Form onSubmit={formik.handleSubmit}>
-                    <Form.Input
-                        label="Nombre de la locacion"
-                        name="espacio"
-                        icon='clipboard outline'
-                        value={formik.values.espacio}
-                        onChange={formik.handleChange}
-                        error={formik.errors.espacio}
-                    />
+            <Formik
+                initialValues={emptyValues()}
+                validationSchema={validation()}
+                onSubmit={async (values, options) => {
+                    try {
+                        setLoading(true);
+                        const sitio = values;
 
-                    <div className="field">
-                        <label htmlFor="ubicacion_id">Se ubica en</label>
-                        <select
-                            className="ui selection"
-                            id="ubicacion_id"
-                            name="ubicacion_id"
-                            value={formik.values.ubicacion_id}
-                            onChange={formik.handleChange}
-                            error={formik.errors.ubicacion_id}
-                        >
-                            <option>Seleccione una opcion</option>
-                            {
-                                ubicaciones.map(d => <option key={d.id} value={d.id}>{d.ubicacion}</option>)
+                        await crearSitio({
+                            variables: {
+                                input: sitio
                             }
-                        </select>
+                        });
+                        setLoading(false);
+                        abrirModal();
+
+                    }
+                    catch (err) {
+                        setLoading(false);
+                        toast.error(err.message);
+                    }
+                }}
+            >
+                {({ values, handleChange, errors, handleSubmit }) => (
+                    <div className="formulario-admin">
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Input
+                                label="Nombre del sitio"
+                                name="nombre"
+                                icon='clipboard outline'
+                                value={values.nombre}
+                                onChange={handleChange}
+                                error={errors.nombre}
+                            />
+                            <SelectFormik
+                                name="edificio"
+                                options={edificiosOptions}
+                                label="Pertenece al edificio"
+                            />
+
+                            <Button type="submit">Crear Sitio</Button>
+                        </Form>
+                        <MessageForm />
+
                     </div>
-
-                    <Button type="submit">Crear Locacion</Button>
-                </Form>
-                <MessageForm />
-
-            </div>
+                )}
+            </Formik>
             <ModalBasic show={loading}>
                 <Loader active={loading} size="big">Cargando Pagina...</Loader>
             </ModalBasic>
+            <ModalMensaje
+                centered={true}
+                open={abrir}
+                onClose={cerrarModal}
+                titulo="Petición Exitosa"
+                texto="El Sitio se ha creado con éxito."
+                boton="Salir"
+            />
         </>
     )
 }
 
 function emptyValues() {
     return {
-        espacio: "",
-        ubicacion_id: ""
+        nombre: "",
+        edificio: ""
     }
 }
 
 function validation() {
     return Yup.object({
-        espacio: Yup.string().required("Este campo es obligatorio"),
-        subdireccion_id: Yup.number().required("Este campo es obligatorio")
+        nombre: Yup.string().required("Este campo es obligatorio"),
+        edificio: Yup.string().required("Este campo es obligatorio")
     })
 }

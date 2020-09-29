@@ -2,44 +2,51 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useMutation } from "@apollo/client";
+import { CREAR_TIPOORDER } from "../../../../gql/tipoorder";
 import { toast } from "react-toastify";
 import { Form, Button, Loader } from "semantic-ui-react";
-import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { newStatusorder } from "../../../../servicios/statusorder";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
+import ModalMensaje from "../../../reutilizables/ModalMensaje/ModalMensaje";
 import "./FormStatusorder.scss";
 
 export default function FormStatusorder() {
     const [loading, setLoading] = useState(false);
+    const [abrir, setAbrir] = useState(false);
+    const [crearTipoorder] = useMutation(CREAR_TIPOORDER);
     const history = useHistory();
+
+    const abrirModal = () => {
+        setAbrir(true);
+
+    }
+
+    const cerrarModal = () => {
+        setAbrir(false);
+        history.push("/admin/statusorders");
+    }
 
     const formik = useFormik({
         initialValues: emptyValues(),
         validationSchema: validation(),
-        onSubmit: async (data) => {
+        onSubmit: async (formData) => {
             try {
                 setLoading(true);
-                const response = await newStatusorder(data);
+                const tipoorder = formData;
 
-                if (response.status === "success") {
-                    scrollTop();
-                    setLoading(false);
-                    toast.success("Dato creado con exito");
-                    history.push(`/admin/statusorder/${response.elemento_creado.id}`);
-
-                } else {
-                    scrollTop();
-                    toast.error("Lo sentimos, los datos introducidos han sido incorrectos");
-                    setLoading(false);
-
-                }
+                await crearTipoorder({
+                    variables: {
+                        input: tipoorder
+                    }
+                });
+                setLoading(false);
+                abrirModal();
 
             }
             catch (err) {
                 setLoading(false);
-                toast.error("Los datos no han podido ser guardados, intentelo mas tarde");
-                console.log(err);
+                toast.error(err.message);
             }
         }
     })
@@ -51,15 +58,15 @@ export default function FormStatusorder() {
             <div className="formulario-admin">
                 <Form onSubmit={formik.handleSubmit}>
                     <Form.Input
-                        label="Nombre de la locacion"
-                        name="status"
+                        label="Nombre del tipo de orden"
+                        name="nombre"
                         icon='clipboard outline'
-                        value={formik.values.status}
+                        value={formik.values.nombre}
                         onChange={formik.handleChange}
-                        error={formik.errors.status}
+                        error={formik.errors.nombre}
                     />
  
-                    <Button type="submit">Crear Estado</Button>
+                    <Button type="submit">Crear Tipo de Orden</Button>
                 </Form>
                 <MessageForm />
 
@@ -67,18 +74,26 @@ export default function FormStatusorder() {
             <ModalBasic show={loading}>
                 <Loader active={loading} size="big">Cargando Pagina...</Loader>
             </ModalBasic>
+            <ModalMensaje
+                centered={true}
+                open={abrir}
+                onClose={cerrarModal}
+                titulo="Peticion Exitosa"
+                texto="El Tipo de orden se ha creado con éxito."
+                boton="Salir"
+            />
         </>
     )
 }
 
 function emptyValues() {
     return {
-        status: "",
+        nombre: "",
     }
 }
 
 function validation() {
     return Yup.object({
-        status: Yup.string().required("Este campo es obligatorio")
+        nombre: Yup.string().required("Este campo es obligatorio")
     })
 }

@@ -1,25 +1,34 @@
 import React, { useState, useEffect } from "react";
 import { Loader } from "semantic-ui-react";
+import { useQuery } from "@apollo/client";
+import { OBTENER_PERMISOS } from "../../../../gql/permiso";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import SolicitudGrid from "../../../../components/reutilizables/SolicitudGrid/SolicitudGrid";
-import { getPuestos } from "../../../../servicios/puesto";
 import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
 
-export default function Espacios() {
+export default function Puestos() {
     const [content, setContent ] = useState("");
     const [ loading, setLoading ] = useState(true);
+    
+        const {data: permisos} = useQuery(OBTENER_PERMISOS, {
+            variables: {
+                input: {
+                    cantidad: 15,
+                    pagina: 1
+                }
+            }
+        })
+    
 
     const fetchData = async () => {
         try{
-            const puestos = await getPuestos();
-
             setContent(() => {
-                if(puestos.status === "success") return puestos.elementos
+                if(permisos) return permisos.obtenerPermisos
             });
 
             setLoading(() => {
-                if(puestos.status === "success") return false
+                if(permisos) return false
             });
 
         }
@@ -35,6 +44,7 @@ export default function Espacios() {
         return () => {
             setContent("");
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     return (
@@ -48,6 +58,7 @@ export default function Espacios() {
                     loading={loading} 
                     setLoading={setLoading}
                     admin={true}
+                    paginate={false}
                 />
 
             </div>

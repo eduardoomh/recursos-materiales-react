@@ -34,8 +34,10 @@ export default function CardCarrousel(props) {
                                 elementos.map(e =>
                                     <Card
                                         key={e.id}
-                                        fecha={transformarFecha(e.fecha)}
-                                        contenido={e.evento || e.trabajo_realizado || e.destino} status={e.status} tipo={titulo.toLowerCase()}
+                                        fecha={e.fecha}
+                                        contenido={e.nombre || e.trabajo_realizado || e.destino} 
+                                        status={e.aprobado} 
+                                        tipo={titulo.toLowerCase()}
                                         id={e.id}
                                     />
                                 )

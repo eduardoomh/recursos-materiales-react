@@ -5,8 +5,13 @@ export const OBTENER_EVENTOS = gql`
         obtenerEventos(input: $input){
             id
             nombre
-            fecha
         }
   
+    }
+`;
+
+export const CREAR_EVENTO = gql`
+    mutation crearEvento($input: crearEvento!){
+        crearEvento(input: $input)
     }
 `;

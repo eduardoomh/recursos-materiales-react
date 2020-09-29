@@ -4,7 +4,6 @@ import { useQuery } from "@apollo/client";
 import { OBTENER_TIPOORDERS } from "../../../../gql/tipoorder";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import SolicitudGrid from "../../../../components/reutilizables/SolicitudGrid/SolicitudGrid";
-import { getStatusorders } from "../../../../servicios/statusorder";
 import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
 
@@ -47,6 +46,7 @@ export default function Statusorders() {
         return () => {
             setContent("");
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[tipoorders]);
 
     return (

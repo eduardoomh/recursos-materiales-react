@@ -29,3 +29,11 @@ export const OBTENER_TRANSPORTES = gql`
   
     }
 `;
+
+export const CREAR_MANTENIMIENTO = gql`
+    mutation crearMantenimiento($input: crearMantenimiento!){
+        crearMantenimiento(input: $input)
+    }
+`;
+
+

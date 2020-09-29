@@ -10,36 +10,36 @@ export default function Grid(props) {
     const values = (d) => {
         switch (tipo) {
             case "cargos":
-                firstValue = "Editar"
-                return d.cargo;
+                firstValue = "Ver Contenido"
+                return d.nombre;
 
             case "puestos":
-                firstValue = d.cargo.cargo;
-                return `${d.user.name} ${d.user.surname}`;
+                firstValue = "Ver contenido";
+                return `${d.usuario.nombre} ${d.usuario.apellidos}`;
 
             case "ubicaciones":
-                firstValue = "Editar"
+                firstValue = "Ver"
                 return d.nombre;
 
             case "statusvehiculos":
-                firstValue = "Editar"
-                return d.status;
+                firstValue = "Ver contenido"
+                return d.nombre;
 
             case "departamentos":
-                firstValue = `Subdireccion ${d.subdireccion.subdireccion}`;
-                return d.departamento;
+                firstValue = "Ver contenido";
+                return d.nombre;
 
             case "vehiculos":
-                firstValue = d.placas;
-                return d.vehiculo;
+                firstValue = "Ver contenido";
+                return d.nombre;
 
             case "statusorders":
                 firstValue = "Editar"
                 return d.nombre;
 
             case "espacios":
-                firstValue = d.status === true ? "disponible" : "No disponible";
-                return d.espacio;
+                firstValue = "Ver detalle";
+                return d.nombre;
 
             case "subdirecciones":
                 firstValue = "Ver subdireccion"
@@ -64,8 +64,8 @@ export default function Grid(props) {
                     d => (
                         <Card
                             fecha={admin !== true ? fechha(d.fecha) : firstValue}
-                            contenido={d.evento || d.trabajo_realizado || d.destino || values(d)}
-                            status={d.status || "aprobado"}
+                            contenido={d.nombre || d.trabajo_realizado || d.destino || values(d)}
+                            status={d.aprobado || "aprobado"}
                             tipo={tipo}
                             key={d.id}
                             id={d.id}
@@ -75,17 +75,6 @@ export default function Grid(props) {
                 )
                 :
                 <p className="empty">No existen solicitudes de esta categoria aun.</p>
-            }
-            {
-                data && data.length !== 0 && (
-                    <>
-                        <Card key={1} />
-                        <Card key={2} />
-                        <Card key={3} />
-                        <Card key={4} />
-                    </>
-
-                ) 
             }
 
         </div>

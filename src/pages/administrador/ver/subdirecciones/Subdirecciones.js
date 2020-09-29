@@ -4,7 +4,6 @@ import { useQuery } from "@apollo/client";
 import { OBTENER_SUBDIRECCIONES } from "../../../../gql/subdireccion";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import SolicitudGrid from "../../../../components/reutilizables/SolicitudGrid/SolicitudGrid";
-import { getSubdirecciones } from "../../../../servicios/subdireccion";
 import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
 
@@ -45,6 +44,7 @@ export default function Espacios() {
         return () => {
             setContent("");
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[subdirecciones]);
 
     return (

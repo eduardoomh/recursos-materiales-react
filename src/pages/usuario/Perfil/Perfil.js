@@ -11,7 +11,7 @@ export default function Perfil(){
     const { identity } = useIdentity();
     return(
         <div className="perfil">
-            <Banner titulo={`${identity.name} ${identity.surname}`} />
+            <Banner titulo={`${identity.nombre} ${identity.apellidos}`} />
             <Titulo titulo="Todos sus datos personales" />
             <PerfilContainer />
         </div>

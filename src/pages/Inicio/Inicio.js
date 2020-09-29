@@ -53,11 +53,8 @@ export default function Inicio() {
     return (
         <>
             <Banner />
-            <Container loading={loading} setLoading={setLoading} />
+            <Container/>
 
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
 
         </>
 

@@ -2,44 +2,51 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useMutation } from "@apollo/client";
+import { CREAR_PUESTO } from "../../../../gql/puesto";
 import { toast } from "react-toastify";
 import { Form, Button, Loader } from "semantic-ui-react";
-import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { newCargo } from "../../../../servicios/cargo";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
+import ModalMensaje from "../../../reutilizables/ModalMensaje/ModalMensaje";
 import "./FormCargo.scss";
 
 export default function FormCargo() {
     const [loading, setLoading] = useState(false);
+    const [abrir, setAbrir] = useState(false);
+    const [crearPuesto] = useMutation(CREAR_PUESTO);
     const history = useHistory();
+
+    const abrirModal = () => {
+        setAbrir(true);
+
+    }
+
+    const cerrarModal = () => {
+        setAbrir(false);
+        history.push("/admin/cargos");
+    }
 
     const formik = useFormik({
         initialValues: emptyValues(),
         validationSchema: validation(),
-        onSubmit: async (data) => {
+        onSubmit: async (formData) => {
             try {
                 setLoading(true);
-                const response = await newCargo(data);
+                const puesto = formData;
 
-                if (response.status === "success") {
-                    scrollTop();
-                    setLoading(false);
-                    toast.success("Dato creado con exito");
-                    history.push(`/admin/cargos/${response.elemento_creado.id}`);
-
-                } else {
-                    scrollTop();
-                    toast.error("Lo sentimos, los datos introducidos han sido incorrectos");
-                    setLoading(false);
-
-                }
+                await crearPuesto({
+                    variables: {
+                        input: puesto
+                    }
+                });
+                setLoading(false);
+                abrirModal();
 
             }
             catch (err) {
                 setLoading(false);
-                toast.error("Los datos no han podido ser guardados, intentelo mas tarde");
-                console.log(err);
+                toast.error(err.message);
             }
         }
     })
@@ -49,15 +56,15 @@ export default function FormCargo() {
             <div className="formulario-admin">
                 <Form onSubmit={formik.handleSubmit}>
                     <Form.Input
-                        label="Nombre del cargo"
-                        name="cargo"
+                        label="Nombre del puesto"
+                        name="nombre"
                         icon='clipboard outline'
-                        value={formik.values.cargo}
+                        value={formik.values.nombre}
                         onChange={formik.handleChange}
-                        error={formik.errors.cargo}
+                        error={formik.errors.nombre}
                     />
 
-                    <Button type="submit">Crear Cargo</Button>
+                    <Button type="submit">Crear Puesto</Button>
                 </Form>
                 <MessageForm />
 
@@ -65,18 +72,26 @@ export default function FormCargo() {
             <ModalBasic show={loading}>
                 <Loader active={loading} size="big">Cargando Pagina...</Loader>
             </ModalBasic>
+            <ModalMensaje
+                centered={true}
+                open={abrir}
+                onClose={cerrarModal}
+                titulo="Peticion Exitosa"
+                texto="El Puesto se ha creado con éxito."
+                boton="Salir"
+            />
         </>
     )
 }
 
 function emptyValues() {
     return {
-        cargo: ""
+        nombre: ""
     }
 }
 
 function validation() {
     return Yup.object({
-        cargo: Yup.string().required("Este campo es obligatorio")
+        nombre: Yup.string().required("Este campo es obligatorio")
     })
 }

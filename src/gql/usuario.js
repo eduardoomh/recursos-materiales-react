@@ -16,9 +16,20 @@ export const LOGIN = gql`
     }
 `;
 
+export const OBTENER_USUARIOS = gql`
+    query obtenerUsuarios($input: PaginateInput!){
+        obtenerUsuarios(input: $input){
+            id
+            nombre
+            apellidos
+        }
+  
+    }
+`;
+
 export const OBTENER_USUARIO = gql`
-    query getUser($id: ID, $username: String){
-        getUser(id: $id, username: $username){
+    query obtenerUsuario($id: ID, $username: String){
+        obtenerUsuario(id: $id, username: $username){
             id
             name
             username

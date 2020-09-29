@@ -1,45 +1,54 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
+import { useMutation } from "@apollo/client";
+import { CREAR_SUBDIRECCION } from "../../../../gql/subdireccion";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { Form, Button, Loader } from "semantic-ui-react";
-import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { newSubdireccion } from "../../../../servicios/subdireccion";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
+import ModalMensaje from "../../../reutilizables/ModalMensaje/ModalMensaje";
 import "./FormSubdireccion.scss";
 
 export default function FormSubdireccion() {
     const [loading, setLoading] = useState(false);
+    const [abrir, setAbrir] = useState(false);
+    const [crearSubdireccion] = useMutation(CREAR_SUBDIRECCION);
     const history = useHistory();
+
+    const abrirModal = () => {
+        setAbrir(true);
+
+    }
+
+    const cerrarModal = () => {
+        setAbrir(false);
+        history.push("/admin/subdirecciones");
+    }
 
     const formik = useFormik({
         initialValues: emptyValues(),
         validationSchema: validation(),
-        onSubmit: async (data) => {
+        onSubmit: async (formData) => {
             try {
                 setLoading(true);
-                const response = await newSubdireccion(data);
+                const subdireccion = formData;
 
-                if (response.status === "success") {
-                    scrollTop();
-                    setLoading(false);
-                    toast.success("Dato creado con exito");
-                    history.push(`/admin/subdirecciones/${response.elemento_creado.id}`);
+                await crearSubdireccion({
+                    variables: {
+                        input: subdireccion
+                    }
+                });
+                setLoading(false);
+                abrirModal();
+                toast.success("Subdireccion creada con exito");
 
-                } else {
-                    scrollTop();
-                    toast.error("Lo sentimos, los datos introducidos han sido incorrectos");
-                    setLoading(false);
-
-                }
 
             }
             catch (err) {
                 setLoading(false);
-                toast.error("Los datos no han podido ser guardados, intentelo mas tarde");
-                console.log(err);
+                toast.error(err.message);
             }
         }
     })
@@ -52,13 +61,22 @@ export default function FormSubdireccion() {
                 <Form onSubmit={formik.handleSubmit}>
                     <Form.Input
                         label="Nombre de la subdireccion"
-                        name="subdireccion"
+                        name="nombre"
                         icon='clipboard outline'
-                        value={formik.values.subdireccion}
+                        value={formik.values.nombre}
                         onChange={formik.handleChange}
-                        error={formik.errors.subdireccion}
+                        error={formik.errors.nombre}
                     />
- 
+
+                    <Form.Input
+                        label="Nombre del jefe"
+                        name="jefe"
+                        icon='clipboard outline'
+                        value={formik.values.jefe}
+                        onChange={formik.handleChange}
+                        error={formik.errors.jefe}
+                    />
+
                     <Button type="submit">Crear Subdireccion</Button>
                 </Form>
                 <MessageForm />
@@ -67,18 +85,28 @@ export default function FormSubdireccion() {
             <ModalBasic show={loading}>
                 <Loader active={loading} size="big">Cargando Pagina...</Loader>
             </ModalBasic>
+            <ModalMensaje
+                centered={true}
+                open={abrir}
+                onClose={cerrarModal}
+                titulo="Peticion Exitosa"
+                texto="La subdirección se ha creado con éxito."
+                boton="Salir"
+            />
         </>
     )
 }
 
 function emptyValues() {
     return {
-        subdireccion: "",
+        nombre: "",
+        jefe: ""
     }
 }
 
 function validation() {
     return Yup.object({
-        subdireccion: Yup.string().required("Este campo es obligatorio")
+        nombre: Yup.string().required("Este campo es obligatorio"),
+        jefe: Yup.string().required("Este campo es obligatorio")
     })
 }

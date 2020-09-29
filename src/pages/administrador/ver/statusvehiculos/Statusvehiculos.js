@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useQuery } from "@apollo/client";
+import { OBTENER_ACOMODOSILLAS } from "../../../../gql/acomodosilla";
 import { Loader } from "semantic-ui-react";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import SolicitudGrid from "../../../../components/reutilizables/SolicitudGrid/SolicitudGrid";
-import { getStatusvehiculos } from "../../../../servicios/statusvehiculo";
 import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
 
@@ -10,16 +11,24 @@ export default function Espacios() {
     const [content, setContent ] = useState("");
     const [ loading, setLoading ] = useState(true);
 
+    const {data: acomodosillas} = useQuery(OBTENER_ACOMODOSILLAS, {
+        variables: {
+            input: {
+                cantidad: 15,
+                pagina: 1
+            }
+        }
+    })
+
     const fetchData = async () => {
         try{
-            const statusvehiculos = await getStatusvehiculos();
 
             setContent(() => {
-                if(statusvehiculos.status === "success") return statusvehiculos.elementos
+                if(acomodosillas) return acomodosillas.obtenerAcomodosillas
             });
 
             setLoading(() => {
-                if(statusvehiculos.status === "success") return false
+                if(acomodosillas) return false
             });
 
         }
@@ -35,7 +44,8 @@ export default function Espacios() {
         return () => {
             setContent("");
         }
-    },[]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[acomodosillas]);
 
     return (
         <>

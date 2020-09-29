@@ -2,7 +2,7 @@
 
 //etilos para el componente banner
 .banner-titulo{
-    background-image: $gradient-fondo;
+    background-color: #fff0c3;
     @include flexbox();
     @include min-h(10rem);
     font-size: 1.1em;
