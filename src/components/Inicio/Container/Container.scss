@@ -10,11 +10,12 @@
     grid-template-rows: 3em 1fr;
 
 
-    div{
+    .box{
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 1fr 1fr 1fr;
-        margin: 2em 0 0 0;
+        grid-template-rows: repeat(5, 15rem);
+        grid-gap: 2em;
+        padding-top: 2em;
 
 
     }

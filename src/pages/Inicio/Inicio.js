@@ -54,8 +54,6 @@ export default function Inicio() {
         <>
             <Banner />
             <Container/>
-
-
         </>
 
     )

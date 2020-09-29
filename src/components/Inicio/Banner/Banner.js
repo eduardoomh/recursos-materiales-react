@@ -1,30 +1,29 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Icon, Button } from "semantic-ui-react";
+import { Button, Image, Divider } from "semantic-ui-react";
+import calendar from "../../../assets/img/pngwave.png";
 import "./Banner.scss";
-import Card from "../../reutilizables/Card/Card";
 
-export default function Banner(){
+export default function Banner() {
     const history = useHistory();
-    const gotoCalendar = () => {
-        
-        history.push("/calendario");
+
+    const gotoPage = (ruta) => {
+        history.push(ruta);
     }
 
-    return(
+    return (
         <div className="banner">
-            <h1>Sistema de Gestión para el Departamento de Recursos Materiales y Servicios.</h1>
             <div className="banner-box">
-                <article className="banner-box-cards">
-                    <p className="text">Solicitudes pendientes para hoy:</p>
-                    <div className="cards">
-                        <Card />
-                    </div>
-                </article>
-                <div>
-                    <p>Busque mas solicitudes <Icon name="calendar" size="big" /></p>
-                    <Button onClick={() => gotoCalendar()}>Ver Calendario</Button>
-                </div>
+                <Image src={calendar} />
+            </div>
+            
+            <div className="banner-info">
+                <h1>Consulte todas las solicitudes para Eventos, Manteminientos, Transportes y salidas de vehiculos.</h1>
+                <p className="boton-box">
+                    <Button onClick={() => gotoPage("/calendario")}>Ver Calendario</Button>
+                    <Button onClick={() => gotoPage("/usuario/perfil")}>Ver perfil</Button>
+                </p>
+
             </div>
         </div>
     )

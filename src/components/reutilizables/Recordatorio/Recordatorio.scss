@@ -1,0 +1,49 @@
+@import "../../../scss//index.scss";
+
+.recordatorio{
+    display: grid;
+    grid-template-columns: 20rem 1fr 20rem;
+    grid-template-rows: 1fr;
+    @include min-h(15rem);
+    @include min-w(97%);
+
+    border: 1px solid #d0d0d0;
+    box-shadow: $box-shadow;
+    margin: 1em;
+
+    .box-image{
+        @include flexbox();
+
+            img{
+                width: 12em;
+                padding: 1em;
+            }
+    }
+
+
+    .contenido{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: .5fr 1fr;
+
+        h4{
+            @include flexbox();
+            font-size: 1.3em;
+        }
+
+        p{
+            @include flexbox();
+            @include min-h(100%);
+            align-items: flex-start;
+            font-size: 1.3em;
+            color: $guindo;
+        }
+
+    }
+
+    div{
+        @include flexbox();
+        flex-direction: column;
+        grid-gap: 1.5em;
+    }
+}
