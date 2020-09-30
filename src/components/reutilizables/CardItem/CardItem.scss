@@ -1,0 +1,73 @@
+@import "../../../scss/index.scss";
+
+//Estilos del card de solicitudes
+
+.cardItem{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 12rem 3rem 3rem;
+    box-shadow: $box-shadow;
+    @include min-w(16rem);
+    @include min-h(18rem);
+    margin: 0;
+    padding: 0;
+    border-radius: 4px;
+    border: 1px solid #CEC9C9;
+    background-color: #FAFAFA;
+
+    .fecha{
+        grid-column: 1/2;
+        grid-row: 2/3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        @include min-h(3rem);
+        color: $guindo;
+        font-size: 1em !important;
+        border-radius: 4px 4px 0 0;
+        border-bottom: 1px solid $borde-gris-claro;
+        background-color: #eadbdb2e !important;
+
+    }
+
+    .contenido{
+        grid-column: 1/2;
+        grid-row: 1/2;
+        @include flexbox();
+        @include min-h(12rem);
+        font-size: 1.2em !important;
+        font-weight: semibold;
+        padding: .5rem;
+        text-align: center;
+        color: black !important;
+        border-bottom: 1px solid $borde-gris-claro;
+    }
+
+    .status{
+        grid-column: 1/2;
+        grid-row: 3/4;
+        @include flexbox();
+        @include min-h(3rem);
+        padding-right: .5rem;
+        padding-bottom: .5rem;
+        background-color: #eadbdb2e;
+        color: gray;
+
+        i{
+            @include flexbox();
+            margin-left: 1em;
+            margin-top: .3em;
+
+        }
+
+        span{
+            justify-content: flex-start;
+        }
+    }
+
+    &:hover{
+        transition: transform .3s;
+        cursor: pointer;
+        transform: translateY(10px);
+    }
+}

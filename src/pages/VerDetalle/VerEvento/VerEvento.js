@@ -2,67 +2,50 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import "./VerEvento.scss";
-import { transformarFecha } from "../../../utils/reutilizables/fecha"
+import { useQuery } from "@apollo/client";
+import { OBTENER_EVENTO } from "../../../gql/evento";
 import Banner from "../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../components/reutilizables/Titulo/Titulo";
-import CardCarrousel from "../../../components/reutilizables/CardCarrousel/CardCarrousel";
 import InformacionEvento from "../../../components/VerSolicitudes/VerEvento/InformacionEvento";
-import { scrollTop } from "../../../utils/reutilizables/scroll";
-import { getEvento } from "../../../servicios/evento";
-import { getStorage, saveStorage } from "../../../servicios/reutilizables/localStorage";
-import ModalBasic from "../../../components/reutilizables/ModalBasic/ModalBasic";
 
-export default function VerEvento(){
-    const [content, setContent] = useState("cargando ....");
+export default function VerEvento() {
     const [loading, setLoading] = useState(false);
     const { id } = useParams();
 
-    const eventos = getStorage("eventos");
 
-
-    useEffect( () => {
-        const fetchData = async () => {
-            try{
-                setLoading(true);
-                const evento = await getEvento(id);
-                saveStorage("solicitud", evento.elemento);
-                evento.elemento.fecha = transformarFecha(evento.elemento.fecha);
-                
-                
-                setContent( () => {
-                    if(evento.status === "success"){
-                        return evento.elemento
-                    }
-                });
-                setLoading(false);
-                
-    
-            }
-            catch(err){
-                console.log(err);
-            }
+    const { data: evento, loading: loadingEvento, refetch } = useQuery(OBTENER_EVENTO, {
+        variables: {
+            id: id
         }
-        
-        scrollTop();
-        fetchData();
+    })
+
+
+    useEffect(() => {
+
+        if (evento) {
+            refetch();
+        }
+
 
         return () => {
-            setContent("");
+
         }
-    },[id]);
+    }, [id]);
 
 
 
-    return(
+    return (
         <div className="ver-evento">
-            <Banner titulo={content.evento || "cargando"} />
-            <Titulo titulo={ content.fecha || "cargando"} />
-            <InformacionEvento data={content || "cargando"} loading={loading} />
-            <CardCarrousel titulo="Eventos" data={eventos} />
-
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
+            {
+                evento && !loadingEvento ? (
+                    <>
+                        <Banner titulo={evento.obtenerEvento.nombre} />
+                        <Titulo titulo={evento.obtenerEvento.fecha} />
+                        <InformacionEvento data={evento.obtenerEvento} loading={loading} />
+                    </>
+                )
+                : <Loader active inline='centered' size='massive' />
+            }
 
         </div>
     )

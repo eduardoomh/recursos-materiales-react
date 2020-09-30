@@ -32,7 +32,7 @@
         background-color: $gris;
         margin-top: 3rem;
         margin-bottom: 3rem;
-        @include min-h(64rem);
+        @include min-h(100rem);
 
         @include minicaja();
     }

@@ -2,62 +2,44 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import "./VerSalida.scss";
-import { transformarFecha } from "../../../utils/reutilizables/fecha";
+import { useQuery } from "@apollo/client";
+import { OBTENER_SALIDA } from "../../../gql/salida";
 import Banner from "../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../components/reutilizables/Titulo/Titulo";
-import CardCarrousel from "../../../components/reutilizables/CardCarrousel/CardCarrousel";
 import InformacionSalida from "../../../components/VerSolicitudes/VerSalida/InformacionSalida";
-import { scrollTop } from "../../../utils/reutilizables/scroll";
-import { getSalida } from "../../../servicios/salida";
-import { getStorage } from "../../../servicios/reutilizables/localStorage";
-import ModalBasic from "../../../components/reutilizables/ModalBasic/ModalBasic";
 
 export default function VerSalida(){
-
-    const [content, setContent] = useState("cargando ....");
     const [loading, setLoading] = useState(false);
     const { id } = useParams();
 
-    const salidas = getStorage("salidas");
+    const { data: salida, loading: loadingSalida, refetch } = useQuery(OBTENER_SALIDA, {
+        variables: {
+            id: id
+        }
+    })
 
-    useEffect( () => {
-        const fetchData = async () => {
-            try{
-                setLoading(true);
-                const salida = await getSalida(id);
-                salida.elemento.fecha = transformarFecha(salida.elemento.fecha);
-                
-                setContent( () => {
-                    if(salida.status === "success"){
-                        return salida.elemento
-                    }
-                });
-                setLoading(false);
-                
-            }
-            catch(err){
-                console.log(err);
-            }
+    useEffect(() => {
+        if (salida) {
+            refetch();
         }
-        
-        scrollTop();
-        fetchData();
- 
+
         return () => {
-            setContent("");
+
         }
-    },[id]);
+    }, [id]);
 
     return(
         <div className="ver-salida">
-            <Banner titulo={content.destino || "cargando"} />
-            <Titulo titulo={content.fecha || "cargando"} />
-            <InformacionSalida data={content || "cargando..."} loading={loading} />
-            <CardCarrousel titulo="Salidas" data={salidas} />
-
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
+            {
+                salida && !loadingSalida ? (
+                    <>
+                        <Banner titulo={salida.obtenerSalida.destino} />
+                        <Titulo titulo={salida.obtenerSalida.fecha} />
+                        <InformacionSalida data={salida.obtenerSalida} loading={loading} />
+                    </>
+                )
+                : <Loader active inline='centered' size='massive' />
+            }
         </div>
     )
 }

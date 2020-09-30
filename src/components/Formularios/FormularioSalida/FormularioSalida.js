@@ -1,157 +1,159 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
-import { useFormik } from "formik";
+import { Formik } from "formik";
+import { useMutation } from "@apollo/client";
+import { CREAR_SALIDA } from "../../../gql/salida";
 import { toast } from "react-toastify";
-import { scrollTop } from "../../../utils/reutilizables/scroll";
 import useIdentity from "../../../utils/hooks/useIdentity";
 import { Form, Button, Loader } from "semantic-ui-react";
-import { getStorage, saveStorage } from "../../../servicios/reutilizables/localStorage";
-import { newSalida, getSalidas } from "../../../servicios/salida";
 import MessageForm from "../../../components/reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../reutilizables/ModalBasic/ModalBasic";
+import SelectFormik from "../../../components/reutilizables/SelectFormik/SelectFormik";
+import ModalMensaje from "../../../components/reutilizables/ModalMensaje/ModalMensaje";
 import "./FormularioSalida.scss";
 
-export default function FormularioSalida() {
+export default function FormularioSalida(props) {
+    const { departamentos, vehiculos } = props;
     const [loading, setLoading] = useState(false);
     const { identity } = useIdentity();
+    const [abrir, setAbrir] = useState(false);
+    const [crearSalida] = useMutation(CREAR_SALIDA);
     const history = useHistory();
 
-    let departamentos = getStorage("departamentos");
-    let vehiculos = getStorage("vehiculos");
+    const abrirModal = () => {
+        setAbrir(true);
+    }
+
+    const cerrarModal = () => {
+        setAbrir(false);
+        history.push("/salidas");
+    }
 
 
-    const formik = useFormik({
-        initialValues: emptyValues(identity),
-        validationSchema: validation(),
-        onSubmit: async (data) => {
-            try {
-                setLoading(true);
-                const response = await newSalida(data);
-
-                if (response.status === "success") {
-                    const salidas = await getSalidas();
-                    if (salidas.status === "success") {
-                        saveStorage("salidas", salidas.elementos.data);
-                    }
-                    scrollTop();
-                    setLoading(false);
-                    toast.success("Solicitud creada con exito");
-                    history.push(`/salidas/${response.elemento_creado.id}`);
-
-                } else {
-                    scrollTop();
-                    toast.error("Lo sentimos, los datos introducidos han sido incorrectos");
-                    setLoading(false);
-
-                }
-
-            }
-            catch (err) {
-                setLoading(false);
-                toast.error("La solicitud no ha podido ser creada, intentelo mas tarde");
-                console.log(err);
-            }
-        }
+    const departamentosOptions = departamentos.map(d => {
+        return { key: d.id, text: d.nombre, value: d.id }
     })
+
+    const vehiculosOptions = vehiculos.map(d => {
+        return { key: d.id, text: d.nombre, value: d.id }
+    })
+
 
     return (
         <>
-            <div className="formulario-salida">
-                <Form onSubmit={formik.handleSubmit}>
-                    <Form.Input
-                        label="Destino escogido"
-                        icon="university"
-                        name="destino"
-                        value={formik.values.destino}
-                        onChange={formik.handleChange}
-                        error={formik.errors.destino}
-                    />
-                    <Form.TextArea
-                        label="Descripcion de las actividades"
-                        name="descripcion"
-                        value={formik.values.descripcion}
-                        onChange={formik.handleChange}
-                        error={formik.errors.descripcion}
-                    />
+            <Formik
+                initialValues={emptyValues(identity)}
+                validationSchema={validation()}
+                onSubmit={async (values, options) => {
+                    try {
+                        setLoading(true);
+                        const salida = values;
 
-                    <div className="field">
-                        <label htmlFor="vehiculo_id">Vehiculo escogido</label>
-                        <select
-                            className="ui selection"
-                            id="vehiculo_id"
-                            name="vehiculo_id"
-                            value={formik.values.vehiculo_id}
-                            onChange={formik.handleChange}
-                            error={formik.errors.vehiculo_id}
-                        >
-                            {
-                                vehiculos.map(v => <option key={v.id} value={v.id}>{v.vehiculo}</option>)
+                        await crearSalida({
+                            variables: {
+                                input: salida
                             }
-                        </select>
+                        });
+                        setLoading(false);
+                        abrirModal();
+
+                    }
+                    catch (err) {
+                        setLoading(false);
+                        toast.error(err.message);
+                    }
+                }}
+            >
+                {({ values, handleChange, errors, handleSubmit }) => (
+                    <div className="formulario-admin">
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Input
+                                label="Destino del viaje"
+                                name="destino"
+                                icon='clipboard outline'
+                                value={values.destino}
+                                onChange={handleChange}
+                                error={errors.destino}
+                            />
+                            <Form.TextArea
+                                label="Actividades a realizar"
+                                name="actividades"
+                                icon='clipboard outline'
+                                value={values.actividades}
+                                onChange={handleChange}
+                                error={errors.actividades}
+                            />
+
+                            <SelectFormik
+                                name="departamento"
+                                options={departamentosOptions}
+                                label="Pedido por el departamento"
+                            />
+
+                            <SelectFormik
+                                name="vehiculo"
+                                options={vehiculosOptions}
+                                label="Vehiculo escogido"
+                            />
+
+                            <Form.Input
+                                type="date"
+                                label="Fecha de la salida"
+                                name="fecha"
+                                icon='clipboard outline'
+                                value={values.fecha}
+                                onChange={handleChange}
+                                error={errors.fecha}
+                            />
+
+                            <Form.Input
+                                type="time"
+                                label="Hora de salida"
+                                name="hora_salida"
+                                icon='clipboard outline'
+                                value={values.hora_salida}
+                                onChange={handleChange}
+                                error={errors.hora_salida}
+                            />
+
+                            <Form.Input
+                                type="time"
+                                label="Hora de llegada"
+                                name="hora_llegada"
+                                icon='clipboard outline'
+                                value={values.hora_llegada}
+                                onChange={handleChange}
+                                error={errors.hora_llegada}
+                            />
+
+                            <Form.Input
+                                label="Chofer del viaje"
+                                name="chofer"
+                                icon='clipboard outline'
+                                value={values.chofer}
+                                onChange={handleChange}
+                                error={errors.chofer}
+                            />
+
+                            <Button type="submit">Crear Salida</Button>
+                        </Form>
+                        <MessageForm />
+
                     </div>
-                    <Form.Input
-                        label="Nombre del chofer"
-                        icon='user circle'
-                        name="chofer"
-                        value={formik.values.chofer}
-                        onChange={formik.handleChange}
-                        error={formik.errors.chofer}
-                    />
-
-                    <div className="field">
-                        <label htmlFor="depto_solicitante">Departamento Solicitante</label>
-                        <select
-                            className="ui selection"
-                            id="depto_solicitante"
-                            name="depto_solicitante"
-                            value={formik.values.depto_solicitante}
-                            onChange={formik.handleChange}
-                            error={formik.errors.depto_solicitante}
-                        >
-                            {
-                                departamentos.map(d => <option key={d.id} value={d.id}>{d.departamento}</option>)
-                            }
-                        </select>
-                    </div>
-
-                    <Form.Input
-                        label="Fecha de realizacion"
-                        type="date"
-                        icon='calendar plus outline'
-                        name="fecha"
-                        value={formik.values.fecha}
-                        onChange={formik.handleChange}
-                        error={formik.errors.fecha}
-                    />
-
-                    <Form.Input
-                        label="Hora de salida"
-                        type="time"
-                        icon="clock outline"
-                        name="hora_salida"
-                        value={formik.values.hora_salida}
-                        onChange={formik.handleChange}
-                        error={formik.errors.hora_salida}
-                    />
-
-                    <Form.Input
-                        label="Hora de llegada"
-                        type="time"
-                        icon="clock"
-                        name="hora_llegada"
-                        value={formik.values.hora_llegada}
-                        onChange={formik.handleChange}
-                        error={formik.errors.hora_llegada}
-                    />
-                    <Button type="submit">Crear Salida</Button>
-                </Form>
-                <MessageForm />
-
-            </div>
+                )}
+            </Formik>
             <ModalBasic show={loading}>
                 <Loader active={loading} size="big">Cargando Pagina...</Loader>
             </ModalBasic>
+            <ModalMensaje
+                centered={true}
+                open={abrir}
+                onClose={cerrarModal}
+                titulo="Peticion Exitosa"
+                texto="La Salida se ha creado con éxito."
+                boton="Salir"
+            />
         </>
     )
 }
@@ -159,13 +161,13 @@ function emptyValues(props) {
     const { id } = props;
     return {
         destino: "",
-        depto_solicitante: "",
-        vehiculo_id: "",
-        usuario_id: id,
+        actividades: "",
+        departamento: "",
+        usuario: id,
         fecha: "",
         hora_salida: "",
         hora_llegada: "",
-        descripcion: "",
+        vehiculo: "",
         chofer: "",
     }
 }
@@ -174,13 +176,13 @@ function emptyValues(props) {
 function validation() {
     return Yup.object({
         destino: Yup.string().required("Este campo es obligatorio"),
-        depto_solicitante: Yup.number().required("Este campo es obligatorio"),
-        vehiculo_id: Yup.number().required("Este campo es obligatorio"),
-        usuario_id: Yup.number().required("Este campo es obligatorio"),
+        actividades: Yup.string().required("Este campo es obligatorio"),
+        departamento: Yup.string().required("Este campo es obligatorio"),
+        usuario: Yup.string().required("Este campo es obligatorio"),
         fecha: Yup.string().required("Este campo es obligatorio"),
         hora_salida: Yup.string().required("Este campo es obligatorio"),
         hora_llegada: Yup.string().required("Este campo es obligatorio"),
-        descripcion: Yup.string().required("Este campo es obligatorio"),
-        chofer: Yup.string().required("Este campo es obligatorio"),
+        vehiculo: Yup.string().required("Este campo es obligatorio"),
+        chofer: Yup.string().required("Este campo es obligatorio")
     })
 }

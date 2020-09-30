@@ -22,7 +22,7 @@ export default function InformacionMantenimiento(props) {
                         <>
                             <BoxFormData
                                 titulo="Tipo de Mantenimiento"
-                                data={data.tipo}
+                                data={data.mantenimiento}
                             />
                             <BoxFormData
                                 titulo="Asignado a personal"
@@ -30,15 +30,11 @@ export default function InformacionMantenimiento(props) {
                             />
                             <BoxFormData
                                 titulo="Pedido por el departamento"
-                                data={data.departamento.departamento}
+                                data={data.departamento.nombre}
                             />
                             <BoxFormData
                                 titulo="Tipo de Servicio"
-                                data={data.servicio.status}
-                            />
-                            <BoxFormData
-                                titulo="Equipo de proteccion personal"
-                                data={data.equipo_proteccion}
+                                data={data.servicio.nombre}
                             />
                             <BoxFormData
                                 titulo="Horario"
@@ -46,17 +42,31 @@ export default function InformacionMantenimiento(props) {
                             />
                             <BoxFormData
                                 titulo="Solicitud creada por"
-                                data={`${data.user.name} ${data.user.surname}`}
+                                data={`${data.usuario.nombre} ${data.usuario.apellidos}`}
+                            />
+                            <BoxFormData
+                                titulo="Verificacion"
+                                data={data.verificado === false ? "sin verificar" : "verificada"}
+                            />
+
+                            <article>
+                                <p>Estado de Aprobacion</p>
+                                <p>
+                                    {data.aprobado === false ? "Esperando aprobacion" : "aprobada"}
+                                    {data.aprobado === true ? <Icon name="check" /> : <Icon name={data.verificado === false ? "exclamation triangle" : "key"} className="pendiente" />}
+                                </p>
+                            </article>
+
+                            <BoxFormData
+                                titulo="Ultima actualizacion"
+                                data={data.updatedAt}
                             />
 
 
-                            <article>
-                                <p>Estado</p>
-                                <p>
-                                    {data.status || cargando} 
-                                    { data.status === "aprobado" ? <Icon name="check"/> : <Icon name={ data.status === "pendiente" ? "exclamation triangle" : "key"} className="pendiente" />}
-                                </p>
-                            </article>
+                            <BoxFormData
+                                titulo="Fecha de creacion"
+                                data={data.createdAt}
+                            />
 
                             <BoxFormData
                                 titulo=""

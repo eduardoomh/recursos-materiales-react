@@ -49,9 +49,11 @@
                 align-items: flex-start;
 
                 button{
-                    @include min-w(15em);
-                    @include min-h(3em);
                     @include boton();
+                    @include min-w(10em);
+                    @include min-h(2.5em);
+                    font-size: 1.2em;
+                    
                     margin-right: 2rem;
                 }   
             }

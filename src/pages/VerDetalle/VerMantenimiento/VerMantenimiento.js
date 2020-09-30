@@ -2,63 +2,47 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import "./VerMantenimiento.scss";
-import { transformarFecha } from "../../../utils/reutilizables/fecha";
+import { useQuery } from "@apollo/client";
+import { OBTENER_MANTENIMIENTO } from "../../../gql/mantenimiento";
 import Banner from "../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../components/reutilizables/Titulo/Titulo";
-import CardCarrousel from "../../../components/reutilizables/CardCarrousel/CardCarrousel";
 import InformacionMantenimiento from "../../../components/VerSolicitudes/VerMantenimiento/InformacionMantenimiento";
-import { scrollTop } from "../../../utils/reutilizables/scroll";
-import { getMantenimiento } from "../../../servicios/mantenimiento";
-import { getStorage } from "../../../servicios/reutilizables/localStorage";
-import ModalBasic from "../../../components/reutilizables/ModalBasic/ModalBasic";
-
 
 export default function VerMantenimiento(){
-    const [content, setContent] = useState("cargando ....");
     const [loading, setLoading] = useState(false);
     const { id } = useParams();
 
-    const mantenimientos = getStorage("mantenimientos");
-
-    useEffect( () => {
-        const fetchData = async () => {
-            try{
-                setLoading(true);
-                const mantenimiento = await getMantenimiento(id);
-                mantenimiento.elemento.fecha = transformarFecha(mantenimiento.elemento.fecha);
-                
-                setContent( () => {
-                    if(mantenimiento.status === "success"){
-                        return mantenimiento.elemento
-                    }
-                });
-                setLoading(false);
-                
-            }
-            catch(err){
-                console.log(err);
-            }
+    const { data: mantenimiento, loading: loadingMantenimiento, refetch } = useQuery(OBTENER_MANTENIMIENTO, {
+        variables: {
+            id: id
         }
-        
-        scrollTop();
-        fetchData();
+    })
+
+    useEffect(() => {
+
+        if (mantenimiento) {
+            refetch();
+        }
+
 
         return () => {
-            setContent("");
+
         }
-    },[id]);
+    }, [id]);
 
 
     return(
         <div className="ver-mantenimiento">
-                <Banner titulo={content.trabajo_realizado || "cargando"}  />
-                <Titulo titulo={content.fecha || "cargando"} />    
-                <InformacionMantenimiento data={content || "cargando..."} loading={loading} />
-            <CardCarrousel titulo="Mantenimientos" data={mantenimientos}  />
-
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
+            {
+                mantenimiento && !loadingMantenimiento ? (
+                    <>
+                        <Banner titulo={mantenimiento.obtenerMantenimiento.nombre} />
+                        <Titulo titulo={mantenimiento.obtenerMantenimiento.fecha} />
+                        <InformacionMantenimiento data={mantenimiento.obtenerMantenimiento} loading={loading} />
+                    </>
+                )
+                : <Loader active inline='centered' size='massive' />
+            }
         </div>
     )
 }

@@ -1,0 +1,10 @@
+@import "../../../scss/index.scss";
+
+.list-box{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    @include min-w(100vw);
+    @include min-h(100%);
+    padding: 2em;
+}

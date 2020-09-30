@@ -29,12 +29,12 @@ export default function InformacionEvento(props) {
 
                             <BoxFormData
                                 titulo="Pedido por el departamento"
-                                data={data.departamento.departamento}
+                                data={data.departamento.nombre}
                             />
 
                             <BoxFormData
                                 titulo="Lugar del evento"
-                                data={data.espacio.espacio}
+                                data={data.sitio.nombre}
                             />
 
                             <BoxFormData
@@ -44,16 +44,33 @@ export default function InformacionEvento(props) {
 
                             <BoxFormData
                                 titulo="Solicitud creada por"
-                                data={`${data.user.name} ${data.user.surname}`}
+                                data={`${data.usuario.nombre} ${data.usuario.apellidos}`}
+                            />
+
+                            <BoxFormData
+                                titulo="Verificacion"
+                                data={data.verificado === false ? "sin verificar" : "verificada"}
                             />
 
                             <article>
-                                <p>Estado</p>
+                                <p>Estado de Aprobacion</p>
                                 <p>
-                                    {data.status || cargando}
-                                    {data.status === "aprobado" ? <Icon name="check" /> : <Icon name={data.status === "pendiente" ? "exclamation triangle" : "key"} className="pendiente" />}
+                                    {data.aprobado === false ? "Esperando aprobacion" : "aprobada"}
+                                    {data.aprobado === true ? <Icon name="check" /> : <Icon name={data.verificado === false ? "exclamation triangle" : "key"} className="pendiente" />}
                                 </p>
                             </article>
+
+
+                            <BoxFormData
+                                titulo="Ultima actualizacion"
+                                data={data.updatedAt}
+                            />
+
+
+                            <BoxFormData
+                                titulo="Fecha de creacion"
+                                data={data.createdAt}
+                            />
 
                             <BoxFormData
                                 titulo=""

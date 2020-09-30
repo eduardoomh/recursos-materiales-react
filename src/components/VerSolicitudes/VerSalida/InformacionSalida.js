@@ -23,16 +23,16 @@ export default function InformacionSalida(props) {
 
                             <BoxFormData
                                 titulo="Actividades a realizar"
-                                data={data.descripcion || "No hay ectividades registradas aun."}
+                                data={data.actividades || "No hay ectividades registradas aun."}
                             />
                             <BoxFormData
                                 titulo="Pedido por el departamento"
-                                data={data.departamento.departamento}
+                                data={data.departamento.nombre}
                             />
 
                             <BoxFormData
                                 titulo="Vehiculo elegido"
-                                data={data.vehiculo.vehiculo}
+                                data={data.vehiculo.nombre}
                             />
 
                             <BoxFormData
@@ -46,17 +46,20 @@ export default function InformacionSalida(props) {
                             
                             <BoxFormData
                                 titulo="Solicitud creada por"
-                                data={`${data.user.name} ${data.user.surname}`}
+                                data={`${data.usuario.nombre} ${data.usuario.apellidos}`}
                             />
 
 
-                            <article>
-                                <p>Estado</p>
-                                <p>
-                                    {data.status || cargando}
-                                    {data.status === "aprobado" ? <Icon name="check" /> : <Icon name={data.status === "pendiente" ? "exclamation triangle" : "key"} className="pendiente" />}
-                                </p>
-                            </article>
+                            <BoxFormData
+                                titulo="Ultima actualizacion"
+                                data={data.updatedAt}
+                            />
+
+
+                            <BoxFormData
+                                titulo="Fecha de creacion"
+                                data={data.createdAt}
+                            />
 
                             <BoxFormData
                                 titulo=""

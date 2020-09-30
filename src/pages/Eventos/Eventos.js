@@ -5,6 +5,7 @@ import { useQuery } from "@apollo/client";
 import { OBTENER_EVENTOS } from "../../gql/evento";
 import Banner from "../../components/reutilizables/Banner/Banner";
 import SolicitudGrid from "../../components/reutilizables/SolicitudGrid/SolicitudGrid";
+import SolicitudList from "../../components/reutilizables/SolicitudList/SolicitudList";
 import ModalBasic from "../../components/reutilizables/ModalBasic/ModalBasic";
 import { scrollTop } from "../../utils/reutilizables/scroll";
 
@@ -21,54 +22,24 @@ export default function Eventos() {
         }
     })
 
-    const fetchData = async () => {
-        try {
-            setContent(() => {
-                if (eventos) return eventos.obtenerEventos
-            });
-
-            setLoading(() => {
-                if (eventos) return false
-            });
-
-        }
-        catch (err) {
-            console.log(err);
-        }
-    }
-
-    useEffect(() => {
-        scrollTop();
-        fetchData();
-
-        return () => {
-            setContent("");
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-
 
     return (
         <div className="eventos">
             <Banner titulo="Solicitudes de Eventos" />
+            
             {
-                !loadingEventos &&
+                !loadingEventos ?
 
-                <SolicitudGrid
-                    data={content}
-                    setData={setContent}
+                <SolicitudList
+                    data={eventos.obtenerEventos}
                     tipo="eventos"
                     loading={loading}
                     setLoading={setLoading}
-                    paginate={false}
                 />
+                : <Loader active inline='centered' size='massive' />
+
 
             }
-
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
 
         </div>
     )

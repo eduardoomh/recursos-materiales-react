@@ -1,4 +1,5 @@
 import React from "react";
+import { Loader } from "semantic-ui-react";
 import "./CrearEvento.scss";
 import { useQuery } from "@apollo/client";
 import { OBTENER_ACOMODOSILLAS } from "../../../gql/acomodosilla";
@@ -16,7 +17,7 @@ export default function CrearEvento(){
                 pagina: 1
             }
         }
-    });
+    }); 
 
     const { data: departamentos, loading: loadingDepartamentos} = useQuery(OBTENER_DEPARTAMENTOS, {
         variables: {
@@ -41,12 +42,14 @@ export default function CrearEvento(){
             <Banner titulo="Crear nuevo Evento" />
             <Titulo titulo="Rellene el formulario con los datos que se le indiquen." />
             {
-                !loadingAcomodosillas && !loadingDepartamentos && !loadingSitios && 
+                !loadingAcomodosillas && !loadingDepartamentos && !loadingSitios ?
                 <FormularioEvento 
                     acomodosillas={acomodosillas.obtenerAcomodosillas} 
                     departamentos={departamentos.obtenerDepartamentos}
                     sitios={sitios.obtenerSitios}
                 /> 
+                :
+                <Loader active inline='centered' size='massive' />
             }
             
         </div>

@@ -1,173 +1,175 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
-import { useFormik } from "formik";
+import { Formik } from "formik";
+import { useMutation } from "@apollo/client";
+import { CREAR_MANTENIMIENTO } from "../../../gql/mantenimiento";
 import useIdentity from "../../../utils/hooks/useIdentity";
 import { Form, Button, Loader } from "semantic-ui-react";
-import { scrollTop } from "../../../utils/reutilizables/scroll";
 import { toast } from "react-toastify";
-import { getStorage, saveStorage } from "../../../servicios/reutilizables/localStorage";
-import { newMantenimiento, getMantenimientos } from "../../../servicios/mantenimiento";
 import MessageForm from "../../../components/reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../reutilizables/ModalBasic/ModalBasic";
+import SelectFormik from "../../../components/reutilizables/SelectFormik/SelectFormik";
+import ModalMensaje from "../../../components/reutilizables/ModalMensaje/ModalMensaje";
 import "./FormularioMantenimiento.scss";
 
-export default function FormularioMantenimiento() {
+export default function FormularioMantenimiento(props) {
+    const { departamentos, tipoorders } = props;
     const [loading, setLoading] = useState(false);
     const { identity } = useIdentity();
+    const [abrir, setAbrir] = useState(false);
+    const [crearMantenimiento] = useMutation(CREAR_MANTENIMIENTO);
     const history = useHistory();
 
-    let departamentos = getStorage("departamentos");
-    let statusorders = getStorage("statusorders");
+    const abrirModal = () => {
+        setAbrir(true);
+    }
 
-    const formik = useFormik({
-        initialValues: emptyValues(identity),
-        validationSchema: validation(),
-        onSubmit: async (data) => {
-            try {
-                setLoading(true);
-                const response = await newMantenimiento(data);
+    const cerrarModal = () => {
+        setAbrir(false);
+        history.push("/mantenimientos");
+    }
 
-                if (response.status === "success") {
-                    const mantenimientos = await getMantenimientos();
-                    if (mantenimientos.status === "success") {
-                        saveStorage("mantenimientos", mantenimientos.elementos.data);
-                    }
-                    scrollTop();
-                    setLoading(false);
-                    toast.success("Solicitud creada con exito");
-                    history.push(`/mantenimientos/${response.elemento_creado.id}`);
-
-                } else {
-                    scrollTop();
-                    toast.error("Lo sentimos, los datos introducidos han sido incorrectos");
-                    setLoading(false);
-
-                }
-
-            }
-            catch (err) {
-                setLoading(false);
-                toast.error("La solicitud no ha podido ser creada, intentelo mas tarde");
-                console.log(err);
-            }
-        }
+    const departamentosOptions = departamentos.map(d => {
+        return { key: d.id, text: d.nombre, value: d.id }
     })
+
+    const tipoordersOptions = tipoorders.map(d => {
+        return { key: d.id, text: d.nombre, value: d.id }
+    })
+
+    const opciones = [
+        { key: "interno", text: "interno", value: "interno" },
+        { key: "externo", text: "externo", value: "externo" },
+    ]
+
 
     return (
         <>
-            <div className="formulario-mantenimiento">
-                <Form onSubmit={formik.handleSubmit}>
-                    <div className="field">
-                        <label htmlFor="servicio_id">Tipo de servicio</label>
-                        <select
-                            className="ui selection"
-                            id="servicio_id"
-                            name="servicio_id"
-                            placeholder="Selecciona una opcion"
-                            value={formik.values.servicio_id}
-                            onChange={formik.handleChange}
-                            error={formik.errors.servicio_id}
-                        >
-                            <option>Seleccione una opcion</option>
-                            {
-                                statusorders.map(s => <option key={s.id} value={s.id}>{s.status}</option>)
+            <Formik
+                initialValues={emptyValues(identity)}
+                validationSchema={validation()}
+                onSubmit={async (values, options) => {
+                    try {
+                        setLoading(true);
+                        const mantenimiento = values;
+
+                        await crearMantenimiento({
+                            variables: {
+                                input: mantenimiento
                             }
-                        </select>
+                        });
+                        setLoading(false);
+                        abrirModal();
+
+                    }
+                    catch (err) {
+                        setLoading(false);
+                        toast.error(err.message);
+                    }
+                }}
+            >
+                {({ values, handleChange, errors, handleSubmit }) => (
+                    <div className="formulario-admin">
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Input
+                                label="Nombre del mantenimiento"
+                                name="nombre"
+                                icon='clipboard outline'
+                                value={values.nombre}
+                                onChange={handleChange}
+                                error={errors.nombre}
+                            />
+                            <SelectFormik
+                                name="servicio"
+                                options={tipoordersOptions}
+                                label="Tipo de servicio"
+                            />
+
+                            <SelectFormik
+                                name="mantenimiento"
+                                options={opciones}
+                                label="Mantenimiento de tipo"
+                            />
+
+                            <SelectFormik
+                                name="asignado_a"
+                                options={opciones}
+                                label="Asignado a "
+                            />
+
+                            <Form.TextArea
+                                label="Trabajo a realizar"
+                                name="trabajo_realizado"
+                                icon='clipboard outline'
+                                value={values.trabajo_realizado}
+                                onChange={handleChange}
+                                error={errors.trabajo_realizado}
+                            />
+
+                            <SelectFormik
+                                name="departamento"
+                                options={departamentosOptions}
+                                label="Pedido por el departamento"
+                            />
+
+                            <Form.Input
+                                type="date"
+                                label="Fecha del Mantenimiento"
+                                name="fecha"
+                                icon='clipboard outline'
+                                value={values.fecha}
+                                onChange={handleChange}
+                                error={errors.fecha}
+                            />
+
+                            <Form.Input
+                                type="date"
+                                label="Se extiende hasta le fecha (opcional)"
+                                name="fecha_final"
+                                icon='clipboard outline'
+                                value={values.fecha_final}
+                                onChange={handleChange}
+                                error={errors.fecha_final}
+                            />
+                            <Form.Input
+                                type="time"
+                                label="Hora de comienzo"
+                                name="hora_inicio"
+                                icon='clipboard outline'
+                                value={values.hora_inicio}
+                                onChange={handleChange}
+                                error={errors.hora_inicio}
+                            />
+
+                            <Form.Input
+                                type="time"
+                                label="Hora de finalizacion"
+                                name="hora_final"
+                                icon='clipboard outline'
+                                value={values.hora_final}
+                                onChange={handleChange}
+                                error={errors.hora_final}
+                            />
+
+                            <Button type="submit">Crear Mantenimiento</Button>
+                        </Form>
+                        <MessageForm />
+
                     </div>
-                    <div className="field">
-                        <label htmlFor="tipo">Forma de servicio</label>
-                        <select
-                            className="ui selection"
-                            id="tipo"
-                            name="tipo"
-                            value={formik.values.tipo}
-                            onChange={formik.handleChange}
-                            error={formik.errors.tipo}
-                        >
-                            <option>Seleccione una opcion</option>
-                            <option key="interno" value="interno">Interna</option>
-                            <option key="externo" value="externo">Externa</option>
-                        </select>
-                    </div>
-
-                    <div className="field">
-                        <label htmlFor="asignado_a">Asignado A</label>
-                        <select
-                            className="ui selection"
-                            id="asignado_a"
-                            name="asignado_a"
-                            value={formik.values.asignado_a}
-                            onChange={formik.handleChange}
-                            error={formik.errors.asignado_a}
-                        >
-                            <option>Seleccione una opcion</option>
-                            <option key="Interno" value="interno">Interno</option>
-                            <option key="Externo" value="externo">Externo</option>
-                        </select>
-                    </div>
-
-                    <div className="field">
-                        <label htmlFor="depto_solicitante">Departamento Solicitante</label>
-                        <select
-                            className="ui selection"
-                            id="depto_solicitante"
-                            name="depto_solicitante"
-                            value={formik.values.depto_solicitante}
-                            onChange={formik.handleChange}
-                            error={formik.errors.depto_solicitante}
-                        >
-                            <option>Seleccione una opcion</option>
-                            {
-                                departamentos.map(d => <option key={d.id} value={d.id}>{d.departamento}</option>)
-                            }
-                        </select>
-                    </div>
-
-                    <Form.TextArea
-                        label="Actividades a realizar"
-                        name="trabajo_realizado"
-                        value={formik.values.trabajo_realizado}
-                        onChange={formik.handleChange}
-                        error={formik.errors.trabajo_realizado}
-                    />
-                    <Form.Input
-                        label="Fecha de realizacion"
-                        type="date"
-                        name="fecha"
-                        icon='calendar plus outline'
-                        value={formik.values.fecha}
-                        onChange={formik.handleChange}
-                        error={formik.errors.fecha}
-                    />
-
-                    <Form.Input
-                        label="Hora de comienzo"
-                        type="time"
-                        name="hora_inicio"
-                        icon="clock outline"
-                        value={formik.values.hora_inicio}
-                        onChange={formik.handleChange}
-                        error={formik.errors.hora_inicio}
-                    />
-
-                    <Form.Input
-                        label="Hora de finalizacion"
-                        type="time"
-                        name="hora_final"
-                        icon="clock"
-                        value={formik.values.hora_final}
-                        onChange={formik.handleChange}
-                        error={formik.errors.hora_final}
-                    />
-                    <Button type="submit">Crear Mantenimiento</Button>
-                </Form>
-                <MessageForm />
-
-            </div>
+                )}
+            </Formik>
             <ModalBasic show={loading}>
                 <Loader active={loading} size="big">Cargando Pagina...</Loader>
             </ModalBasic>
+            <ModalMensaje
+                centered={true}
+                open={abrir}
+                onClose={cerrarModal}
+                titulo="Peticion Exitosa"
+                texto="El Mantenimiento se ha creado con éxito."
+                boton="Salir"
+            />
         </>
     )
 }
@@ -176,12 +178,14 @@ export default function FormularioMantenimiento() {
 function emptyValues(props) {
     const { id } = props;
     return {
-        tipo: "",
-        servicio_id: "",
+        nombre: "",
+        mantenimiento: "",
+        servicio: "",
         asignado_a: "",
-        depto_solicitante: "",
-        usuario_id: id,
+        departamento: "",
+        usuario: id,
         fecha: "",
+        fecha_final: "",
         hora_inicio: "",
         hora_final: "",
         trabajo_realizado: "",
@@ -190,14 +194,16 @@ function emptyValues(props) {
 
 function validation() {
     return Yup.object({
-        tipo: Yup.string().required("Este campo es obligatorio"),
-        servicio_id: Yup.number().required("Este campo es obligatorio"),
+        nombre: Yup.string().required("Este campo es obligatorio"),
+        mantenimiento: Yup.string().required("Este campo es obligatorio"),
+        servicio: Yup.string().required("Este campo es obligatorio"),
         asignado_a: Yup.string().required("Este campo es obligatorio"),
-        depto_solicitante: Yup.string().required("Este campo es obligatorio"),
-        usuario_id: Yup.number().required("Este campo es obligatorio"),
+        departamento: Yup.string().required("Este campo es obligatorio"),
+        usuario: Yup.string().required("Este campo es obligatorio"),
         fecha: Yup.string().required("Este campo es obligatorio"),
+        fecha_final: Yup.string(),
         hora_inicio: Yup.string().required("Este campo es obligatorio"),
         hora_final: Yup.string().required("Este campo es obligatorio"),
-        trabajo_realizado: Yup.string().required("Este campo es obligatorio"),
+        trabajo_realizado: Yup.string().required("Este campo es obligatorio")
     })
 }
