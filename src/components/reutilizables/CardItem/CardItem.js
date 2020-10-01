@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory} from "react-router-dom";
 import { Icon } from "semantic-ui-react";
+import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import "./CardItem.scss";
 
 export default function CardItem(props){
@@ -13,7 +14,7 @@ export default function CardItem(props){
 
     return(
         <article className="cardItem" onClick={() => cardClick()}>
-            <p className="fecha">{fecha}</p>
+            <p className="fecha">{transformarFecha(fecha) }</p>
             <p className="status">{status === false ? "No aprobada" : "aprobada"} <Icon name="arrow alternate circle right" /></p>
             <p className="contenido">{contenido}</p>
         </article>

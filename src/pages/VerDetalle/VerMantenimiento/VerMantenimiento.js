@@ -4,6 +4,7 @@ import { Loader } from "semantic-ui-react";
 import "./VerMantenimiento.scss";
 import { useQuery } from "@apollo/client";
 import { OBTENER_MANTENIMIENTO } from "../../../gql/mantenimiento";
+import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import Banner from "../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../components/reutilizables/Titulo/Titulo";
 import InformacionMantenimiento from "../../../components/VerSolicitudes/VerMantenimiento/InformacionMantenimiento";
@@ -37,7 +38,7 @@ export default function VerMantenimiento(){
                 mantenimiento && !loadingMantenimiento ? (
                     <>
                         <Banner titulo={mantenimiento.obtenerMantenimiento.nombre} />
-                        <Titulo titulo={mantenimiento.obtenerMantenimiento.fecha} />
+                        <Titulo titulo={transformarFecha(mantenimiento.obtenerMantenimiento.fecha)} />
                         <InformacionMantenimiento data={mantenimiento.obtenerMantenimiento} loading={loading} />
                     </>
                 )

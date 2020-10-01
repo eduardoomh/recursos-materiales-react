@@ -26,16 +26,20 @@ export const OBTENER_EVENTO = gql`
             createdAt
             updatedAt
             departamento{
+                id
                 nombre
             }
             usuario{
+                id
                 nombre
                 apellidos
             }
             acomodo_sillas{
+                id
                 nombre
             }
             sitio{
+                id
                 nombre
             }
         }
@@ -48,3 +52,10 @@ export const CREAR_EVENTO = gql`
         crearEvento(input: $input)
     }
 `;
+
+export const ACTUALIZAR_EVENTO = gql`
+    mutation actualizarEvento($id: ID! $input: actualizarEvento!){
+        actualizarEvento(id: $id input: $input)
+    }
+`;
+

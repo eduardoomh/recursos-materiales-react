@@ -4,6 +4,7 @@ import { Loader } from "semantic-ui-react";
 import "./VerSalida.scss";
 import { useQuery } from "@apollo/client";
 import { OBTENER_SALIDA } from "../../../gql/salida";
+import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import Banner from "../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../components/reutilizables/Titulo/Titulo";
 import InformacionSalida from "../../../components/VerSolicitudes/VerSalida/InformacionSalida";
@@ -34,7 +35,7 @@ export default function VerSalida(){
                 salida && !loadingSalida ? (
                     <>
                         <Banner titulo={salida.obtenerSalida.destino} />
-                        <Titulo titulo={salida.obtenerSalida.fecha} />
+                        <Titulo titulo={transformarFecha(salida.obtenerSalida.fecha)} />
                         <InformacionSalida data={salida.obtenerSalida} loading={loading} />
                     </>
                 )

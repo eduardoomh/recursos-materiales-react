@@ -18,7 +18,7 @@ export default function CrearEvento(){
             }
         }
     }); 
-
+ 
     const { data: departamentos, loading: loadingDepartamentos} = useQuery(OBTENER_DEPARTAMENTOS, {
         variables: {
             input: {

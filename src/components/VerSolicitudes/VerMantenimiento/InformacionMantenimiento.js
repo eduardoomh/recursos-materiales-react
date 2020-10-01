@@ -1,11 +1,14 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Icon, Button } from "semantic-ui-react";
+import { scrollTop } from "../../../utils/reutilizables/scroll";
 import BoxFormData from "../../reutilizables/BoxFormData/BoxFormData";
+import { formatDate } from "../../../utils/reutilizables/fecha";
 import "./InformacionMantenimiento.scss";
 
 export default function InformacionMantenimiento(props) {
     const { data, loading } = props;
+    scrollTop();
     const history = useHistory();
     const cargando = "cargando";
 
@@ -37,6 +40,10 @@ export default function InformacionMantenimiento(props) {
                                 data={data.servicio.nombre}
                             />
                             <BoxFormData
+                                titulo="Trabajo a realizar"
+                                data={data.trabajo_realizado}
+                            />
+                            <BoxFormData
                                 titulo="Horario"
                                 data={`Empieza a las ${data.hora_inicio} y termina a las ${data.hora_final}`}
                             />
@@ -59,13 +66,13 @@ export default function InformacionMantenimiento(props) {
 
                             <BoxFormData
                                 titulo="Ultima actualizacion"
-                                data={data.updatedAt}
+                                data={ formatDate(data.updatedAt)}
                             />
 
 
                             <BoxFormData
                                 titulo="Fecha de creacion"
-                                data={data.createdAt}
+                                data={formatDate(data.createdAt)}
                             />
 
                             <BoxFormData

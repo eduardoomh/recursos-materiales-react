@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { useMutation } from "@apollo/client";
 import { CREAR_SALIDA } from "../../../gql/salida";
+import { scrollTop } from "../../../utils/reutilizables/scroll";
 import { toast } from "react-toastify";
 import useIdentity from "../../../utils/hooks/useIdentity";
 import { Form, Button, Loader } from "semantic-ui-react";
@@ -43,7 +44,7 @@ export default function FormularioSalida(props) {
     return (
         <>
             <Formik
-                initialValues={emptyValues(identity)}
+                initialValues={emptyValues()}
                 validationSchema={validation()}
                 onSubmit={async (values, options) => {
                     try {
@@ -55,6 +56,7 @@ export default function FormularioSalida(props) {
                                 input: salida
                             }
                         });
+                        scrollTop();
                         setLoading(false);
                         abrirModal();
 
@@ -157,13 +159,11 @@ export default function FormularioSalida(props) {
         </>
     )
 }
-function emptyValues(props) {
-    const { id } = props;
+function emptyValues() {
     return {
         destino: "",
         actividades: "",
         departamento: "",
-        usuario: id,
         fecha: "",
         hora_salida: "",
         hora_llegada: "",
@@ -178,7 +178,6 @@ function validation() {
         destino: Yup.string().required("Este campo es obligatorio"),
         actividades: Yup.string().required("Este campo es obligatorio"),
         departamento: Yup.string().required("Este campo es obligatorio"),
-        usuario: Yup.string().required("Este campo es obligatorio"),
         fecha: Yup.string().required("Este campo es obligatorio"),
         hora_salida: Yup.string().required("Este campo es obligatorio"),
         hora_llegada: Yup.string().required("Este campo es obligatorio"),

@@ -1,11 +1,14 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Icon, Button } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
+import { scrollTop } from "../../../utils/reutilizables/scroll";
 import BoxFormData from "../../reutilizables/BoxFormData/BoxFormData";
+import { formatDate } from "../../../utils/reutilizables/fecha";
 import "./InformacionSalida.scss";
 
 export default function InformacionSalida(props) {
     const { data, loading } = props;
+    scrollTop();
     const history = useHistory();
     const cargando = "cargando";
 
@@ -52,13 +55,13 @@ export default function InformacionSalida(props) {
 
                             <BoxFormData
                                 titulo="Ultima actualizacion"
-                                data={data.updatedAt}
+                                data={formatDate(data.updatedAt)}
                             />
 
 
                             <BoxFormData
                                 titulo="Fecha de creacion"
-                                data={data.createdAt}
+                                data={formatDate(data.createdAt)}
                             />
 
                             <BoxFormData

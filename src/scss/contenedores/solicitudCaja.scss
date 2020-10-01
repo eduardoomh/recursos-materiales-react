@@ -12,18 +12,22 @@
         grid-column: 2/3;
         grid-row: 1/2;
         display: grid;
+        @include min-h(50rem);
         grid-template-columns: 1fr;
 
         @if $tipo == "salida"{
             grid-template-rows: 1.5fr repeat($value -1, 1fr);
+            @include min-h(90rem);
         }
 
         @if $tipo == "evento"{
             grid-template-rows: repeat($value, 1fr);
+            @include min-h(100rem);
         }
 
         @if $tipo == "mantenimiento"{
             grid-template-rows: repeat($value, 1fr);
+            @include min-h(120rem);
         }
         
         border: 1px solid $borde-gris-claro;
@@ -32,7 +36,6 @@
         background-color: $gris;
         margin-top: 3rem;
         margin-bottom: 3rem;
-        @include min-h(100rem);
 
         @include minicaja();
     }

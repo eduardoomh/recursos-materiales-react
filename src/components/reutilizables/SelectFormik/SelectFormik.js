@@ -12,6 +12,8 @@ export default function SelectFormik(props) {
             options={options}
             onChange={(e, v) => helpers.setValue(v.value)}
             value={field.value.value} 
+            defaultValue={field.value}
+            placeholder='Selecciona una opcion'
         />
     );
 }

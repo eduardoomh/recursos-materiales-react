@@ -4,6 +4,7 @@ import { Loader } from "semantic-ui-react";
 import "./VerEvento.scss";
 import { useQuery } from "@apollo/client";
 import { OBTENER_EVENTO } from "../../../gql/evento";
+import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import Banner from "../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../components/reutilizables/Titulo/Titulo";
 import InformacionEvento from "../../../components/VerSolicitudes/VerEvento/InformacionEvento";
@@ -40,7 +41,7 @@ export default function VerEvento() {
                 evento && !loadingEvento ? (
                     <>
                         <Banner titulo={evento.obtenerEvento.nombre} />
-                        <Titulo titulo={evento.obtenerEvento.fecha} />
+                        <Titulo titulo={transformarFecha(evento.obtenerEvento.fecha)} />
                         <InformacionEvento data={evento.obtenerEvento} loading={loading} />
                     </>
                 )

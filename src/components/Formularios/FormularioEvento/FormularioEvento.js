@@ -4,8 +4,8 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@apollo/client";
 import { CREAR_EVENTO } from "../../../gql/evento";
+import { scrollTop } from "../../../utils/reutilizables/scroll";
 import { toast } from "react-toastify";
-import useIdentity from "../../../utils/hooks/useIdentity";
 import { Form, Button, Loader } from "semantic-ui-react";
 import MessageForm from "../../../components/reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../reutilizables/ModalBasic/ModalBasic";
@@ -16,7 +16,6 @@ import "./FormularioEvento.scss";
 export default function FormularioEvento(props) {
     const { departamentos, acomodosillas, sitios } = props;
     const [loading, setLoading] = useState(false);
-    const { identity } = useIdentity();
     const [abrir, setAbrir] = useState(false);
     const [crearEvento] = useMutation(CREAR_EVENTO);
     const history = useHistory();
@@ -45,7 +44,7 @@ export default function FormularioEvento(props) {
     return (
         <>
             <Formik
-                initialValues={emptyValues(identity)}
+                initialValues={emptyValues()}
                 validationSchema={validation()}
                 onSubmit={async (values, options) => {
                     try {
@@ -57,6 +56,7 @@ export default function FormularioEvento(props) {
                                 input: evento
                             }
                         });
+                        scrollTop();
                         setLoading(false);
                         abrirModal();
 
@@ -73,6 +73,7 @@ export default function FormularioEvento(props) {
                             <Form.Input
                                 label="Nombre del evento"
                                 name="nombre"
+                                placeholder='Rellene este campo'
                                 icon='clipboard outline'
                                 value={values.nombre}
                                 onChange={handleChange}
@@ -81,6 +82,7 @@ export default function FormularioEvento(props) {
                             <Form.TextArea
                                 label="Actividades a realizar"
                                 name="actividades"
+                                placeholder='Rellene este campo'
                                 icon='clipboard outline'
                                 value={values.actividades}
                                 onChange={handleChange}
@@ -166,8 +168,7 @@ export default function FormularioEvento(props) {
     )
 }
 
-function emptyValues(props) {
-    const { id } = props;
+function emptyValues() {
     return {
         nombre: "",
         actividades: "",
@@ -177,8 +178,7 @@ function emptyValues(props) {
         fecha: "",
         fecha_final: "",
         hora_inicio: "",
-        hora_final: "",
-        usuario: id,
+        hora_final: ""
 
     }
 }
@@ -193,7 +193,6 @@ function validation() {
         fecha: Yup.string().required("Este campo es obligatorio"),
         fecha_final: Yup.string(),
         hora_inicio: Yup.string().required("Este campo es obligatorio"),
-        hora_final: Yup.string().required("Este campo es obligatorio"),
-        usuario: Yup.string().required()
+        hora_final: Yup.string().required("Este campo es obligatorio")
     })
 }

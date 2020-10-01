@@ -1,53 +1,60 @@
-import React, { useEffect, useState }  from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
+import { useQuery } from "@apollo/client";
+import { OBTENER_VEHICULOS } from "../../../gql/vehiculo";
+import { OBTENER_DEPARTAMENTOS } from "../../../gql/departamento";
+import { OBTENER_SALIDA } from "../../../gql/salida";
 import "./ActualizarSalida.scss";
 import { scrollTop } from "../../../utils/reutilizables/scroll";
-import { getSalida } from "../../../servicios/salida";
 import Banner from "../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../components/reutilizables/Titulo/Titulo";
 import FormularioActualizar from "../../../components/Formularios/ActualizarSalida/FormularioActualizar";
-import ModalBasic from "../../../components/reutilizables/ModalBasic/ModalBasic";
 
-export default function ActualizarSalida(){
-    const [solicitud, setSolicitud] = useState(false);
-    const [loading, setLoading] = useState(true);
+export default function ActualizarSalida() {
     const { id } = useParams();
+    scrollTop();
 
-    useEffect(() => {
-        scrollTop();
-        const getData = async () => {
-            const data = await getSalida(id);
-
-            setSolicitud(() => {
-                if (data.status === "success") return data.elemento
-            });
-            console.log(data.elemento);
-            setLoading(false); 
+    const { data: vehiculos, loading: loadingVehiculos } = useQuery(OBTENER_VEHICULOS, {
+        variables: {
+            input: {
+                cantidad: 15,
+                pagina: 1
+            }
         }
+    });
 
-        getData();
-
-        return () => {
-            setSolicitud(false);
+    const { data: departamentos, loading: loadingDepartamentos } = useQuery(OBTENER_DEPARTAMENTOS, {
+        variables: {
+            input: {
+                cantidad: 15,
+                pagina: 1
+            }
         }
+    });
 
-    }, [id]);
+    const { data: salida, loading: loadingSalida } = useQuery(OBTENER_SALIDA, {
+        variables: {
+            id: id
+        }
+    });
 
-    return(
+    return (
         <>
             <div className="actualizar-salida">
                 <Banner titulo="Actualizar Salida" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
                 {
-                loading === false && (
-                    <FormularioActualizar solicitud={solicitud} loading={loading} setLoading={setLoading} />
-                )
-            }
+                    !loadingVehiculos && !loadingDepartamentos && !loadingSalida ?
+                        <FormularioActualizar
+                            vehiculos={vehiculos.obtenerVehiculos}
+                            departamentos={departamentos.obtenerDepartamentos}
+                            solicitud={salida.obtenerSalida}
+                        />
+                        :
+                        <Loader active inline='centered' size='massive' />
+                }
             </div>
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
         </>
     )
 }

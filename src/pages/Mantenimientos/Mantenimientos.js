@@ -1,58 +1,41 @@
 import React, { useState, useEffect } from "react";
 import "./Mantenimientos.scss";
 import { Loader} from "semantic-ui-react";
-import Banner from "../../components/reutilizables/Banner/Banner";
-import SolicitudGrid from "../../components/reutilizables/SolicitudGrid/SolicitudGrid";
-import { getMantenimientos } from "../../servicios/mantenimiento";
-import ModalBasic from "../../components/reutilizables/ModalBasic/ModalBasic";
+import { useQuery } from "@apollo/client";
+import { OBTENER_REPARACIONES } from "../../gql/mantenimiento";
 import { scrollTop } from "../../utils/reutilizables/scroll";
+import Banner from "../../components/reutilizables/Banner/Banner";
+import SolicitudList from "../../components/reutilizables/SolicitudList/SolicitudList";
 
 export default function Mantenimientos(){
-    const [content, setContent ] = useState("");
     const [ loading, setLoading ] = useState(true);
+    scrollTop();
     
-    const fetchData = async () => {
-        try{
-            const mantenimientos = await getMantenimientos();
-
-            setContent(() => {
-                if(mantenimientos.status === "success") return mantenimientos.elementos
-            
-            });
-            setLoading(() => {
-                if(mantenimientos.status === "success") return false
-            });
-
+    const { data: reparaciones, loading: loadingReparaciones} = useQuery(OBTENER_REPARACIONES, {
+        variables: {
+            input: {
+                cantidad: 15,
+                pagina: 1
+            }
         }
-        catch(err){
-            console.log(err);
-        }
-    }
-
-    useEffect( () => {
-        scrollTop();
-        fetchData();
-
-        return () => {
-            setContent("");
-        }
-    },[]);
+    })
 
     return(
         <div className="mantenimientos">
             <Banner titulo="Solicitudes de Mantenimientos" />
-            <SolicitudGrid 
-                data={content} 
-                setData={setContent} 
-                loading={loading} 
-                tipo="mantenimientos"  
-                setLoading={setLoading}
-                paginate={true}
-            />
+            {
+                !loadingReparaciones ?
 
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
+                <SolicitudList
+                    data={reparaciones.obtenerReparaciones}
+                    tipo="mantenimientos"
+                    loading={loading}
+                    setLoading={setLoading}
+                />
+                : <Loader active inline='centered' size='massive' />
+
+
+            }
         </div>
     )
 }

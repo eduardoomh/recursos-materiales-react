@@ -1,59 +1,42 @@
 import React, { useState, useEffect } from "react";
 import "./Salidas.scss";
 import { Loader} from "semantic-ui-react";
-import Banner from "../../components/reutilizables/Banner/Banner";
-import SolicitudGrid from "../../components/reutilizables/SolicitudGrid/SolicitudGrid";
-import { getSalidas } from "../../servicios/salida";
-import ModalBasic from "../../components/reutilizables/ModalBasic/ModalBasic";
+import { useQuery } from "@apollo/client";
+import { OBTENER_SALIDAS } from "../../gql/salida";
 import { scrollTop } from "../../utils/reutilizables/scroll";
+import Banner from "../../components/reutilizables/Banner/Banner";
+import SolicitudList from "../../components/reutilizables/SolicitudList/SolicitudList";
 
-export default function Salidas(){
-    const [content, setContent ] = useState("");
+export default function Salidas(){ 
     const [ loading, setLoading ] = useState(true);
+    scrollTop();
     
-    const fetchData = async () => {
-        try{
-            const salidas = await getSalidas();
-
-            setContent(() => {
-                if(salidas.status === "success") return salidas.elementos
-            });
-
-            setLoading(() => {
-                if(salidas.status === "success") return false
-            });
-
+    const { data: salidas, loading: loadingSalidas} = useQuery(OBTENER_SALIDAS, {
+        variables: {
+            input: {
+                cantidad: 15,
+                pagina: 1
+            }
         }
-        catch(err){
-            console.log(err);
-        }
-    }
-
-    useEffect( () => {
-        scrollTop();
-        fetchData();
-
-        return () => {
-            setContent("");
-        }
-    },[]);
+    })
 
 
     return(
         <div className="salidas">
             <Banner titulo="Solicitudes de Salidas" />
-            <SolicitudGrid 
-                data={content} 
-                setData={setContent} 
-                tipo="salidas"
-                loading={loading}
-                setLoading={setLoading} 
-                paginate={true}
-            />
+            {
+                !loadingSalidas ?
 
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
+                <SolicitudList
+                    data={salidas.obtenerSalidas}
+                    tipo="salidas"
+                    loading={loading}
+                    setLoading={setLoading}
+                />
+                : <Loader active inline='centered' size='massive' />
+
+
+            }
         </div>
     )
 }

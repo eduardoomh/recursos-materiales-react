@@ -4,7 +4,9 @@ export const OBTENER_REPARACIONES = gql`
     query obtenerReparaciones($input: PaginateInput!){
         obtenerReparaciones(input: $input){
             id
+            nombre
             fecha
+            aprobado
         }
   
     }
@@ -46,13 +48,17 @@ export const OBTENER_MANTENIMIENTO = gql`
             aprobado
             updatedAt
             createdAt
+            equipo_proteccion
             servicio{
+                id
                 nombre
             }
             departamento{
+                id
                 nombre
             }
             usuario{
+                id
                 nombre
                 apellidos
             }
@@ -64,6 +70,12 @@ export const OBTENER_MANTENIMIENTO = gql`
 export const CREAR_MANTENIMIENTO = gql`
     mutation crearMantenimiento($input: crearMantenimiento!){
         crearMantenimiento(input: $input)
+    }
+`;
+
+export const ACTUALIZAR_MANTENIMIENTO = gql`
+    mutation actualizarMantenimiento($id: ID! $input: actualizarMantenimiento!){
+        actualizarMantenimiento(id: $id input: $input)
     }
 `;
 

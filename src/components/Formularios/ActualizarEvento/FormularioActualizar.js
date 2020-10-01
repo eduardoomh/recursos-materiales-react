@@ -1,168 +1,201 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useFormik } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
-import { toast } from "react-toastify";
-import useIdentity from "../../../utils/hooks/useIdentity";
-import { Form, Button } from "semantic-ui-react";
-import { getStorage, saveStorage } from "../../../servicios/reutilizables/localStorage";
+import { useMutation } from "@apollo/client";
+import { ACTUALIZAR_EVENTO } from "../../../gql/evento";
 import { scrollTop } from "../../../utils/reutilizables/scroll";
-import { updateEvento, getEventos } from "../../../servicios/evento";
-import MessageForm from "../../reutilizables/MessageForm/MessageForm";
+import { toast } from "react-toastify";
+import { Form, Button, Loader } from "semantic-ui-react";
+import MessageForm from "../../../components/reutilizables/MessageForm/MessageForm";
+import ModalBasic from "../../reutilizables/ModalBasic/ModalBasic";
+import SelectFormik from "../../../components/reutilizables/SelectFormik/SelectFormik";
+import ModalMensaje from "../../../components/reutilizables/ModalMensaje/ModalMensaje";
 import "./FormularioActualizar.scss";
 
 export default function FormularioActualizar(props) {
-    const { setLoading, solicitud} = props;
-    const { identity } = useIdentity();
+    const { departamentos, acomodosillas, sitios, solicitud } = props;
+    const [loading, setLoading] = useState(false);
+    const [abrir, setAbrir] = useState(false);
+    const [actualizarEvento] = useMutation(ACTUALIZAR_EVENTO);
     const history = useHistory();
 
-    let departamentos = getStorage("departamentos");
-    let locaciones = getStorage("espacios");
+    const abrirModal = () => {
+        setAbrir(true);
+    }
 
-    const formik = useFormik({
-        initialValues: {
-            evento: solicitud.evento,
-            depto_solicitante: solicitud.depto_solicitante,
-            espacio_id: solicitud.espacio_id,
-            usuario_id: identity.id,
-            fecha: solicitud.fecha,
-            hora_inicio: solicitud.hora_inicio,
-            hora_final: solicitud.hora_final,
-            actividades: solicitud.actividades,
-        },
-        validationSchema: validation(),
-        onSubmit: async (data) => {
-            try {
-                setLoading(true);
-                const response = await updateEvento(data, solicitud.id);
+    const cerrarModal = () => {
+        setAbrir(false);
+        history.push(`/eventos/${solicitud.id}`);
+    }
 
-                if (response.status === "success") {
-                    const eventos = await getEventos();
-                    if (eventos.status === "success") {
-                        saveStorage("eventos", eventos.elementos.data);
-                    }
-                    scrollTop();
-                    setLoading(false);
-                    toast.success("Solicitud creada con exito");
-                    history.push(`/eventos/${solicitud.id}`);
-
-                } else {
-                    scrollTop();
-                    toast.error("Lo sentimos, los datos introducidos han sido incorrectos");
-                    setLoading(false);
-
-                }
-
-            }
-            catch (err) {
-                setLoading(false);
-                toast.error("La solicitud no ha podido ser creada, intentelo mas tarde");
-                console.log(err);
-            }
-        }
+    const departamentosOptions = departamentos.map(d => {
+        return { key: d.id, text: d.nombre, value: d.id }
     })
 
+    const acomodosillasOptions = acomodosillas.map(d => {
+        return { key: d.id, text: d.imagen, value: d.id }
+    })
 
+    const sitiosOptions = sitios.map(d => {
+        return { key: d.id, text: d.nombre, value: d.id }
+    })
 
     return (
-        <div className="formulario-evento">
-            <Form onSubmit={formik.handleSubmit}>
-                <Form.Input
-                    label="Nombre del evento"
-                    name="evento"
-                    icon='clipboard outline'
-                    value={formik.values.evento}
-                    onChange={formik.handleChange}
-                    error={formik.errors.evento}
-                />
-                <Form.TextArea
-                    label="Actividades a realizar"
-                    name="actividades"
-                    value={formik.values.actividades}
-                    onChange={formik.handleChange}
-                    error={formik.errors.actividades}
-                />
+        <>
+            <Formik
+                initialValues={emptyValues(solicitud)}
+                validationSchema={validation()}
+                onSubmit={async (values, options) => {
+                    try {
+                        setLoading(true);
+                        const evento = values;
 
-                <div className="field">
-                    <label htmlFor="depto_solicitante">Departamento solicitante</label>
-                    <select
-                        className="ui search dropdown"
-                        id="depto_solicitante"
-                        name="depto_solicitante"
-                        value={formik.values.depto_solicitante}
-                        onChange={formik.handleChange}
-                        error={formik.errors.depto_solicitante}
-                    >
-                        {
-                            departamentos.map(d => <option key={d.id} value={d.id}>{d.departamento}</option>)
-                        }
-                    </select>
-                </div>
+                        await actualizarEvento({
+                            variables: {
+                                id: solicitud.id,
+                                input: evento
+                            }
+                        });
+                        scrollTop();
+                        setLoading(false);
+                        abrirModal();
 
-                <div className="field">
-                    <label htmlFor="espacio_id">Locacion elegida</label>
-                    <select
-                        className="ui selection"
-                        id="espacio_id"
-                        name="espacio_id"
-                        value={formik.values.espacio_id}
-                        onChange={formik.handleChange}
-                        error={formik.errors.espacio_id}
-                    >
-                        {
-                            locaciones.map(l => <option key={l.id} value={l.id}>{l.espacio}</option>)
-                        }
-                    </select>
-                </div>
+                    }
+                    catch (err) {
+                        setLoading(false);
+                        toast.error(err.message);
+                    }
+                }}
+            >
+                {({ values, handleChange, errors, handleSubmit }) => (
+                    <div className="formulario-admin">
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Input
+                                label="Nombre del evento"
+                                name="nombre"
+                                icon='clipboard outline'
+                                placeholder='Rellene este campo'
+                                value={values.nombre}
+                                onChange={handleChange}
+                                error={errors.nombre}
+                            />
+                            <Form.TextArea
+                                label="Actividades a realizar"
+                                name="actividades"
+                                placeholder='Rellene este campo'
+                                icon='clipboard outline'
+                                value={values.actividades}
+                                onChange={handleChange}
+                                error={errors.actividades}
+                            />
 
-                <Form.Input
-                    label="Fecha de realizacion"
-                    type="date"
-                    name="fecha"
-                    icon='calendar plus outline'
-                    value={formik.values.fecha}
-                    onChange={formik.handleChange}
-                    error={formik.errors.fecha}
-                />
+                            <SelectFormik
+                                name="sitio"
+                                options={sitiosOptions}
+                                label="Lugar del evento"
+                            />
 
-                <Form.Input
-                    label="Hora de comienzo"
-                    type="time"
-                    name="hora_inicio"
-                    icon="clock outline"
-                    value={formik.values.hora_inicio}
-                    onChange={formik.handleChange}
-                    error={formik.errors.hora_inicio}
-                />
+                            <SelectFormik
+                                name="departamento"
+                                options={departamentosOptions}
+                                label="Pedido por el departamento"
+                            />
 
-                <Form.Input
-                    label="Hora de finalizacion"
-                    type="time"
-                    name="hora_final"
-                    icon="clock"
-                    value={formik.values.hora_final}
-                    onChange={formik.handleChange}
-                    error={formik.errors.hora_final}
-                />
+                            <SelectFormik
+                                name="acomodo_sillas"
+                                options={acomodosillasOptions}
+                                label="Forma de acomodar las sillas"
+                            />
 
-                <Button type="submit">Actualizar Evento</Button>
-            </Form>
-            <MessageForm />
+                            <Form.Input
+                                type="date"
+                                label="Fecha del evento"
+                                name="fecha"
+                                icon='clipboard outline'
+                                value={values.fecha}
+                                onChange={handleChange}
+                                error={errors.fecha}
+                            />
 
-        </div>
+                            <Form.Input
+                                type="date"
+                                label="Se extiende hasta le fecha (opcional)"
+                                name="fecha_final"
+                                icon='clipboard outline'
+                                value={values.fecha_final}
+                                onChange={handleChange}
+                                error={errors.fecha_final}
+                            />
+                            <Form.Input
+                                type="time"
+                                label="Hora de comienzo"
+                                name="hora_inicio"
+                                icon='clipboard outline'
+                                value={values.hora_inicio}
+                                onChange={handleChange}
+                                error={errors.hora_inicio}
+                            />
 
+                            <Form.Input
+                                type="time"
+                                label="Hora de finalizacion"
+                                name="hora_final"
+                                icon='clipboard outline'
+                                value={values.hora_final}
+                                onChange={handleChange}
+                                error={errors.hora_final}
+                            />
+
+                            <Button type="submit">Actualizar Evento</Button>
+                        </Form>
+                        <MessageForm />
+
+                    </div>
+                )}
+            </Formik>
+            <ModalBasic show={loading}>
+                <Loader active={loading} size="big">Cargando Pagina...</Loader>
+            </ModalBasic>
+            <ModalMensaje
+                centered={true}
+                open={abrir}
+                onClose={cerrarModal}
+                titulo="Actualización Exitosa"
+                texto="El Evento se ha actualizado correctamente."
+                boton="Salir"
+            />
+        </>
     )
+}
+
+function emptyValues(props) {
+    const { departamento, acomodo_sillas, sitio } = props;
+    return {
+        nombre: props.nombre,
+        actividades: props.actividades,
+        departamento: departamento.id,
+        sitio: sitio.id,
+        acomodo_sillas: acomodo_sillas.id,
+        fecha: props.fecha,
+        fecha_final: props.fecha_final || "",
+        hora_inicio: props.hora_inicio,
+        hora_final: props.hora_final
+
+    }
 }
 
 function validation() {
     return Yup.object({
-        evento: Yup.string().required("Este campo es obligatorio"),
-        fecha: Yup.string().required("La fecha es obligatoria"),
-        depto_solicitante: Yup.number().required("Este campo es obligatorio"),
-        espacio_id: Yup.number().required("Este campo es obligatorio"),
+        nombre: Yup.string().required("Este campo es obligatorio"),
+        actividades: Yup.string().required("La fecha es obligatoria"),
+        departamento: Yup.string().required("Este campo es obligatorio"),
+        sitio: Yup.string().required("Este campo es obligatorio"),
+        acomodo_sillas: Yup.string().required("Este campo es obligatorio"),
+        fecha: Yup.string().required("Este campo es obligatorio"),
+        fecha_final: Yup.string(),
         hora_inicio: Yup.string().required("Este campo es obligatorio"),
-        hora_final: Yup.string().required("Este campo es obligatorio"),
-        actividades: Yup.string().required("Este campo es obligatorio"),
-        usuario_id: Yup.number().required()
+        hora_final: Yup.string().required("Este campo es obligatorio")
     })
 }
+

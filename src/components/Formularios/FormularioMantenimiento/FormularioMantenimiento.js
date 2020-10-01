@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { Formik } from "formik";
 import { useMutation } from "@apollo/client";
 import { CREAR_MANTENIMIENTO } from "../../../gql/mantenimiento";
-import useIdentity from "../../../utils/hooks/useIdentity";
+import { scrollTop } from "../../../utils/reutilizables/scroll";
 import { Form, Button, Loader } from "semantic-ui-react";
 import { toast } from "react-toastify";
 import MessageForm from "../../../components/reutilizables/MessageForm/MessageForm";
@@ -16,7 +16,6 @@ import "./FormularioMantenimiento.scss";
 export default function FormularioMantenimiento(props) {
     const { departamentos, tipoorders } = props;
     const [loading, setLoading] = useState(false);
-    const { identity } = useIdentity();
     const [abrir, setAbrir] = useState(false);
     const [crearMantenimiento] = useMutation(CREAR_MANTENIMIENTO);
     const history = useHistory();
@@ -47,7 +46,7 @@ export default function FormularioMantenimiento(props) {
     return (
         <>
             <Formik
-                initialValues={emptyValues(identity)}
+                initialValues={emptyValues()}
                 validationSchema={validation()}
                 onSubmit={async (values, options) => {
                     try {
@@ -59,6 +58,7 @@ export default function FormularioMantenimiento(props) {
                                 input: mantenimiento
                             }
                         });
+                        scrollTop();
                         setLoading(false);
                         abrirModal();
 
@@ -175,15 +175,13 @@ export default function FormularioMantenimiento(props) {
 }
 
 
-function emptyValues(props) {
-    const { id } = props;
+function emptyValues() {
     return {
         nombre: "",
         mantenimiento: "",
         servicio: "",
         asignado_a: "",
         departamento: "",
-        usuario: id,
         fecha: "",
         fecha_final: "",
         hora_inicio: "",
@@ -199,7 +197,6 @@ function validation() {
         servicio: Yup.string().required("Este campo es obligatorio"),
         asignado_a: Yup.string().required("Este campo es obligatorio"),
         departamento: Yup.string().required("Este campo es obligatorio"),
-        usuario: Yup.string().required("Este campo es obligatorio"),
         fecha: Yup.string().required("Este campo es obligatorio"),
         fecha_final: Yup.string(),
         hora_inicio: Yup.string().required("Este campo es obligatorio"),
