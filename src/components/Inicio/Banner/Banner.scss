@@ -4,34 +4,26 @@
 
     .banner{
         display: grid;
-        grid-template-columns: 25rem 1fr;
+        grid-template-columns: 1fr;
         grid-template-rows: 1fr;
-        background-color: #fddf99;
-        background-image: linear-gradient(to left, #fbfbfb, #eae4d8);
+        background-color: #FAFAFA;
         min-height: 22rem;
         max-height: 22rem;
-
-        .banner-box{
-            grid-column: 1/2;
-            grid-row: 1/2;
-            @include flexbox();
-            padding: 1em;
-            @include min-h(22rem);
-
-            img{
-                width: 24em;
-            }
-
-            
-        }
+        background-image: url("../../../assets/img/azteca.jpg");
+        background-repeat: repeat;
+        background-size: contain;
+       
 
         .banner-info{
-            grid-column: 2/3;
+            grid-column: 1/2;
             grid-row: 1/2;
             display: grid;
             grid-template-columns: 1fr;
             grid-template-rows: 2fr 1fr;
             padding: 1em;
+            background-color: hsla(240,100%,99%, 0.93);
+            
+            
 
             h1{
                 grid-column: 1/2;
@@ -59,9 +51,7 @@
             }
 
 
-            
+           
         }
-
-        
 
     }

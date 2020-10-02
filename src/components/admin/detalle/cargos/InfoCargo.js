@@ -38,7 +38,7 @@ export default function InfoCargo(props) {
 
                             <BoxFormData
                                 titulo=""
-                                data={<Button onClick={() => gotoUpdate(data.id)}>Actualizar Puesto</Button>}
+                                data={<Button className="boton-guindo" onClick={() => gotoUpdate(data.id)}>Actualizar Puesto</Button>}
                             />
                         </>
                     )

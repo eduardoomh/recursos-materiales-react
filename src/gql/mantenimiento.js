@@ -79,4 +79,15 @@ export const ACTUALIZAR_MANTENIMIENTO = gql`
     }
 `;
 
+export const BUSCAR_MANTENIMIENTO = gql`
+    query buscarMantenimiento($search: String){
+        buscarMantenimiento(search: $search){
+            id
+            nombre
+            fecha
+        }
+    }
+`;
+
+
 

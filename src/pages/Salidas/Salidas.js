@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import "./Salidas.scss";
 import { Loader} from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
-import { OBTENER_SALIDAS } from "../../gql/salida";
+import { OBTENER_SALIDAS, BUSCAR_SALIDA } from "../../gql/salida";
 import { scrollTop } from "../../utils/reutilizables/scroll";
-import Banner from "../../components/reutilizables/Banner/Banner";
+import BannerSolicitud from "../../components/reutilizables/BannerSolicitud/BannerSolicitud";
 import SolicitudList from "../../components/reutilizables/SolicitudList/SolicitudList";
 
 export default function Salidas(){ 
@@ -23,7 +23,11 @@ export default function Salidas(){
 
     return(
         <div className="salidas">
-            <Banner titulo="Solicitudes de Salidas" />
+            <BannerSolicitud 
+                titulo="Solicitudes de Salidas" 
+                query={BUSCAR_SALIDA} 
+                tipo="salidas"
+            />
             {
                 !loadingSalidas ?
 

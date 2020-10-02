@@ -46,7 +46,7 @@ export default function InfoVehiculo(props) {
 
                             <BoxFormData
                                 titulo=""
-                                data={<Button onClick={() => gotoUpdate(data.id)}>Actualizar Vehiculo</Button>}
+                                data={<Button className="boton-guindo" onClick={() => gotoUpdate(data.id)}>Actualizar Vehiculo</Button>}
                             />
                         </>
                     )

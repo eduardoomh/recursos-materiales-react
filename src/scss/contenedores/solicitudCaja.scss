@@ -34,6 +34,11 @@
             grid-template-rows: repeat($value, 1fr);
             @include min-h(50rem);
         }
+
+        @if $tipo == "departamento"{
+            grid-template-rows: repeat($value, 1fr);
+            @include min-h(60rem);
+        }
         
         border: 1px solid $borde-gris-claro;
         box-shadow: $box-shadow;
@@ -41,6 +46,10 @@
         background-color: $gris;
         margin-top: 3rem;
         margin-bottom: 3rem;
+
+        button{
+            @include boton();
+        }
 
         @include minicaja();
     }

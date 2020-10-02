@@ -52,3 +52,13 @@ export const ACTUALIZAR_SALIDA = gql`
         actualizarSalida(id: $id input: $input)
     }
 `;
+
+export const BUSCAR_SALIDA = gql`
+    query buscarSalida($search: String){
+        buscarSalida(search: $search){
+            id
+            destino
+            fecha
+        }
+    }
+`;

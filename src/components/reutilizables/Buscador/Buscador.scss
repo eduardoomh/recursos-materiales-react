@@ -1,0 +1,40 @@
+@import "../../../scss/index.scss";
+
+.buscar-elementos{
+    @include flexbox();
+    @include min-w(35rem);
+    @include min-h(100%);
+    margin-top: 0px;
+
+
+    .ui.left.icon.input{
+        width: 35rem;
+ 
+    }
+
+    .results{
+        max-height: 60vh;
+        overflow-y: scroll;
+    }
+
+    &__item{
+        display: flex;
+        align-items: center;
+        @include min-w(35rem);
+
+        p{
+            margin: 0;
+            color: black;
+            @include min-w(35rem);
+
+            &:first-of-type{
+                font-weight: bold;
+            }
+            &:last-of-type{
+                color: $gris-oscuro;
+            }
+        }
+    }
+
+
+}

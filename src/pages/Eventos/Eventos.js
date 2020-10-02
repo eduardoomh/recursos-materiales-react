@@ -3,8 +3,9 @@ import "./Eventos.scss";
 import { Loader } from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
 import { OBTENER_EVENTOS } from "../../gql/evento";
+import { BUSCAR_EVENTO } from "../../gql/evento";
 import { scrollTop } from "../../utils/reutilizables/scroll";
-import Banner from "../../components/reutilizables/Banner/Banner";
+import BannerSolicitud from "../../components/reutilizables/BannerSolicitud/BannerSolicitud";
 import SolicitudList from "../../components/reutilizables/SolicitudList/SolicitudList";
 
 
@@ -24,7 +25,11 @@ export default function Eventos() {
  
     return (
         <div className="eventos">
-            <Banner titulo="Solicitudes de Eventos" />
+            <BannerSolicitud 
+                titulo="Solicitudes de Eventos" 
+                query={BUSCAR_EVENTO} 
+                tipo="eventos"
+            />
             
             {
                 !loadingEventos ?

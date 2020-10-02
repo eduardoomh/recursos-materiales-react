@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import "./DetallePuesto.scss";
 import { useQuery } from "@apollo/client";
-import { OBTENER_PUESTO } from "../../../../gql/puesto";
+import { OBTENER_PERMISO } from "../../../../gql/permiso";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../../components/reutilizables/Titulo/Titulo";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
@@ -14,7 +14,7 @@ export default function DetallePuesto(){
     const { id } = useParams();
     scrollTop();
 
-    const { data: puesto, loading: loadingPuesto, refetch } = useQuery(OBTENER_PUESTO, {
+    const { data: permiso, loading: loadingPermiso, refetch } = useQuery(OBTENER_PERMISO, {
         variables: {
             id: id
         }
@@ -22,7 +22,7 @@ export default function DetallePuesto(){
 
     useEffect(() => {
 
-        if (puesto) {
+        if (permiso) {
             refetch();
         }
         return () => {
@@ -37,11 +37,9 @@ export default function DetallePuesto(){
             <Banner titulo="Detalle del Puesto" />
             <Titulo titulo="Informacion sobre el puesto seleccionado seleccionado" />
             {
-                puesto && !loadingPuesto ? (
+                permiso && !loadingPermiso ? (
                     <>
-                        <Banner titulo="Informacion del puesto" />
-                        <Titulo titulo={puesto.obtenerPuesto.nombre} />
-                        <InfoPuesto data={puesto.obtenerPuesto} loading={loading} setLoading={setLoading} />
+                        <InfoPuesto data={permiso.obtenerPermiso} loading={loading} setLoading={setLoading} />
                     </>
                 )
                 : <Loader active inline='centered' size='massive' />

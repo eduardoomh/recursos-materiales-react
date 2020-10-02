@@ -38,7 +38,7 @@ export default function InfoStatusvehiculo(props) {
 
                             <BoxFormData
                                 titulo=""
-                                data={<Button onClick={() => gotoUpdate(data.id)}>Actualizar Acomodo de sillas</Button>}
+                                data={<Button className="boton-guindo" onClick={() => gotoUpdate(data.id)}>Actualizar Acomodo de sillas</Button>}
                             />
                         </>
                     )

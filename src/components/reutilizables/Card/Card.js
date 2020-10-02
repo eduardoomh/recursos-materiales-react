@@ -4,26 +4,17 @@ import { Icon } from "semantic-ui-react";
 import "./Card.scss";
 
 export default function Card(props){
-    const { fecha = "fecha", contenido = "contenido", status = "aprobada", tipo = "eventos", id, admin = false} = props;
+    const {tipo, id, footer, contenido } = props;
     const history = useHistory();
-
     const cardClick = () => {
 
-        if(admin === true){
-            return history.push(`/admin/${tipo}/${id}`);
-        }
-        return history.push(`/${tipo}/${id}`);
+        return history.push(`/admin/${tipo}/${id}`);
     }
-
 
     return(
         <article className="card" onClick={() => cardClick()}>
-            <p className="fecha">{fecha}</p>
+            <p className="revisar">{footer}<Icon name="arrow alternate circle right" /></p>
             <p className="contenido">{contenido}</p>
-            <p className="status">
-                { status === "aprobado" ? <Icon name="check"/> : <Icon name={ status === "pendiente" ? "exclamation triangle" : "key"} className="pendiente" />}
-                
-            </p>
         </article>
     )
 }

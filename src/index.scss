@@ -10,16 +10,6 @@ body {
 
   #root{
     min-width: 100vw;
-
-    button{
-      background-color: $guindo;
-      color: $dorado-claro;
-    
-      &:hover{
-        background-color: $dorado-claro;
-        color: $guindo;
-      }
-    }
     
   }
 }
@@ -27,6 +17,16 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.boton-guindo{
+  background-color: $dorado-claro;
+  color: $guindo;
+  
+    &:hover{
+      background-color: $guindo;
+      color: $dorado-claro;
+    }
 }
 
 

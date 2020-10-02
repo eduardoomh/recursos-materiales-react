@@ -59,3 +59,12 @@ export const ACTUALIZAR_EVENTO = gql`
     }
 `;
 
+export const BUSCAR_EVENTO = gql`
+    query buscarEvento($search: String){
+        buscarEvento(search: $search){
+            id
+            nombre
+            fecha
+        }
+    }
+`;

@@ -7,4 +7,11 @@
     @include min-w(100vw);
     @include min-h(100%);
     padding: 2em;
+
+    .empty{
+        grid-column: 2/span 3;
+        grid-row: 1/3;
+        @include flexbox();
+        font-size: 1.3em;
+    }
 }

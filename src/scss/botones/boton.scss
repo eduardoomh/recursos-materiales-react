@@ -1,16 +1,16 @@
-
+@import "../colors.scss";
 //mixin con estilos de un boton normal
 
 @mixin boton(){
     font-size: 1.2rem;
-    color: $dorado-claro;
-    background-color: $guindo;
+    background-color: $dorado-claro-hover;
+    color: $guindo;
     @include min-h(3.5rem);
     @include min-w(15rem);
 
 
     &:hover{
-        background-color: $dorado-claro-hover;
-        color: $guindo;
+        color: $dorado-claro;
+        background-color: $guindo;
     }
 }

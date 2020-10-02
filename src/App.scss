@@ -4,4 +4,14 @@
   width: 100vw;
   scroll-behavior: smooth !important;
 
+  .boton-guindo{
+    background-color: $dorado-claro;
+    color: $guindo;
+    
+    &:hover{
+      background-color: $guindo;
+      color: $dorado-claro;
+    }
+}
+
 }

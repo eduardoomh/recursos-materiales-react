@@ -1,7 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Button, Image } from "semantic-ui-react";
-import calendar from "../../../assets/img/pngwave.png";
+import { Button } from "semantic-ui-react";
 import "./Banner.scss";
 
 export default function Banner() {
@@ -13,10 +12,6 @@ export default function Banner() {
 
     return (
         <div className="banner">
-            <div className="banner-box">
-                <Image src={calendar} />
-            </div>
-            
             <div className="banner-info">
                 <h1>Consulte todas las solicitudes para Eventos, Manteminientos, Transportes y salidas de vehiculos.</h1>
                 <p className="boton-box">
@@ -24,7 +19,9 @@ export default function Banner() {
                     <Button onClick={() => gotoPage("/usuario/perfil")}>Ver perfil</Button>
                 </p>
 
+
             </div>
+
         </div>
     )
 }

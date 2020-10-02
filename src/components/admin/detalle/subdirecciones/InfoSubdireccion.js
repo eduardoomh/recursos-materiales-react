@@ -43,7 +43,7 @@ export default function InfoSubdireccion(props) {
 
                             <BoxFormData
                                 titulo=""
-                                data={<Button onClick={() => gotoUpdate(data.id)}>Actualizar Subdireccion</Button>}
+                                data={<Button className="boton-guindo" onClick={() => gotoUpdate(data.id)}>Actualizar Subdireccion</Button>}
                             />
                         </>
                     )

@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import "./Mantenimientos.scss";
 import { Loader} from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
-import { OBTENER_REPARACIONES } from "../../gql/mantenimiento";
+import { OBTENER_REPARACIONES, BUSCAR_MANTENIMIENTO } from "../../gql/mantenimiento";
 import { scrollTop } from "../../utils/reutilizables/scroll";
-import Banner from "../../components/reutilizables/Banner/Banner";
+import BannerSolicitud from "../../components/reutilizables/BannerSolicitud/BannerSolicitud";
 import SolicitudList from "../../components/reutilizables/SolicitudList/SolicitudList";
 
 export default function Mantenimientos(){
@@ -22,7 +22,11 @@ export default function Mantenimientos(){
 
     return(
         <div className="mantenimientos">
-            <Banner titulo="Solicitudes de Mantenimientos" />
+            <BannerSolicitud 
+                titulo="Solicitudes de Mantenimientos" 
+                query={BUSCAR_MANTENIMIENTO} 
+                tipo="mantenimientos"
+            />
             {
                 !loadingReparaciones ?
 

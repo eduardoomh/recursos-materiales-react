@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./SolicitudGrid.scss";
 import Titulo from "../Titulo/Titulo";
 import Filtrado from "../Filtrado/Filtrado";
+import Grid from "../Grid/Grid";
 
 export default function SolicitudGrid(props) {
     const { data, tipo } = props;
@@ -19,6 +20,7 @@ export default function SolicitudGrid(props) {
         <div className="solicitud-list">
             <Titulo titulo={titulo} />
             <Filtrado setTitulo={setTitulo} filtro={filtro} setFiltro={setFiltro} />
+            <Grid data={data} tipo={tipo} />
         </div>
     )
 }

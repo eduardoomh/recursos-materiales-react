@@ -40,7 +40,7 @@ export default function InfoStatusorder(props) {
 
                             <BoxFormData
                                 titulo=""
-                                data={<Button onClick={() => gotoUpdate(data.id)}>Actualizar Tipo de orden</Button>}
+                                data={<Button className="boton-guindo" onClick={() => gotoUpdate(data.id)}>Actualizar Tipo de orden</Button>}
                             />
                         </>
                     )
