@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import { useQuery } from "@apollo/client";

@@ -1,129 +1,126 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useFormik } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
+import { useMutation } from "@apollo/client";
+import { ACTUALIZAR_PERMISO } from "../../../../gql/permiso";
 import { toast } from "react-toastify";
-import { Form, Button } from "semantic-ui-react";
-import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { updatePuesto } from "../../../../servicios/puesto";
-import { getStorage } from "../../../../servicios/reutilizables/localStorage";
+import { Form, Button, Loader } from "semantic-ui-react";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
+import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
+import SelectFormik from "../../../reutilizables/SelectFormik/SelectFormik";
+import ModalMensaje from "../../../reutilizables/ModalMensaje/ModalMensaje";
 import "./FormPuesto.scss";
 
 export default function FormPuesto(props) {
-    const { setLoading, solicitud} = props;
+    const { usuarios, puestos, departamentos, solicitud } = props;
+    const [loading, setLoading] = useState(false);
+    const [abrir, setAbrir] = useState(false);
     const history = useHistory();
+    const [actualizarPermiso] = useMutation(ACTUALIZAR_PERMISO);
 
-    const users = getStorage("users");
-    const departamentos = getStorage("departamentos");
-    const cargos = getStorage("cargos");
-
-    const formik = useFormik({
-        initialValues: {
-            departamento_id: solicitud.departamento_id,
-            cargo_id: solicitud.cargo_id,
-            usuario_id: solicitud.usuario_id
-        },
-        validationSchema: validation(),
-        onSubmit: async (data) => {
-            try {
-                setLoading(true);
-                const response = await updatePuesto(data.solicitud.id);
-
-                if (response.status === "success") {
-                    scrollTop();
-                    setLoading(false);
-                    toast.success("Dato creado con exito");
-                    history.push(`/admin/puestos/${solicitud.id}`);
-
-                } else {
-                    scrollTop();
-                    toast.error("Lo sentimos, los datos introducidos han sido incorrectos");
-                    setLoading(false);
-
-                }
-
-            }
-            catch (err) {
-                setLoading(false);
-                toast.error("Los datos no han podido ser guardados, intentelo mas tarde");
-                console.log(err);
-            }
-        }
+    const departamentosOptions = departamentos.map(d => {
+        return { key: d.id, text: d.nombre, value: d.id }
     })
 
+    const usuariosOptions = usuarios.map(d => {
+        return { key: d.id, text: `${d.nombre} ${d.apellidos}`, value: d.id }
+    })
+
+    const PuestosOptions = puestos.map(d => {
+        return { key: d.id, text: d.nombre, value: d.id }
+    })
+
+    const abrirModal = () => {
+        setAbrir(true);
+    }
+
+    const cerrarModal = () => {
+        setAbrir(false);
+        history.push(`/admin/puestos/${solicitud.id}`);
+    }
 
 
     return (
         <>
-            <div className="formulario-admin">
-                <Form onSubmit={formik.handleSubmit}>
-                <div className="field">
-                        <label htmlFor="usuario_id">Usuario elegido</label>
-                        <select
-                            className="ui selection"
-                            id="usuario_id"
-                            name="usuario_id"
-                            value={formik.values.usuario_id}
-                            onChange={formik.handleChange}
-                            error={formik.errors.usuario_id}
-                        >
-                            <option>Seleccione una opcion</option>
-                            {
-                                users.map(d => <option key={d.id} value={d.id}>{`${d.name} ${d.surname}`}</option>)
+            <Formik
+                initialValues={emptyValues(solicitud)}
+                validationSchema={validation()}
+                onSubmit={async (values, options) => {
+                    try {
+                        setLoading(true);
+                        const permiso = values;
+
+                        await actualizarPermiso({
+                            variables: {
+                                id: solicitud.id,
+                                input: permiso
                             }
-                        </select>
+                        });
+                        setLoading(false);
+                        abrirModal();
+
+                    }
+                    catch (err) {
+                        setLoading(false);
+                        toast.error(err.message);
+                    }
+                }}
+            >
+                {({ handleSubmit }) => (
+                    <div className="formulario-admin">
+                        <Form onSubmit={handleSubmit}>
+                            <SelectFormik
+                                name="usuario"
+                                options={usuariosOptions}
+                                label="Nombre del usuario"
+                            />
+                            <SelectFormik
+                                name="departamento"
+                                options={departamentosOptions}
+                                label="Departamento al que pertenece"
+                            />
+                            <SelectFormik
+                                name="puesto"
+                                options={PuestosOptions}
+                                label="Puesto a ser asignado"
+                            />
+
+                            <Button type="submit">Actualizar Permiso</Button>
+                        </Form>
+                        <MessageForm />
+
                     </div>
-
-                    <div className="field">
-                        <label htmlFor="departamento_id">Pertenece al departamento</label>
-                        <select
-                            className="ui selection"
-                            id="departamento_id"
-                            name="departamento_id"
-                            value={formik.values.departamento_id}
-                            onChange={formik.handleChange}
-                            error={formik.errors.departamento_id}
-                        >
-                            <option>Seleccione una opcion</option>
-                            {
-                                departamentos.map(d => <option key={d.id} value={d.id}>{d.departamento}</option>)
-                            }
-                        </select>
-                    </div>
-
-                    <div className="field">
-                        <label htmlFor="cargo_id">Cargo asignado</label>
-                        <select
-                            className="ui selection"
-                            id="cargo_id"
-                            name="cargo_id"
-                            value={formik.values.cargo_id}
-                            onChange={formik.handleChange}
-                            error={formik.errors.cargo_id}
-                        >
-                            <option>Seleccione una opcion</option>
-                            {
-                                cargos.map(d => <option key={d.id} value={d.id}>{d.cargo}</option>)
-                            }
-                        </select>
-                    </div>
-                
-
-                    <Button type="submit">Actualizar Puesto</Button>
-                </Form>
-                <MessageForm />
-
-            </div>
+                )}
+            </Formik>
+            <ModalBasic show={loading}>
+                <Loader active={loading} size="big">Cargando Pagina...</Loader>
+            </ModalBasic>
+            <ModalMensaje
+                centered={true}
+                open={abrir}
+                onClose={cerrarModal}
+                titulo="Petición Exitosa"
+                texto="El Permiso se ha actualizado con éxito."
+                boton="Salir"
+            />
         </>
     )
 }
 
+function emptyValues(props) {
+    const {usuario, departamento, puesto} = props;
+    return {
+        usuario: usuario.id,
+        departamento: departamento.id,
+        puesto: puesto.id
+    }
+}
 
 function validation() {
     return Yup.object({
-        departamento_id: Yup.number().required("Este campo es obligatorio"),
-        cargo_id: Yup.number().required("Este campo es obligatorio"),
-        usuario_id: Yup.number().required("Este campo es obligatorio"),
+        usuario: Yup.string().required("Este campo es obligatorio"),
+        departamento: Yup.string().required("Este campo es obligatorio"),
+        puesto: Yup.string().required("Este campo es obligatorio"),
     })
 }

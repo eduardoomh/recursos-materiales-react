@@ -2,57 +2,48 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import "./DetalleVehiculo.scss";
+import { useQuery } from "@apollo/client";
+import { OBTENER_VEHICULO } from "../../../../gql/vehiculo";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../../components/reutilizables/Titulo/Titulo";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { getVehiculo } from "../../../../servicios/vehiculo";
 import InfoVehiculo from "../../../../components/admin/detalle/vehiculos/InfoVehiculo";
-import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 
 export default function DetalleVehiculo(){
-    const [content, setContent] = useState("cargando ....");
     const [loading, setLoading] = useState(false);
     const { id } = useParams();
+    scrollTop();
 
-    useEffect( () => {
-        const fetchData = async () => {
-            try{
-                setLoading(true);
-                const vehiculo = await getVehiculo(id);
-                
-                setContent( () => {
-                    if(vehiculo.status === "success"){
-                        return vehiculo.elementos
-                    }
-                });
-                setLoading(false);
-                
-    
-            }
-            catch(err){
-                console.log(err);
-            }
+    const { data: vehiculo, loading: loadingVehiculo, refetch } = useQuery(OBTENER_VEHICULO, {
+        variables: {
+            id: id
         }
-        
-        scrollTop();
-        fetchData();
+    });
 
+    useEffect(() => {
+
+        if (vehiculo) {
+            refetch();
+        }
         return () => {
-            setContent("");
+ 
         }
-    },[id]);
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id]);
 
 
     return(
         <div className="ver-vehiculo">
             <Banner titulo="Detalle del Vehiculo" />
             <Titulo titulo="Informacion sobre el vehiculo seleccionado" />
-            <InfoVehiculo data={content} loading={loading} />
-
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
+            {
+                vehiculo && !loadingVehiculo ? (
+                    <>
+                        <InfoVehiculo data={vehiculo.obtenerVehiculo} loading={loading} setLoading={setLoading} />
+                    </>
+                )
+                : <Loader active inline='centered' size='massive' />
+            }
 
         </div>
     )

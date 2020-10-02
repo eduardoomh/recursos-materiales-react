@@ -27,6 +27,7 @@ export default function VerSalida(){
         return () => {
 
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
     return(
@@ -36,7 +37,7 @@ export default function VerSalida(){
                     <>
                         <Banner titulo={salida.obtenerSalida.destino} />
                         <Titulo titulo={transformarFecha(salida.obtenerSalida.fecha)} />
-                        <InformacionSalida data={salida.obtenerSalida} loading={loading} />
+                        <InformacionSalida data={salida.obtenerSalida} loading={loading} setLoading={setLoading} />
                     </>
                 )
                 : <Loader active inline='centered' size='massive' />

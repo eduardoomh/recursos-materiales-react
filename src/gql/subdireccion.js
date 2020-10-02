@@ -9,8 +9,27 @@ query obtenerSubdirecciones($input: PaginateInput!){
 }
 `;
 
+export const OBTENER_SUBDIRECCION = gql`
+query obtenerSubdireccion($id: ID!){
+    obtenerSubdireccion(id: $id){
+        id
+        nombre
+        jefe
+        updatedAt
+        createdAt
+    }
+}
+`;
+
+
 export const CREAR_SUBDIRECCION = gql`
 mutation crearSubdireccion($input: crearSubdireccion!){
     crearSubdireccion(input: $input)
+}
+`;
+
+export const ACTUALIZAR_SUBDIRECCION = gql`
+mutation actualizarSubdireccion($id: ID! $input: actualizarSubdireccion!){
+    actualizarSubdireccion(id: $id input: $input)
 }
 `;

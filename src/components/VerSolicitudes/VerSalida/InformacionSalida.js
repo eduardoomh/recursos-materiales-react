@@ -10,7 +10,6 @@ export default function InformacionSalida(props) {
     const { data, loading } = props;
     scrollTop();
     const history = useHistory();
-    const cargando = "cargando";
 
     const gotoUpdate = (id) => {
         history.push(`/actualizar/salida/${id}`);

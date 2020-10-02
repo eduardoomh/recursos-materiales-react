@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Button } from "semantic-ui-react";
+import { formatDate } from "../../../../utils/reutilizables/fecha";
 import BoxFormData from "../../../reutilizables/BoxFormData/BoxFormData";
 import "./InfoCargo.scss";
 
@@ -11,7 +12,7 @@ export default function InfoCargo(props) {
     const gotoUpdate = (id) => {
         history.push(`/admin/actualizar/cargo/${id}`);
     }
-
+ 
     return (
         <div className="informacion-cargo">
 
@@ -21,23 +22,23 @@ export default function InfoCargo(props) {
                         <>
 
                             <BoxFormData
-                                titulo="Nombre del cargo"
-                                data={data.cargo}
+                                titulo="Nombre del puesto"
+                                data={data.nombre}
                             />
 
                             <BoxFormData
                                 titulo="Ultima actualizacion"
-                                data={data.updated_at}
+                                data={formatDate(data.updatedAt)}
                             />
 
                             <BoxFormData
                                 titulo="Creado hace"
-                                data={data.created_at}
+                                data={formatDate(data.createdAt)}
                             />
 
                             <BoxFormData
                                 titulo=""
-                                data={<Button onClick={() => gotoUpdate(data.id)}>Actualizar Cargo</Button>}
+                                data={<Button onClick={() => gotoUpdate(data.id)}>Actualizar Puesto</Button>}
                             />
                         </>
                     )

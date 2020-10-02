@@ -1,39 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import "./EditSubdireccion.scss";
+import { useQuery } from "@apollo/client";
+import { OBTENER_SUBDIRECCION } from "../../../../gql/subdireccion";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { getSubdireccion } from "../../../../servicios/subdireccion";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../../components/reutilizables/Titulo/Titulo";
 import FormSubdireccion from "../../../../components/admin/actualizar/subdirecciones/FormSubdireccion";
-import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 
 export default function EditSubdireccion() {
-    const [solicitud, setSolicitud] = useState(false);
-    const [loading, setLoading] = useState(true);
     const { id } = useParams();
+    scrollTop();
 
-
-    useEffect(() => {
-        scrollTop();
-        const getData = async () => {
-            const data = await getSubdireccion(id);
-
-            setSolicitud(() => {
-                if (data.status === "success") return data.cargo
-            });
-            console.log(data.cargo);
-            setLoading(false); 
+    const { data: subdireccion, loading: loadingSubdireccion } = useQuery(OBTENER_SUBDIRECCION, {
+        variables: {
+            id: id
         }
+    });
 
-        getData();
-
-        return () => {
-            setSolicitud(false);
-        }
-
-    }, [id]);
 
     return (
         <>
@@ -41,16 +26,16 @@ export default function EditSubdireccion() {
                 <Banner titulo="Actualizar Subdireccion" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
                 
-                {
-                    loading === false && (
-                     <FormSubdireccion solicitud={solicitud} setLoading={setLoading}/>
-                    )
-                }
+                 {
+                    !loadingSubdireccion ?
+                        <FormSubdireccion
+                            solicitud={subdireccion.obtenerSubdireccion}
+                        />
+                    :
+                    <Loader active inline='centered' size='massive' />
+                } 
 
             </div>
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
         </>
     )
 }

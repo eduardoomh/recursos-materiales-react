@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Loader } from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
 import { OBTENER_DEPARTAMENTOS } from "../../../../gql/departamento";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import SolicitudGrid from "../../../../components/reutilizables/SolicitudGrid/SolicitudGrid";
-import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
 
 export default function Departamentos() {
-    const [content, setContent ] = useState("");
     const [ loading, setLoading ] = useState(true);
+    scrollTop();
 
-    const {data: departamentos} = useQuery(OBTENER_DEPARTAMENTOS, {
+    const {data: departamentos, loading: loadingDepartamentos} = useQuery(OBTENER_DEPARTAMENTOS, {
         variables: {
             input: {
                 cantidad: 15,
@@ -20,51 +19,23 @@ export default function Departamentos() {
         }
     })
 
-    const fetchData = async () => {
-        try{
-            setContent(() => {
-                if(departamentos) return departamentos.obtenerDepartamentos
-            });
-
-            setLoading(() => {
-                if(departamentos) return false
-            });
-
-        }
-        catch(err){
-            console.log(err);
-        }
-    }
-
-    useEffect( () => {
-        scrollTop();
-        fetchData();
-
-        return () => {
-            setContent("");
-        }
-         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[]);
-
     return (
         <>
             <div className="departamentos">
                 <Banner titulo="Departamentos" />
-                <SolicitudGrid 
-                    data={content} 
-                    setData={setContent}
-                    tipo="departamentos"
-                    loading={loading} 
-                    setLoading={setLoading}
-                    admin={true}
-                    paginate={false}
-                />
+                {
+                    !loadingDepartamentos ?
+
+                        <SolicitudGrid
+                            data={departamentos.obtenerDepartamentos}
+                            tipo="departamentos"
+                            loading={loading}
+                            setLoading={setLoading}
+                        />
+                        : <Loader active inline='centered' size='massive' />
+                }
 
             </div>
-
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
         </>
     )
 }

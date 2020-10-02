@@ -1,7 +1,6 @@
 import React from "react";
 import Titulo from "../../reutilizables/Titulo/Titulo";
 import Recordatorio from "../../reutilizables/Recordatorio/Recordatorio";
-import meeting from "../../../assets/img/meeting.png";
 import reparacion from "../../../assets/img/reparacion.png";
 import car from "../../../assets/img/car.png";
 import bitacora from "../../../assets/img/bitacora.png";
@@ -9,9 +8,7 @@ import caja from "../../../assets/img/caja.png";
 import silla from "../../../assets/img/silla.png";
 import "./Container.scss";
 
-export default function Container(props) {
-    const { loading, setLoading } = props;
-
+export default function Container() {
 
     return (
         <div className="container">

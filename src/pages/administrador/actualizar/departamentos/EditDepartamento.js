@@ -1,39 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import "./EditDepartamento.scss";
+import { useQuery } from "@apollo/client";
+import { OBTENER_DEPARTAMENTO } from "../../../../gql/departamento";
+import { OBTENER_SUBDIRECCIONES } from "../../../../gql/subdireccion";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { getDepartamento } from "../../../../servicios/departamento";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../../components/reutilizables/Titulo/Titulo";
 import FormDepartamento from "../../../../components/admin/actualizar/departamentos/FormDepartamento";
-import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 
 export default function EditDepartamento() {
-    const [solicitud, setSolicitud] = useState(false);
-    const [loading, setLoading] = useState(true);
     const { id } = useParams();
+    scrollTop();
 
-
-    useEffect(() => {
-        scrollTop();
-        const getData = async () => {
-            const data = await getDepartamento(id);
-
-            setSolicitud(() => {
-                if (data.status === "success") return data.elementos
-            });
-            console.log(data.elementos);
-            setLoading(false); 
+    const { data: departamento, loading: loadingDepartamento } = useQuery(OBTENER_DEPARTAMENTO, {
+        variables: {
+            id: id
         }
+    });
 
-        getData();
-
-        return () => {
-            setSolicitud(false);
+    const { data: subdirecciones, loading: loadingSubdirecciones } = useQuery(OBTENER_SUBDIRECCIONES, {
+        variables: {
+            input: {
+                cantidad: 15,
+                pagina: 1
+            }
         }
+    });
 
-    }, [id]);
 
     return (
         <>
@@ -41,14 +36,15 @@ export default function EditDepartamento() {
                 <Banner titulo="Actualizar Departamento" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />             
                 {
-                    loading === false && (
-                        <FormDepartamento solicitud={solicitud} setLoading={setLoading} />
-                    )
-                }
+                    !loadingDepartamento && !loadingSubdirecciones ?
+                        <FormDepartamento
+                            solicitud={departamento.obtenerDepartamento}
+                            subdirecciones={subdirecciones.obtenerSubdirecciones}
+                        />
+                    :
+                    <Loader active inline='centered' size='massive' />
+                }                
             </div>
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
         </>
     )
 }

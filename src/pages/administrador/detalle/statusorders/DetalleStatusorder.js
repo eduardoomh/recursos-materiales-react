@@ -2,45 +2,35 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import "./DetalleStatusorder.scss";
+import { useQuery } from "@apollo/client";
+import { OBTENER_TIPOORDER } from "../../../../gql/tipoorder";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../../components/reutilizables/Titulo/Titulo";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { getStatusorder } from "../../../../servicios/statusorder";
 import InfoStatusorder from "../../../../components/admin/detalle/statusorders/InfoStatusorder";
-import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 
 export default function DetalleStatusorder(){
-    const [content, setContent] = useState("cargando ....");
     const [loading, setLoading] = useState(false);
     const { id } = useParams();
+    scrollTop();
 
-    useEffect( () => {
-        const fetchData = async () => {
-            try{
-                setLoading(true);
-                const statusorder = await getStatusorder(id);
-                
-                setContent( () => {
-                    if(statusorder.status === "success"){
-                        return statusorder.cargo
-                    }
-                });
-                setLoading(false);
-                
-    
-            }
-            catch(err){
-                console.log(err);
-            }
+
+    const { data: tipoorder, loading: loadingTipoorder, refetch } = useQuery(OBTENER_TIPOORDER, {
+        variables: {
+            id: id
         }
-        
-        scrollTop();
-        fetchData();
+    })
 
+    useEffect(() => {
+
+        if (tipoorder) {
+            refetch();
+        }
         return () => {
-            setContent("");
+ 
         }
-    },[id]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [id]);
 
 
 
@@ -48,11 +38,14 @@ export default function DetalleStatusorder(){
         <div className="ver-statusorder">
             <Banner titulo="Detalle del estado de Mantenimiento" />
             <Titulo titulo="Informacion sobre el Estado de mantenimiento seleccionado" />
-            <InfoStatusorder data={content} loading={loading} />
-
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
+            {
+                tipoorder && !loadingTipoorder ? (
+                    <>
+                        <InfoStatusorder data={tipoorder.obtenerTipoorder} loading={loading} setLoading={setLoading} />
+                    </>
+                )
+                : <Loader active inline='centered' size='massive' />
+            }
 
         </div>
     )

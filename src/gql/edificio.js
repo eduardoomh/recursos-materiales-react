@@ -9,8 +9,25 @@ query obtenerEdificios($input: PaginateInput!){
 }
 `;
 
+export const OBTENER_EDIFICIO = gql`
+query obtenerEdificio($id: ID!){
+    obtenerEdificio(id: $id){
+        id
+        nombre
+        updatedAt
+        createdAt
+    }
+}
+`;
+
 export const CREAR_EDIFICIO = gql`
 mutation crearEdificio($input: crearEdificio!){
     crearEdificio(input: $input)
+}
+`;
+
+export const ACTUALIZAR_EDIFICIO = gql`
+mutation actualizarEdificio($id: ID! $input: actualizarEdificio!){
+    actualizarEdificio(id: $id input: $input)
 }
 `;

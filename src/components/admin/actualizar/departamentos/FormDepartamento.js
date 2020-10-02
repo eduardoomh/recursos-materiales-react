@@ -1,117 +1,146 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useFormik } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
+import { useMutation } from "@apollo/client";
+import { ACTUALIZAR_DEPARTAMENTO } from "../../../../gql/departamento";
 import { toast } from "react-toastify";
-import { Form, Button } from "semantic-ui-react";
-import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { updateDepartamento } from "../../../../servicios/departamento";
-import { getStorage } from "../../../../servicios/reutilizables/localStorage";
+import { Form, Button, Loader } from "semantic-ui-react";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
-import "./FormDepartamento.scss";
+import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
+import SelectFormik from "../../../reutilizables/SelectFormik/SelectFormik";
+import ModalMensaje from "../../../reutilizables/ModalMensaje/ModalMensaje";
+import "./FormDepartamento.scss"; 
 
 export default function FormDepartamento(props) {
-    const { setLoading, solicitud} = props;
+    const { subdirecciones, solicitud } = props;
+    const [loading, setLoading] = useState(false);
+    const [abrir, setAbrir] = useState(false);
+    const [actualizarDepartamento] = useMutation(ACTUALIZAR_DEPARTAMENTO);
     const history = useHistory();
 
-    const subdirecciones = getStorage("subdirecciones");
+    const abrirModal = () => {
+        setAbrir(true);
+    }
 
-    const formik = useFormik({
-        initialValues: {
-            departamento: solicitud.departamento,
-            subdireccion_id: solicitud.subdireccion_id,
-            telefono: solicitud.telefono,
-            correo: solicitud.correo
-        },
-        validationSchema: validation(),
-        onSubmit: async (data) => {
-            try {
-                setLoading(true);
-                const response = await updateDepartamento(data, solicitud.id);
+    const cerrarModal = () => {
+        setAbrir(false);
+        history.push(`/admin/departamentos/${solicitud.id}`);
+    }
 
-                if (response.status === "success") {
-                    scrollTop();
-                    setLoading(false);
-                    toast.success("Dato creado con exito");
-                    history.push(`/admin/departamentos/${solicitud.id}`);
-
-                } else {
-                    scrollTop();
-                    toast.error("Lo sentimos, los datos introducidos han sido incorrectos");
-                    setLoading(false);
-
-                }
-
-            }
-            catch (err) {
-                setLoading(false);
-                toast.error("Los datos no han podido ser guardados, intentelo mas tarde");
-                console.log(err);
-            }
-        }
+    const subdireccionesOptions = subdirecciones.map(d => {
+        return { key: d.id, text: d.nombre, value: d.id }
     })
+
+
 
     return (
         <>
-            <div className="formulario-admin">
-                <Form onSubmit={formik.handleSubmit}>
-                    <Form.Input
-                        label="Nombre del departamento"
-                        name="departamento"
-                        icon='clipboard outline'
-                        value={formik.values.departamento}
-                        onChange={formik.handleChange}
-                        error={formik.errors.departamento}
-                    />
-                    <Form.Input
-                        label="Telefono de contacto"
-                        name="telefono"
-                        icon='clipboard outline'
-                        value={formik.values.telefono}
-                        onChange={formik.handleChange}
-                        error={formik.errors.telefono}
-                    />
-                    <Form.Input
-                        label="Correo electronico"
-                        name="correo"
-                        icon='clipboard outline'
-                        value={formik.values.correo}
-                        onChange={formik.handleChange}
-                        error={formik.errors.correo}
-                    />
+            <Formik
+                initialValues={emptyValues(solicitud)}
+                validationSchema={validation()}
+                onSubmit={async (values, options) => {
+                    try {
+                        setLoading(true);
+                        const departamento = values;
 
-                    <div className="field">
-                        <label htmlFor="subdireccion_id">Pertenece a la subdireccion</label>
-                        <select
-                            className="ui selection"
-                            id="subdireccion_id"
-                            name="subdireccion_id"
-                            value={formik.values.subdireccion_id}
-                            onChange={formik.handleChange}
-                            error={formik.errors.subdireccion_id}
-                        >
-                            <option>Seleccione una opcion</option>
-                            {
-                                subdirecciones.map(d => <option key={d.id} value={d.id}>{d.subdireccion}</option>)
+                        await actualizarDepartamento({
+                            variables: {
+                                id: solicitud.id,
+                                input: departamento
                             }
-                        </select>
+                        });
+                        setLoading(false);
+                        abrirModal();
+
+                    }
+                    catch (err) {
+                        setLoading(false);
+                        toast.error(err.message);
+                    }
+                }}
+            >
+                {({ values, handleChange, errors, handleSubmit }) => (
+                    <div className="formulario-admin">
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Input
+                                label="Nombre del departamento"
+                                name="nombre"
+                                icon='clipboard outline'
+                                value={values.nombre}
+                                onChange={handleChange}
+                                error={errors.nombre}
+                            />
+                            <Form.Input
+                                label="Jefe de departamento"
+                                name="jefe"
+                                icon='clipboard outline'
+                                value={values.jefe}
+                                onChange={handleChange}
+                                error={errors.jefe}
+                            />
+                            <Form.Input
+                                label="Telefono de contacto"
+                                name="telefono"
+                                icon='clipboard outline'
+                                value={values.telefono}
+                                onChange={handleChange}
+                                error={errors.telefono}
+                            />
+                            <Form.Input
+                                label="Correo electronico"
+                                name="correo"
+                                icon='clipboard outline'
+                                value={values.correo}
+                                onChange={handleChange}
+                                error={errors.correo}
+                            />
+                            <SelectFormik
+                                name="subdireccion"
+                                options={subdireccionesOptions}
+                                label="Pertenece a la subdireccion"
+                            />
+
+                            <Button type="submit">Actualizar Departamento</Button>
+                        </Form>
+                        <MessageForm />
+
                     </div>
-
-                    <Button type="submit">Crear Departamento</Button>
-                </Form>
-                <MessageForm />
-
-            </div>
+                )}
+            </Formik>
+            <ModalBasic show={loading}>
+                <Loader active={loading} size="big">Cargando Pagina...</Loader>
+            </ModalBasic>
+            <ModalMensaje
+                centered={true}
+                open={abrir}
+                onClose={cerrarModal}
+                titulo="Actualizacion Exitosa"
+                texto="El Departamento se ha actualizado con éxito."
+                boton="Salir"
+            />
         </>
     )
 }
 
+function emptyValues(props) {
+    const { subdireccion } = props;
+
+    return {
+        nombre: props.nombre,
+        subdireccion: subdireccion.id,
+        telefono: props.telefono,
+        correo: props.correo,
+        jefe: props.jefe
+    }
+}
 
 function validation() {
     return Yup.object({
-        departamento: Yup.string().required("Este campo es obligatorio"),
-        subdireccion_id: Yup.number().required("Este campo es obligatorio"),
+        nombre: Yup.string().required("Este campo es obligatorio"),
+        subdireccion: Yup.string().required("Este campo es obligatorio"),
         telefono: Yup.string().required("Este campo es obligatorio"),
+        jefe: Yup.string().required("Este campo es obligatorio"),
         correo: Yup.string().email("Este correo no es valido").required("Este campo es obligatorio")
     })
 }

@@ -29,6 +29,7 @@ export default function VerMantenimiento(){
         return () => {
 
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
 
@@ -39,7 +40,7 @@ export default function VerMantenimiento(){
                     <>
                         <Banner titulo={mantenimiento.obtenerMantenimiento.nombre} />
                         <Titulo titulo={transformarFecha(mantenimiento.obtenerMantenimiento.fecha)} />
-                        <InformacionMantenimiento data={mantenimiento.obtenerMantenimiento} loading={loading} />
+                        <InformacionMantenimiento data={mantenimiento.obtenerMantenimiento} loading={loading} setLoading={setLoading}  />
                     </>
                 )
                 : <Loader active inline='centered' size='massive' />

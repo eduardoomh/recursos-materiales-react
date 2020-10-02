@@ -10,8 +10,7 @@ export default function InformacionMantenimiento(props) {
     const { data, loading } = props;
     scrollTop();
     const history = useHistory();
-    const cargando = "cargando";
-
+    
     const gotoUpdate = (id) => {
         history.push(`/actualizar/mantenimiento/${id}`);
     }

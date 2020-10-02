@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Button, Image, Divider } from "semantic-ui-react";
+import { Button, Image } from "semantic-ui-react";
 import calendar from "../../../assets/img/pngwave.png";
 import "./Banner.scss";
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Button } from "semantic-ui-react";
+import { formatDate } from "../../../../utils/reutilizables/fecha";
 import BoxFormData from "../../../reutilizables/BoxFormData/BoxFormData";
 import "./InfoDepartamento.scss";
 
@@ -22,7 +23,7 @@ export default function InfoDepartamento(props) {
 
                             <BoxFormData
                                 titulo="Nombre del departamento"
-                                data={data.departamento}
+                                data={data.nombre}
                             />
 
                             <BoxFormData
@@ -35,21 +36,21 @@ export default function InfoDepartamento(props) {
                             />
                             <BoxFormData
                                 titulo="Pertenece a la subdireccion"
-                                data={data.subdireccion.subdireccion}
+                                data={data.subdireccion.nombre}
                             />
                             <BoxFormData
                                 titulo="Ultima actualizacion"
-                                data={data.updated_at}
+                                data={formatDate(data.updatedAt)}
                             />
 
                             <BoxFormData
-                                titulo="Creado hace"
-                                data={data.created_at}
+                                titulo="Fecha de creacion"
+                                data={formatDate(data.createdAt)}
                             />
 
                             <BoxFormData
                                 titulo=""
-                                data={<Button onClick={() => gotoUpdate(data.id)}>Actualizar Cargo</Button>}
+                                data={<Button onClick={() => gotoUpdate(data.id)}>Actualizar Departamento</Button>}
                             />
                         </>
                     )

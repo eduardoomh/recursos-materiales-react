@@ -6,7 +6,7 @@ import Lista from "../List/List";
 
 
 export default function SolicitudList(props) {
-    const { data, tipo, loading, setLoading} = props;
+    const { data, tipo } = props;
     const textTitulo = "Solicitudes Mas Recientes"
 
     const [titulo, setTitulo] = useState(textTitulo);
@@ -20,7 +20,7 @@ export default function SolicitudList(props) {
     return (
         <div className="solicitud-list">
             <Titulo titulo={titulo} />
-            <Filtrado setTitulo={setTitulo} setFiltro={setFiltro} />
+            <Filtrado setTitulo={setTitulo} filtro={filtro} setFiltro={setFiltro} />
             <Lista data={data} tipo={tipo} />
         </div>
     )

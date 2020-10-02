@@ -26,11 +26,10 @@ export default function VerEvento() {
         if (evento) {
             refetch();
         }
-
-
         return () => {
-
+ 
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
 
@@ -42,7 +41,7 @@ export default function VerEvento() {
                     <>
                         <Banner titulo={evento.obtenerEvento.nombre} />
                         <Titulo titulo={transformarFecha(evento.obtenerEvento.fecha)} />
-                        <InformacionEvento data={evento.obtenerEvento} loading={loading} />
+                        <InformacionEvento data={evento.obtenerEvento} loading={loading} setLoading={setLoading} />
                     </>
                 )
                 : <Loader active inline='centered' size='massive' />

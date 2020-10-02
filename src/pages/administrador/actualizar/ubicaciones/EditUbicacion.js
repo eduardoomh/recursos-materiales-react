@@ -1,56 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React  from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import "./EditUbicacion.scss";
+import { useQuery } from "@apollo/client";
+import { OBTENER_EDIFICIO } from "../../../../gql/edificio";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { getUbicacion } from "../../../../servicios/ubicacion";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../../components/reutilizables/Titulo/Titulo";
 import FormUbicacion from "../../../../components/admin/actualizar/ubicaciones/FormUbicacion";
-import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 
 export default function EditUbicacion() {
-    const [solicitud, setSolicitud] = useState(false);
-    const [loading, setLoading] = useState(true);
     const { id } = useParams();
+    scrollTop();
 
-
-    useEffect(() => {
-        scrollTop();
-        const getData = async () => {
-            const data = await getUbicacion(id);
-
-            setSolicitud(() => {
-                if (data.status === "success") return data.cargo
-            });
-            console.log(data.cargo);
-            setLoading(false); 
+    const { data: edificio, loading: loadingEdificio } = useQuery(OBTENER_EDIFICIO, {
+        variables: {
+            id: id
         }
+    });
 
-        getData();
-
-        return () => {
-            setSolicitud(false);
-        }
-
-    }, [id]);
 
     return (
         <>
             <div className="actualizar-ubicacion">
                 <Banner titulo="Actualizar Ubicacion" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
-                
                 {
-                    loading === false && (
-                        <FormUbicacion solicitud={solicitud} setLoading={setLoading} />
-                    )
-                }
+                    !loadingEdificio ?
+                        <FormUbicacion
+                            solicitud={edificio.obtenerEdificio}
+                        />
+                    :
+                    <Loader active inline='centered' size='massive' />
+                }               
 
             </div>
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
         </>
     )
 }

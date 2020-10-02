@@ -11,9 +11,37 @@ query obtenerPermisos($input: PaginateInput!){
     }
 }
 `;
+export const OBTENER_PERMISO = gql`
+    query obtenerPermiso($id: ID!){
+    obtenerPermiso(id: $id){
+        id
+        updatedAt
+        createdAt
+        usuario{
+            id
+            nombre
+            apellidos
+        }
+        departamento{
+            id
+            nombre
+        }
+        puesto{
+            id
+            nombre
+        }
+    }
+}
+`;
 
 export const CREAR_PERMISO = gql`
 mutation crearPermiso($input: crearPermiso!){
     crearPermiso(input: $input)
+}
+`;
+
+export const ACTUALIZAR_PERMISO = gql`
+mutation actualizarPermiso($id: ID! $input: actualizarPermiso!){
+    actualizarPermiso(id: $id input: $input)
 }
 `;

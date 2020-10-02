@@ -6,7 +6,6 @@ import { useMutation } from "@apollo/client";
 import { CREAR_SALIDA } from "../../../gql/salida";
 import { scrollTop } from "../../../utils/reutilizables/scroll";
 import { toast } from "react-toastify";
-import useIdentity from "../../../utils/hooks/useIdentity";
 import { Form, Button, Loader } from "semantic-ui-react";
 import MessageForm from "../../../components/reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../reutilizables/ModalBasic/ModalBasic";
@@ -17,7 +16,6 @@ import "./FormularioSalida.scss";
 export default function FormularioSalida(props) {
     const { departamentos, vehiculos } = props;
     const [loading, setLoading] = useState(false);
-    const { identity } = useIdentity();
     const [abrir, setAbrir] = useState(false);
     const [crearSalida] = useMutation(CREAR_SALIDA);
     const history = useHistory();

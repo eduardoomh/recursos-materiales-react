@@ -1,46 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useMutation } from "@apollo/client";
+import { ACTUALIZAR_TIPOORDER } from "../../../../gql/tipoorder";
 import { toast } from "react-toastify";
-import { Form, Button } from "semantic-ui-react";
-import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { updateStatusorder } from "../../../../servicios/statusorder";
+import { Form, Button, Loader } from "semantic-ui-react";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
+import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
+import ModalMensaje from "../../../reutilizables/ModalMensaje/ModalMensaje";
 import "./FormStatusorder.scss";
 
 export default function FormStatusorder(props) {
-    const { setLoading, solicitud} = props;
+    const { solicitud } = props;
+    const [loading, setLoading] = useState(false);
+    const [abrir, setAbrir] = useState(false);
+    const [actualizarTipoorder] = useMutation(ACTUALIZAR_TIPOORDER);
     const history = useHistory();
 
+    const abrirModal = () => {
+        setAbrir(true);
+
+    }
+
+    const cerrarModal = () => {
+        setAbrir(false);
+        history.push(`/admin/statusorders/${solicitud.id}`);
+    }
+
     const formik = useFormik({
-        initialValues: {
-            status: solicitud.status,
-        },
+        initialValues: emptyValues(solicitud),
         validationSchema: validation(),
-        onSubmit: async (data) => {
+        onSubmit: async (formData) => {
             try {
                 setLoading(true);
-                const response = await updateStatusorder(data, solicitud.id);
+                const tipoorder = formData;
 
-                if (response.status === "success") {
-                    scrollTop();
-                    setLoading(false);
-                    toast.success("Dato creado con exito");
-                    history.push(`/admin/statusorder/${response.elemento_creado.id}`);
-
-                } else {
-                    scrollTop();
-                    toast.error("Lo sentimos, los datos introducidos han sido incorrectos");
-                    setLoading(false);
-
-                }
+                await actualizarTipoorder({
+                    variables: {
+                        id: solicitud.id,
+                        input: tipoorder
+                    }
+                });
+                setLoading(false);
+                abrirModal();
 
             }
             catch (err) {
                 setLoading(false);
-                toast.error("Los datos no han podido ser guardados, intentelo mas tarde");
-                console.log(err);
+                toast.error(err.message);
             }
         }
     })
@@ -52,27 +60,42 @@ export default function FormStatusorder(props) {
             <div className="formulario-admin">
                 <Form onSubmit={formik.handleSubmit}>
                     <Form.Input
-                        label="Nombre de la locacion"
-                        name="status"
+                        label="Nombre del tipo de orden"
+                        name="nombre"
                         icon='clipboard outline'
-                        value={formik.values.status}
+                        value={formik.values.nombre}
                         onChange={formik.handleChange}
-                        error={formik.errors.status}
+                        error={formik.errors.nombre}
                     />
  
-                    <Button type="submit">Actualizar Estado</Button>
+                    <Button type="submit">Actualizar Tipo de Orden</Button>
                 </Form>
                 <MessageForm />
 
             </div>
+            <ModalBasic show={loading}>
+                <Loader active={loading} size="big">Cargando Pagina...</Loader>
+            </ModalBasic>
+            <ModalMensaje
+                centered={true}
+                open={abrir}
+                onClose={cerrarModal}
+                titulo="Peticion Exitosa"
+                texto="El Tipo de orden se ha actualizado con éxito."
+                boton="Salir"
+            />
         </>
     )
 }
 
-
+function emptyValues(props) {
+    return {
+        nombre: props.nombre,
+    }
+}
 
 function validation() {
     return Yup.object({
-        status: Yup.string().required("Este campo es obligatorio")
+        nombre: Yup.string().required("Este campo es obligatorio")
     })
 }

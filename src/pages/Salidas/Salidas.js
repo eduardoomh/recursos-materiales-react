@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Salidas.scss";
 import { Loader} from "semantic-ui-react";
 import { useQuery } from "@apollo/client";

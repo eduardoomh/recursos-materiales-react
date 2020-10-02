@@ -1,39 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import "./EditStatusvehiculo.scss";
+import { useQuery } from "@apollo/client";
+import { OBTENER_ACOMODOSILLA } from "../../../../gql/acomodosilla";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { getStatusvehiculo } from "../../../../servicios/statusvehiculo";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../../components/reutilizables/Titulo/Titulo";
 import FormStatusvehiculo from "../../../../components/admin/actualizar/statusvehiculos/FormStatusvehiculo";
-import ModalBasic from "../../../../components/reutilizables/ModalBasic/ModalBasic";
 
 export default function EditStatusvehiculo() {
-    const [solicitud, setSolicitud] = useState(false);
-    const [loading, setLoading] = useState(true);
     const { id } = useParams();
+    scrollTop();
 
-
-    useEffect(() => {
-        scrollTop();
-        const getData = async () => {
-            const data = await getStatusvehiculo(id);
-
-            setSolicitud(() => {
-                if (data.status === "success") return data.cargo
-            });
-            console.log(data.cargo);
-            setLoading(false); 
+    const { data: acomodosilla, loading: loadingAcomodosilla } = useQuery(OBTENER_ACOMODOSILLA, {
+        variables: {
+            id: id
         }
-
-        getData();
-
-        return () => {
-            setSolicitud(false);
-        }
-
-    }, [id]);
+    });
 
     return (
         <>
@@ -41,16 +25,16 @@ export default function EditStatusvehiculo() {
                 <Banner titulo="Actualizar Estados de Vehiculos" />
                 <Titulo titulo="Modifique los datos que requieran ser actualizados." />
                 
-                {
-                    loading === false && (
-                        <FormStatusvehiculo solicitud={solicitud} setLoading={setLoading}/>
-                    )
-                }
+                 {
+                    !loadingAcomodosilla ?
+                        <FormStatusvehiculo
+                            solicitud={acomodosilla.obtenerAcomodosilla}
+                        />
+                    :
+                    <Loader active inline='centered' size='massive' />
+                }                    
 
             </div>
-            <ModalBasic show={loading}>
-                <Loader active={loading} size="big">Cargando Pagina...</Loader>
-            </ModalBasic>
         </>
     )
 }

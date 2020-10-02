@@ -1,130 +1,124 @@
-import React  from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useFormik } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
+import { useMutation } from "@apollo/client";
+import { ACTUALIZAR_VEHICULO } from "../../../../gql/vehiculo";
 import { toast } from "react-toastify";
-import { Form, Button } from "semantic-ui-react";
-import { scrollTop } from "../../../../utils/reutilizables/scroll";
-import { updateVehiculo } from "../../../../servicios/vehiculo";
-import { getStorage } from "../../../../servicios/reutilizables/localStorage";
+import { Form, Button, Loader } from "semantic-ui-react";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
+import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
+import ModalMensaje from "../../../reutilizables/ModalMensaje/ModalMensaje";
 import "./FormVehiculo.scss";
 
 export default function FormVehiculo(props) {
-    const { setLoading, solicitud} = props;
+    const {solicitud} = props;
+    const [loading, setLoading] = useState(false);
+    const [abrir, setAbrir] = useState(false);
+    const [actualizarVehiculo] = useMutation(ACTUALIZAR_VEHICULO);
     const history = useHistory();
 
-    const statusvehiculos = getStorage("statusvehiculos");
+    const abrirModal = () => {
+        setAbrir(true);
+    }
 
-    const formik = useFormik({
-        initialValues:{
-            vehiculo: solicitud.vehiculo,
-            marca: solicitud.marca,
-            placas: solicitud.placas,
-            kilometraje: solicitud.kilometraje || "",
-            status_id: solicitud.status_id
-        },
-        validationSchema: validation(),
-        onSubmit: async (data) => {
-            try {
-                setLoading(true);
-                const response = await updateVehiculo(data, solicitud.id);
-
-                if (response.status === "success") {
-                    scrollTop();
-                    setLoading(false);
-                    toast.success("Dato creado con exito");
-                    history.push(`/admin/vehiculos/${solicitud.id}`);
-
-                } else {
-                    scrollTop();
-                    toast.error("Lo sentimos, los datos introducidos han sido incorrectos");
-                    setLoading(false);
-
-                }
-
-            }
-            catch (err) {
-                setLoading(false);
-                toast.error("Los datos no han podido ser guardados, intentelo mas tarde");
-                console.log(err);
-            }
-        }
-    })
+    const cerrarModal = () => {
+        setAbrir(false);
+        history.push(`/admin/vehiculos/${solicitud.id}`);
+    }
 
 
 
     return (
         <>
-            <div className="formulario-admin">
-                <Form onSubmit={formik.handleSubmit}>
-                    <Form.Input
-                        label="Nombre del vehiculo"
-                        name="vehiculo"
-                        icon='clipboard outline'
-                        value={formik.values.vehiculo}
-                        onChange={formik.handleChange}
-                        error={formik.errors.vehiculo}
-                    />
-                    <Form.Input
-                        label="Modelo del vehiculo"
-                        name="marca"
-                        icon='clipboard outline'
-                        value={formik.values.marca}
-                        onChange={formik.handleChange}
-                        error={formik.errors.marca}
-                    />
-                    <Form.Input
-                        label="Placas del vehiculo"
-                        name="placas"
-                        icon='clipboard outline'
-                        value={formik.values.placas}
-                        onChange={formik.handleChange}
-                        error={formik.errors.placas}
-                    />
-                    <Form.Input
-                        label="Kilometraje"
-                        name="vehiculo"
-                        icon='clipboard outline'
-                        value={formik.values.kilometraje}
-                        onChange={formik.handleChange}
-                        error={formik.errors.kilometraje}
-                    />
+            <Formik
+                initialValues={emptyValues(solicitud)}
+                validationSchema={validation()}
+                onSubmit={async (values, options) => {
+                    try {
+                        setLoading(true);
+                        const vehiculo = values;
 
-                    <div className="field">
-                        <label htmlFor="status_id">Estado del vehiculo</label>
-                        <select
-                            className="ui selection"
-                            id="status_id"
-                            name="status_id"
-                            value={formik.values.status_id}
-                            onChange={formik.handleChange}
-                            error={formik.errors.status_id}
-                        >
-                            <option>Seleccione una opcion</option>
-                            {
-                                statusvehiculos.map(d => <option key={d.id} value={d.id}>{d.status}</option>)
+                        await actualizarVehiculo({
+                            variables: {
+                                id: solicitud.id,
+                                input: vehiculo
                             }
-                        </select>
+                        });
+                        setLoading(false);
+                        abrirModal();
+
+                    }
+                    catch (err) {
+                        setLoading(false);
+                        toast.error(err.message);
+                    }
+                }}
+            >
+                {({ values, handleChange, errors, handleSubmit }) => (
+                    <div className="formulario-admin">
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Input
+                                label="Nombre del vehículo"
+                                name="nombre"
+                                icon='clipboard outline'
+                                value={values.nombre}
+                                onChange={handleChange}
+                                error={errors.nombre}
+                            />
+
+                            <Form.Input
+                                label="Modelo del vehículo"
+                                name="modelo"
+                                icon='clipboard outline'
+                                value={values.modelo}
+                                onChange={handleChange}
+                                error={errors.modelo}
+                            />
+
+                            <Form.Input
+                                label="Numero de placas"
+                                name="placas"
+                                icon='clipboard outline'
+                                value={values.placas}
+                                onChange={handleChange}
+                                error={errors.placas}
+                            />
+
+                            <Button type="submit">Actualizar Vehiculo</Button>
+                        </Form>
+                        <MessageForm />
+
                     </div>
-
-                    <Button type="submit">Actualizar Vehiculo</Button>
-                </Form>
-                <MessageForm />
-
-            </div>
-
+                )}
+            </Formik>
+            <ModalBasic show={loading}>
+                <Loader active={loading} size="big">Cargando Pagina...</Loader>
+            </ModalBasic>
+            <ModalMensaje
+                centered={true}
+                open={abrir}
+                onClose={cerrarModal}
+                titulo="Petición Exitosa"
+                texto="El Vehículo se ha actualizado con éxito."
+                boton="Salir"
+            />
         </>
     )
 }
 
+function emptyValues(props) {
+    return {
+        nombre: props.nombre,
+        modelo: props.modelo,
+        placas: props.placas,
+    }
+}
 
 function validation() {
     return Yup.object({
-        vehiculo: Yup.string().required("Este campo es obligatorio"),
-        marca: Yup.string().required("Este campo es obligatorio"),
-        placas: Yup.string().required("Este campo es obligatorio"),
-        kilometraje: Yup.string().required("Este campo es obligatorio"),
-        status_id: Yup.number().required("Este campo es obligatorio")
+        nombre: Yup.string().required("Este campo es obligatorio"),
+        modelo: Yup.string().required("Este campo es obligatorio"),
+        placas: Yup.string().required("Este campo es obligatorio")
     })
 }

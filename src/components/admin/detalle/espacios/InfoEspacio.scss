@@ -2,6 +2,6 @@
 @import "../../../../scss/contenedores/solicitudCaja.scss";
 
 .informacion-espacio{
-    @include solicitudCaja(4, "evento");
+    @include solicitudCaja(4, "admin");
      
 }
