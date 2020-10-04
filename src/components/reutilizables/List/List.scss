@@ -2,11 +2,11 @@
 
 .list-box{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(15, 6rem);
     @include min-w(100vw);
     @include min-h(100%);
-    padding: 2em;
+    padding: 2em 5em;
 
     .empty{
         grid-column: 2/span 3;

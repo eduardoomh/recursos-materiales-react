@@ -1,13 +1,8 @@
 @import "../../../scss/index.scss";
 
 //Estilos del contenedor de solicitudes en grid.
-.contenedor{
-    grid-column: 1/2;
-    grid-row: 2/3;
+.solicitud-grid{
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 3em 4rem 50rem 6rem;
-    @include min-h(58rem);
-    margin-bottom: 4rem;
-
+    grid-template-rows: 1fr;
 }

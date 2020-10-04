@@ -7,6 +7,7 @@ import { OBTENER_SALIDA } from "../../../gql/salida";
 import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import Banner from "../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../components/reutilizables/Titulo/Titulo";
+import Cargando from "../../../components/reutilizables/Cargando/Cargando";
 import InformacionSalida from "../../../components/VerSolicitudes/VerSalida/InformacionSalida";
 
 export default function VerSalida(){
@@ -40,7 +41,7 @@ export default function VerSalida(){
                         <InformacionSalida data={salida.obtenerSalida} loading={loading} setLoading={setLoading} />
                     </>
                 )
-                : <Loader active inline='centered' size='massive' />
+                : <Cargando />
             }
         </div>
     )

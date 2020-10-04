@@ -9,6 +9,14 @@
 
     .ui.left.icon.input{
         width: 35rem;
+        @include min-h(2.7em);
+        font-size: 1.2em;
+        color: #000;
+
+        input{
+            border-radius: 4px;
+            color: #4d483c;
+        }
  
     }
 
@@ -24,8 +32,10 @@
 
         p{
             margin: 0;
-            color: black;
+            color: $guindo;
             @include min-w(35rem);
+            font-size: 1.3em;
+            
 
             &:first-of-type{
                 font-weight: bold;

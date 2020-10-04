@@ -6,7 +6,7 @@ export default function Grid(props){
     const { data, tipo} = props;
 
     return (
-        <div className="list-box">
+        <div className="grid-box">
             {
                 data.length === 0 ?
                 <p className="empty">No existen solicitudes de esta categoria aun.</p>

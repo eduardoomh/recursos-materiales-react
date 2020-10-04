@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Image, Button } from "semantic-ui-react";
+import { Image, Button, Icon } from "semantic-ui-react";
 import "./Recordatorio.scss";
 
 export default function Recordatorio(props){
@@ -23,8 +23,14 @@ export default function Recordatorio(props){
             </div>
 
             <div>
-                <Button onClick={() => gotoRoute(url1)}>solicitudes de {tipo}</Button>
-                <Button onClick={() => gotoRoute(url2)}>crear {tipo}</Button>
+                <Button className="boton-guindo" onClick={() => gotoRoute(url1)} icon labelPosition='right' >
+                    solicitudes de {tipo}
+                    <Icon name="angle right" />
+                </Button>
+                <Button className="boton-guindo" onClick={() => gotoRoute(url2)} icon labelPosition='right'>
+                    crear {tipo}
+                    <Icon name="plus" />
+                </Button>
             </div>
         </div>
     )

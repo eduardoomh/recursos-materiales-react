@@ -7,6 +7,7 @@ export default function Lista(props){
 
     return (
         <div className="list-box">
+            
             {
                 data.length === 0 ?
                 <p className="empty">No existen solicitudes de esta categoria aun.</p>

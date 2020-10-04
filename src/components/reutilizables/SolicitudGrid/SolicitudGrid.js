@@ -17,10 +17,10 @@ export default function SolicitudGrid(props) {
     }, [titulo]);
 
     return (
-        <div className="solicitud-list">
+        <div className="solicitud-grid">
             <Titulo titulo={titulo} />
             <Filtrado setTitulo={setTitulo} filtro={filtro} setFiltro={setFiltro} />
             <Grid data={data} tipo={tipo} />
-        </div>
+        </div> 
     )
 }

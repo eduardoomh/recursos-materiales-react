@@ -46,5 +46,10 @@
         @include flexbox();
         flex-direction: column;
         grid-gap: 1.5em;
+
+        button{
+            @include boton();
+            
+        }
     }
 }

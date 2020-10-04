@@ -2,8 +2,7 @@
 
 //etilos para el componente banner
 .banner-titulo{
-    background-color: #fff0c3;
-    background-image: linear-gradient(to left, #fbfbfb, #eae4d8);
+    background-image: linear-gradient(to left, #feb, #ffe185);
     color: $guindo;
     @include flexbox();
     @include min-h(10rem);

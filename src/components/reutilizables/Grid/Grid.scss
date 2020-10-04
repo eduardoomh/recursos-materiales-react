@@ -1,13 +1,13 @@
 @import "../../../scss/index.scss";
 
 //estilos del grid de solicitudes
-.grid{
+.grid-box{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    padding: 2em;
-    grid-gap: 1rem;
-    @include min-h(50rem);
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(15, 6rem);
+    @include min-w(100vw);
+    @include min-h(100%);
+    padding: 2em 5em;
 
     .empty{
         grid-column: 2/span 3;

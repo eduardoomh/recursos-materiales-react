@@ -14,4 +14,14 @@
     }
 }
 
+.boton-dorado{
+    background-color: $guindo;
+    color: $dorado-claro;
+  
+  &:hover{
+    background-color: $dorado-claro;
+    color: $guindo;
+  }
+}
+
 }

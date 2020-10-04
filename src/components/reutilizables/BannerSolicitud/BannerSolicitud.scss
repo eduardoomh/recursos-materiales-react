@@ -4,32 +4,26 @@
 .banner-solicitud{
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 3em 1fr;
+    grid-template-rows: 1fr 1fr;
     grid-gap: 0;
-    background-color: rgba(250, 250, 255, 0.93);
-    color: $gris-oscuro;
+    background-image: linear-gradient(to left, #feb, #ffe185);
+    color: $guindo;
     @include min-h(15rem);
-    font-size: 1.1em;
 
     h1{
         grid-column: 1/2;
         grid-row: 1/2;
         @include flexbox();
-        @include min-h(5rem);
+        @include min-h(7.5rem);
         margin: 0;
-        color: $gris-oscuro;
-    }
-
-    .descripcion-buscador{
-        grid-column: 1/2;
-        grid-row: 2/3;
-        @include flexbox();
-        font-size: 1.2em;
+        font-size: 2.3em;
     }
 
     .buscador-banner{
         grid-column: 1/2;
         grid-row: 3/4;
         @include flexbox();
+        @include min-w(100%);
+        @include min-h(7.5rem);
     }
 }

@@ -1,0 +1,58 @@
+@import "../../../scss/index.scss";
+
+.cargando-pagina{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 10rem 5em 8em 50rem;
+    @include min-h(100vh);
+    @include min-w(100vw);
+    
+    color: $guindo;
+
+    div{
+        &:first-child{
+            background-image: linear-gradient(to left, #feb, #ffe185);
+            @include min-h(10rem);
+            @include min-w(100%);
+
+            h2{
+                @include flexbox();
+                @include min-h(100%);
+                @include min-w(100%);
+                color: $guindo;
+                font-size: 2em;
+                font-weight: bold;
+            }
+        }
+        &:nth-child(2){
+            background-color: white;
+            border: 1px solid #f0e9e9;
+            box-shadow: $box-shadow;
+            @include min-h(5em);
+            @include min-w(100%);
+
+            p{
+                @include flexbox();
+                font-size: 1.7em;
+                color: $gris-oscuro;
+            }
+        }
+
+        &:nth-child(3){
+            @include min-w(100%);
+            @include min-h(8em);
+        }
+
+        &:last-child{
+            @include flexbox();
+            article{
+                @include min-w(50rem);
+                @include min-h(50rem);
+                background-color:#FAFAFA;
+                border: 1px solid #d8d5d5 !important;
+                border-radius: 6px;
+
+            }
+        }
+    }
+}

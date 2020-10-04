@@ -23,5 +23,5 @@ export default function SolicitudList(props) {
             <Filtrado setTitulo={setTitulo} filtro={filtro} setFiltro={setFiltro} />
             <Lista data={data} tipo={tipo} />
         </div>
-    )
+    ) 
 }

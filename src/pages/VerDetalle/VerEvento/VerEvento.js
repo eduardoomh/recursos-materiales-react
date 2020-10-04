@@ -8,6 +8,7 @@ import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import Banner from "../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../components/reutilizables/Titulo/Titulo";
 import InformacionEvento from "../../../components/VerSolicitudes/VerEvento/InformacionEvento";
+import Cargando from "../../../components/reutilizables/Cargando/Cargando";
 
 export default function VerEvento() {
     const [loading, setLoading] = useState(false);
@@ -44,7 +45,7 @@ export default function VerEvento() {
                         <InformacionEvento data={evento.obtenerEvento} loading={loading} setLoading={setLoading} />
                     </>
                 )
-                : <Loader active inline='centered' size='massive' />
+                : <Cargando />
             }
 
         </div>

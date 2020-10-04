@@ -8,7 +8,6 @@ export default function BannerSolicitud(props){
     return(
         <div className="banner-solicitud">
             <h1>{titulo}</h1>
-            <p className="descripcion-buscador">Utilice el buscador para encontrar las solicitudes por nombre.</p>
             <div className="buscador-banner">
                 <Buscador  tipo={tipo} query={query} />
             </div>

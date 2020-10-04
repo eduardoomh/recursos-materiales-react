@@ -7,6 +7,7 @@ import { OBTENER_MANTENIMIENTO } from "../../../gql/mantenimiento";
 import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import Banner from "../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../components/reutilizables/Titulo/Titulo";
+import Cargando from "../../../components/reutilizables/Cargando/Cargando";
 import InformacionMantenimiento from "../../../components/VerSolicitudes/VerMantenimiento/InformacionMantenimiento";
 
 export default function VerMantenimiento(){
@@ -43,7 +44,7 @@ export default function VerMantenimiento(){
                         <InformacionMantenimiento data={mantenimiento.obtenerMantenimiento} loading={loading} setLoading={setLoading}  />
                     </>
                 )
-                : <Loader active inline='centered' size='massive' />
+                : <Cargando />
             }
         </div>
     )

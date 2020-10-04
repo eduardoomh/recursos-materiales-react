@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { Button } from "semantic-ui-react";
+import { Button, Icon } from "semantic-ui-react";
 import "./Banner.scss";
 
 export default function Banner() {
@@ -15,8 +15,14 @@ export default function Banner() {
             <div className="banner-info">
                 <h1>Consulte todas las solicitudes para Eventos, Manteminientos, Transportes y salidas de vehiculos.</h1>
                 <p className="boton-box">
-                    <Button onClick={() => gotoPage("/calendario")}>Ver Calendario</Button>
-                    <Button onClick={() => gotoPage("/usuario/perfil")}>Ver perfil</Button>
+                    <Button className="boton-dorado" onClick={() => gotoPage("/calendario")} icon labelPosition='left'>
+                        Ver Calendario
+                        <Icon name='calendar outline' />
+                    </Button>
+                    <Button className="boton-dorado" onClick={() => gotoPage("/usuario/perfil")} icon labelPosition='right'>
+                        Ver perfil
+                        <Icon name='user' />
+                    </Button>
                 </p>
 
 
