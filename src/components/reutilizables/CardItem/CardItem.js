@@ -5,7 +5,7 @@ import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import "./CardItem.scss";
 
 export default function CardItem(props){
-    const {tipo, id, fecha, contenido, status } = props;
+    const {tipo, id, fecha, contenido } = props;
     const history = useHistory();
     const cardClick = () => {
 

@@ -4,7 +4,7 @@ import { Icon, Button } from "semantic-ui-react";
 import "./Card.scss";
 
 export default function Card(props){
-    const {tipo, id, footer, contenido } = props;
+    const {tipo, id, contenido } = props;
     const history = useHistory();
     const cardClick = () => {
 

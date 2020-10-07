@@ -1,0 +1,15 @@
+@import "../../../scss/index.scss";
+
+.aprobar-modal{
+    @include flexbox();
+    flex-direction: column;
+
+    &__div{
+        @include flexbox();
+        @include min-w(100%);
+    }
+
+    &__boton{
+        @include boton();
+    }
+}

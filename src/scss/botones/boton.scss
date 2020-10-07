@@ -3,14 +3,14 @@
 
 @mixin boton(){
     font-size: 1.2rem;
-    background-color: $dorado-claro-hover;
-    color: $guindo;
+    background-color: $dorado-claro-hover !important;
+    color: $guindo !important;
     @include min-h(3.5rem);
     @include min-w(15rem);
 
 
     &:hover{
-        color: $dorado-claro;
-        background-color: $guindo;
+        color: $dorado-claro !important;
+        background-color: $guindo !important;
     }
 }

@@ -5,22 +5,22 @@
   scroll-behavior: smooth !important;
 
   .boton-guindo{
-    background-color: $dorado-claro;
-    color: $guindo;
+    background-color: $dorado-claro !important;
+    color: $guindo !important;
     
     &:hover{
-      background-color: $guindo;
-      color: $dorado-claro;
+      background-color: $guindo !important;
+      color: $dorado-claro !important;
     }
 }
 
 .boton-dorado{
-    background-color: $guindo;
-    color: $dorado-claro;
+    background-color: $guindo !important;
+    color: $dorado-claro !important;
   
   &:hover{
-    background-color: $dorado-claro;
-    color: $guindo;
+    background-color: $dorado-claro !important;
+    color: $guindo !important;
   }
 }
 

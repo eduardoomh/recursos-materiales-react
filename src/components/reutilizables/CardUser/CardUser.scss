@@ -1,0 +1,51 @@
+@import "../../../scss/index.scss";
+
+//Estilos del card de solicitudes
+
+.cardUser{
+    display: grid;
+    grid-template-columns: 1fr 14rem;
+    grid-template-rows: 3rem 3rem;
+    @include min-h(6rem);
+    margin: 0;
+    padding: 0;
+    border-radius: 4px;
+    border: 1px solid #ECE4E4;
+
+    .contenido{
+        grid-column: 1/2;
+        grid-row: 1/2;
+        border: 0;
+        font-size: 1.4em !important;
+        font-weight: bold;
+        @include flexbox();
+        justify-content: flex-start;
+        @include min-h(3rem);
+        padding-left: 2em;
+        padding-right: 2em;
+    }
+
+    .fecha{
+        grid-column: 1/2;
+        grid-row: 2/3;
+        @include flexbox();
+        justify-content: flex-start;
+        align-items: flex-start;
+        @include min-h(3rem);
+        font-size: 1.2em !important;
+        padding-left: 2.5em;
+        padding-right: 2em;
+
+    }
+
+    .botones{
+        grid-column: 2/3;
+        grid-row: 1/ span 2;
+        color: $guindo !important;
+
+        i{
+            color: $guindo !important;
+        }
+    }
+
+}

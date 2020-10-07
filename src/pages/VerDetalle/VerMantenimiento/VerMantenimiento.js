@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Loader } from "semantic-ui-react";
 import "./VerMantenimiento.scss";
 import { useQuery } from "@apollo/client";
 import { OBTENER_MANTENIMIENTO } from "../../../gql/mantenimiento";
+import { OBTENER_PERMISO_USUARIO } from "../../../gql/permiso";
+import useIdentity from "../../../utils/hooks/useIdentity";
 import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import Banner from "../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../components/reutilizables/Titulo/Titulo";
@@ -13,6 +14,7 @@ import InformacionMantenimiento from "../../../components/VerSolicitudes/VerMant
 export default function VerMantenimiento(){
     const [loading, setLoading] = useState(false);
     const { id } = useParams();
+    const { identity } = useIdentity();
 
     const { data: mantenimiento, loading: loadingMantenimiento, refetch } = useQuery(OBTENER_MANTENIMIENTO, {
         variables: {
@@ -20,28 +22,27 @@ export default function VerMantenimiento(){
         }
     })
 
-    useEffect(() => {
-
-        if (mantenimiento) {
-            refetch();
+    const { data: permiso, loading: loadingPermiso } = useQuery(OBTENER_PERMISO_USUARIO, {
+        variables: {
+            id: identity.id
         }
-
-
-        return () => {
-
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id]);
+    })
 
 
     return(
         <div className="ver-mantenimiento">
             {
-                mantenimiento && !loadingMantenimiento ? (
+                mantenimiento && permiso && !loadingMantenimiento && !loadingPermiso ? (
                     <>
                         <Banner titulo={mantenimiento.obtenerMantenimiento.nombre} />
                         <Titulo titulo={transformarFecha(mantenimiento.obtenerMantenimiento.fecha)} />
-                        <InformacionMantenimiento data={mantenimiento.obtenerMantenimiento} loading={loading} setLoading={setLoading}  />
+                        <InformacionMantenimiento 
+                            data={mantenimiento.obtenerMantenimiento} 
+                            loading={loading} 
+                            setLoading={setLoading}
+                            refetch={refetch}
+                            permiso={permiso.obtenerPermisoUsuario}   
+                        />
                     </>
                 )
                 : <Cargando />

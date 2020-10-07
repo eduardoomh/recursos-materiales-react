@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Loader } from "semantic-ui-react";
 import "./VerSalida.scss";
 import { useQuery } from "@apollo/client";
 import { OBTENER_SALIDA } from "../../../gql/salida";

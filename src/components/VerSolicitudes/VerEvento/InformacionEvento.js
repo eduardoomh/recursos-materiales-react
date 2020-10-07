@@ -1,6 +1,8 @@
 import React from "react";
 import { Tab } from "semantic-ui-react";
 import { scrollTop } from "../../../utils/reutilizables/scroll";
+import { useMutation } from "@apollo/client";
+import { APROBAR_EVENTO } from "../../../gql/evento";
 import Informacion from "./Informacion/informacion";
 import Aprobacion from "./Aprobacion/Aprobacion";
 import Evidencias from "./Evidencias/Evidencias";
@@ -8,9 +10,11 @@ import Opciones from "./Opciones/Opciones";
 import "./InformacionEvento.scss";
 
 export default function InformacionEvento(props) {
-    const { data, loading } = props;
+    const { data, loading, refetch, permiso } = props;
+    const [ aprobarEvento ] = useMutation(APROBAR_EVENTO);
+    
     scrollTop();
-
+ 
     const panes = [
         {
           menuItem: 'Informacion',
@@ -22,7 +26,14 @@ export default function InformacionEvento(props) {
         },
         {
           menuItem: 'Aprobacion',
-          render: () => <Aprobacion />,
+          render: () => <Aprobacion 
+                          verificado={data.verificado} 
+                          aprobado={data.aprobado} 
+                          refetch={refetch} 
+                          query={aprobarEvento} 
+                          departamento={data.departamento.id}
+                          permiso={permiso}
+                        />,
         },
         {
           menuItem: 'Opciones',

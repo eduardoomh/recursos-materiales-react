@@ -89,5 +89,11 @@ export const BUSCAR_MANTENIMIENTO = gql`
     }
 `;
 
+export const APROBAR_MANTENIMIENTO = gql`
+    mutation aprobarMantenimiento($id: ID! $input: actualizarMantenimiento! $contrasena: String!){
+        aprobarMantenimiento(id: $id input: $input contrasena: $contrasena)
+    }
+`;
+
 
 

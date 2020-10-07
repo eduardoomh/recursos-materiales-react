@@ -34,6 +34,29 @@ export const OBTENER_PERMISO = gql`
 }
 `;
 
+export const OBTENER_PERMISO_USUARIO = gql`
+    query obtenerPermisoUsuario($id: ID!){
+    obtenerPermisoUsuario(id: $id){
+        id
+        updatedAt
+        createdAt
+        usuario{
+            id
+            nombre
+            apellidos
+        }
+        departamento{
+            id
+            nombre
+        }
+        puesto{
+            id
+            nombre
+        }
+    }
+}
+`;
+
 export const CREAR_PERMISO = gql`
 mutation crearPermiso($input: crearPermiso!){
     crearPermiso(input: $input)

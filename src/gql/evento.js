@@ -68,3 +68,9 @@ export const BUSCAR_EVENTO = gql`
         }
     }
 `;
+
+export const APROBAR_EVENTO = gql`
+    mutation aprobarEvento($id: ID! $input: actualizarEvento! $contrasena: String!){
+        aprobarEvento(id: $id input: $input contrasena: $contrasena)
+    }
+`;

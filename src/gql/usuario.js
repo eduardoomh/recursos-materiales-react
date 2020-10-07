@@ -22,21 +22,32 @@ export const OBTENER_USUARIOS = gql`
             id
             nombre
             apellidos
+            createdAt
+        }
+  
+    }
+`;
+
+export const OBTENER_USUARIOS_PENDIENTES = gql`
+    query obtenerUsuariosPendientes($input: PaginateInput!){
+        obtenerUsuariosPendientes(input: $input){
+            id
+            nombre
+            apellidos
+            createdAt
         }
   
     }
 `;
 
 export const OBTENER_USUARIO = gql`
-    query obtenerUsuario($id: ID, $username: String){
-        obtenerUsuario(id: $id, username: $username){
+    query obtenerUsuario($id: ID!){
+        obtenerUsuario(id: $id){
             id
-            name
-            username
-            email
-            siteWeb
-            description
-            avatar
+            nombre
+            apellidos
+            correo
+            numero_control
             estatus
             createdAt
         }
@@ -60,8 +71,18 @@ export const BORRAR_AVATAR = gql`
 `;
 
 export const ACTUALIZAR_USUARIO = gql`
-    mutation updateUser($input: userUpdateInput){
-        updateUser(input: $input)
+    mutation actualizarUsuario($input: actualizarUsuarioInput!){
+        actualizarUsuario(input: $input){
+            id
+            nombre
+            apellidos
+            correo
+            numero_control
+            descripcion
+            avatar
+            estatus
+            telefono
+        }
     }
 `;
 
@@ -72,5 +93,12 @@ export const BUSCAR = gql`
             username
             avatar
         }
+    }
+`;
+
+
+export const APROBAR_USUARIO = gql`
+    mutation aprobarUsuario($id: ID!){
+        aprobarUsuario(id: $id)
     }
 `;

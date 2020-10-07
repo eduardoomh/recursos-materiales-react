@@ -1,5 +1,4 @@
 import React from "react";
-import { Loader } from "semantic-ui-react";
 import "./Cargando.scss";
 
 export default function Cargando(){

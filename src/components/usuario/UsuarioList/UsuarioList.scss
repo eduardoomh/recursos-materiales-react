@@ -1,0 +1,12 @@
+@import "../../../scss/index.scss";
+
+.usuarios-tab{
+    @include flexbox();
+
+    .ui.pointing.secondary.menu{
+        margin-top: 1.5em;
+        font-size: 1.3em;        
+        @include min-w(55rem);
+        @include min-h(100%);
+    }
+}

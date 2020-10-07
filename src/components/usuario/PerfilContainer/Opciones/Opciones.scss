@@ -1,15 +1,16 @@
 @import "../../../../scss/index.scss";
 
-.aprobacion{
+.opciones-perfil{
     @include min-w(50rem);
     @include min-h(100vh);
     margin-top: 4em;
+    @include min-w(50rem);
+    @include min-h(100vh);
 
     p{
         @include min-h(8rem);
         @include flexbox();
         font-size: 1.3em;
-        text-align: center;
     }
     div{
         @include flexbox();

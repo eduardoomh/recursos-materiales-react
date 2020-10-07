@@ -90,6 +90,12 @@ export default function Header(props) {
                         <li><Link to="/usuario/perfil">Perfil</Link></li>
                         <li><Link to="/usuario/perfil/editar">Editar Perfil</Link></li>
                         <li><Link to="/usuario/solicitudes">Solicitudes</Link></li>
+                        {
+                            identity.estatus === "administrador" && (
+                                <li><Link to="/usuarios">Usuarios</Link></li>
+                            )
+                        }
+                        
                         <li onClick={() => logout()}>Cerrar Sesion</li>
                     </ul>
                 </div>

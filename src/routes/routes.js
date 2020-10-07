@@ -52,6 +52,7 @@ import DetalleStatusvehiculo from "../pages/administrador/detalle/statusvehiculo
 import DetalleSubdireccion from "../pages/administrador/detalle/subdirecciones/DetalleSubdireccion";
 import DetalleUbicacion from "../pages/administrador/detalle/ubicaciones/DetalleUbicacion";
 import DetalleVehiculo from "../pages/administrador/detalle/vehiculos/DetalleVehiculo";
+import Usuarios from "../pages/usuario/Usuarios/Usuarios";
 
 
 export const routes = [
@@ -418,6 +419,14 @@ export const routesAdmin = [
         component: DetalleVehiculo,
         exact: true,
         admin: true 
+
+    },
+    {
+        path: "/usuarios",
+        layout: LayoutBasic,
+        component: Usuarios,
+        exact: true,
+        admin: true
 
     }
 

@@ -3,6 +3,14 @@
 @import "../../../scss/botones/boton.scss";
 
 .perfil-container{
-    @include solicitudCaja(6, "evento");
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 3em 1fr;
+    @include flexbox();
+
+    .ui.pointing.secondary.menu{
+        margin-top: 2em;
+        font-size: 1.3em;
+    }
 
 }

@@ -7,6 +7,7 @@ import "./EditarPerfil.scss";
 
 export default function EditarPerfil(){
     scrollTop();
+    
     return(
         <div>
             <Banner titulo="Editar perfil" />
@@ -14,4 +15,4 @@ export default function EditarPerfil(){
             <EditarPerfilContainer />
         </div>
     )
-}
+}  
