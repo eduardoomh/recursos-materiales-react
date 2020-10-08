@@ -1,0 +1,30 @@
+@import "../../../scss/index.scss";
+
+.modal-calendario{
+
+    &__data{
+        @include flexbox();
+        justify-content: flex-start;
+        @include min-h(3em);
+        padding-left: .5em;
+        font-size: 1.3em;
+        color: $guindo;
+        border: 1px solid $borde-gris;
+        margin-bottom: .5em;
+
+        p{
+            @include min-w(100%);
+            @include min-h(100%);
+            margin-left: .5em;
+
+            &:hover{
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+    }
+
+    button{
+        background-color: $dorado-claro;
+    }
+}

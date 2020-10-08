@@ -7,7 +7,7 @@ import { Modal, Button, Header, Form, Icon } from "semantic-ui-react";
 import "./AprobarModal.scss";
 
 export default function AprobarModal(props) {
-    const { abrir, cerrar, tipo, verificado, refetch, query } = props;
+    const { abrir, cerrar, verificado, refetch, query } = props;
     const { id } = useParams();
 
     return (

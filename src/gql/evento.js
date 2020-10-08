@@ -74,3 +74,13 @@ export const APROBAR_EVENTO = gql`
         aprobarEvento(id: $id input: $input contrasena: $contrasena)
     }
 `;
+
+export const EVENTO_FECHAS = gql`
+    query eventoFechas($input: fechas!){
+        eventoFechas(input: $input){
+            id
+            nombre
+            fecha
+        }
+    }
+`;

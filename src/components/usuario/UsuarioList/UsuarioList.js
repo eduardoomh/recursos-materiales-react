@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Button, Image, Tab} from "semantic-ui-react";
+import { Tab } from "semantic-ui-react";
 import Aprobados from "./Aprobados/Aprobados";
 import Pendientes from "./Pendientes/Pendientes";
 import "./UsuarioList.scss";

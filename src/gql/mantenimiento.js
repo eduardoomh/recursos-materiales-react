@@ -95,5 +95,17 @@ export const APROBAR_MANTENIMIENTO = gql`
     }
 `;
 
+export const MANTENIMIENTO_FECHAS = gql`
+    query mantenimientoFechas($input: fechas!){
+        mantenimientoFechas(input: $input){
+            id
+            nombre
+            fecha
+            trabajo_realizado
+        }
+    }
+`;
+
+
 
 

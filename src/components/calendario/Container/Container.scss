@@ -2,64 +2,104 @@
 
 .container-calendar{
     display: grid;
-    grid-template-columns: 1fr 60rem 1fr;
+    grid-template-columns: 1fr 65rem 1fr;
     grid-template-rows: 1fr;
-    margin-top: 2rem;
+    margin-top: 2rem;  
 
     #calendario{
         grid-column: 2/3;
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 4rem 1fr;
-        @include min-w(60rem);
-        @include min-h(30rem);
+        grid-template-rows: 6rem 3rem 1fr;
+        @include min-w(65rem);
+        @include min-h(65rem);
         margin:0;
         padding: 0;
-        bordeR: 1px solid $borde-gris;
+        border: 1px solid $borde-gris;
 
         .header-calendar{
             grid-column: 1/2;
             grid-row: 1/2;
             display: grid;
-            grid-template-columns: 4rem 1fr 4rem;
-            grid-template-rows: 4rem !important;
-            @include min-h(4rem);
+            grid-template-columns: 10rem 1fr 12rem;
+            grid-template-rows: 6rem !important;
+            @include min-h(6rem);
+            align-items: center;
             margin: 0;
+            padding: 0 1em;
+            background-color: #f2f2e9;
 
             button{
-                @include min-w(4em);
-                border-radius: 0;
-                padding: 0;
-                background-color: transparent;
-                color: $guindo;
-
-                &:hover{
-                    color: $dorado-oscuro;
-                }
-
-                i{
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    @include min-w(100%);
-                    @include min-h(100%);
-                    padding: 0;
-                    margin: 0;
-
-                }
+                @include boton();
+                @include min-h(2.5em);
+                @include min-w(10em);
+                font-size: 1.2em;
             }
 
             p{
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                @include flexbox();
                 @include min-h(100%);
+                font-size: 1.4em;
+                font-weight: bold;
+                padding: 0;
+                margin: 0;
+            }
+        }
+
+        .header-dias{
+            grid-column: 1/2;
+            grid-row: 2/3;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: 1fr;
+            background-color: #f2f2e9;
+            border-top: 1px solid $borde-gris;
+            border-bottom: 1px solid $borde-gris;
+
+            p{
+                @include flexbox();
+                font-size: 1.2em;
+                margin: 0;
             }
         }
 
         .box-calendar{
             grid-column: 1/2;
-            grid-row: 2/3;
+            grid-row: 3/4;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+
+            .diaBox{
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 1em 1fr;
+                padding: .5em;
+                font-size: 1.2em;
+                border: 1px solid $borde-gris;
+                border-left: none;
+                border-top: none;
+
+                &:hover{
+                    transition: .2s;
+                    cursor: pointer;
+                    background-color: rgb(241, 240, 240);
+                }
+
+                .number{
+                    font-weight: bold;
+                    color: $guindo;
+                }
+
+                &__box{
+                    @include flexbox();
+                }
+
+                &:nth-child(7n){
+                    border-right: none;
+                }
+          
+            }
         }
     }
     
