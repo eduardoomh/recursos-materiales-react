@@ -39,6 +39,8 @@ export default function Informacion(props) {
                             <BoxFormData
                                 titulo="Solicitud creada por"
                                 data={`${data.usuario.nombre} ${data.usuario.apellidos}`}
+                                avatar={data.usuario.avatar}
+                                user={true}
                             />
 
 

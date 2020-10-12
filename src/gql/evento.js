@@ -33,6 +33,7 @@ export const OBTENER_EVENTO = gql`
                 id
                 nombre
                 apellidos
+                avatar
             }
             acomodo_sillas{
                 id

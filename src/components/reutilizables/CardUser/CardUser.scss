@@ -4,7 +4,7 @@
 
 .cardUser{
     display: grid;
-    grid-template-columns: 1fr 14rem;
+    grid-template-columns: 6rem 1fr 14rem;
     grid-template-rows: 3rem 3rem;
     @include min-h(6rem);
     margin: 0;
@@ -12,8 +12,31 @@
     border-radius: 4px;
     border: 1px solid #ECE4E4;
 
-    .contenido{
+    &__avatar{
         grid-column: 1/2;
+        grid-row: 1/span 2;
+        @include flexbox();
+        @include min-h(100%);
+        padding-left: 1em;
+
+        div{
+            @include min-h(4.5rem);
+            @include min-w(4.5rem);
+            overflow: hidden;
+
+            img{
+                @include min-h(4.5rem);
+                border-radius: 50%;
+                object-fit: cover;
+                border: 1px solid #ECE4E4;
+            }
+        }
+
+
+    }
+
+    .contenido{
+        grid-column: 2/3;
         grid-row: 1/2;
         border: 0;
         font-size: 1.4em !important;
@@ -21,25 +44,25 @@
         @include flexbox();
         justify-content: flex-start;
         @include min-h(3rem);
-        padding-left: 2em;
         padding-right: 2em;
+        padding-left: 1em;
+        color: $guindo;
     }
 
     .fecha{
-        grid-column: 1/2;
+        grid-column: 2/3;
         grid-row: 2/3;
         @include flexbox();
         justify-content: flex-start;
         align-items: flex-start;
         @include min-h(3rem);
         font-size: 1.2em !important;
-        padding-left: 2.5em;
-        padding-right: 2em;
+        padding-left: 1.2em;
 
     }
 
     .botones{
-        grid-column: 2/3;
+        grid-column: 3/4;
         grid-row: 1/ span 2;
         color: $guindo !important;
 

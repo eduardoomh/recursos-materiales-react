@@ -61,6 +61,7 @@ export const OBTENER_MANTENIMIENTO = gql`
                 id
                 nombre
                 apellidos
+                avatar
             }
         }
   

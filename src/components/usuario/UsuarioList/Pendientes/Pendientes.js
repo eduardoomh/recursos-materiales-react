@@ -16,6 +16,7 @@ export default function Pendientes(props){
                         key={d.id} 
                         nombre={`${d.nombre} ${d.apellidos}`} 
                         fecha={formatDate(d.createdAt)} 
+                        avatar={d.avatar}
                         id={d.id} 
                         refrescarPendientes={refrescarPendientes}
                         refrescarAprobados={refrescarAprobados}

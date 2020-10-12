@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useIdentity from "../../utils/hooks/useIdentity";
-import { Icon } from "semantic-ui-react";
+import { Icon, Image } from "semantic-ui-react";
+import defaultUser from "../../assets/img/default_user.png";
 import "./Header.scss";
 
 export default function Header(props) {
@@ -85,7 +86,7 @@ export default function Header(props) {
                 <li className="vacio"></li>
             </ul>
             <div>
-                <div className="user-name">{userName} <Icon name="angle down" />
+                <div className="user-name"><span className="avatar-imagen"><Image src={identity.avatar === null ? defaultUser : identity.avatar} /></span> <Icon name="angle down" />
                     <ul className="user-submenu">
                         <li><Link to="/usuario/perfil">Perfil</Link></li>
                         <li><Link to="/usuario/perfil/editar">Editar Perfil</Link></li>

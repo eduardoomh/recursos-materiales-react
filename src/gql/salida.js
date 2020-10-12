@@ -31,6 +31,7 @@ export const OBTENER_SALIDA = gql`
                 id
                 nombre
                 apellidos
+                avatar
             }
             vehiculo{
                 id

@@ -22,7 +22,7 @@
 
         @if $tipo == "evento"{
             grid-template-rows: 2fr repeat($value, 1fr);
-            @include min-h(75rem);
+            @include min-h(70rem);
         }
 
         @if $tipo == "mantenimiento"{

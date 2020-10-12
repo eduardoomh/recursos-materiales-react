@@ -28,12 +28,26 @@ export const OBTENER_USUARIOS = gql`
     }
 `;
 
+export const OBTENER_USUARIOS_APROBADOS = gql`
+    query obtenerUsuarios($input: PaginateInput!){
+        obtenerUsuarios(input: $input){
+            id
+            nombre
+            avatar
+            apellidos
+            createdAt
+        }
+  
+    }
+`;
+
 export const OBTENER_USUARIOS_PENDIENTES = gql`
     query obtenerUsuariosPendientes($input: PaginateInput!){
         obtenerUsuariosPendientes(input: $input){
             id
             nombre
             apellidos
+            avatar
             createdAt
         }
   
@@ -56,8 +70,8 @@ export const OBTENER_USUARIO = gql`
 `;
 
 export const ACTUALIZAR_AVATAR = gql`
-    mutation updateAvatar($file: Upload){
-        updateAvatar(file: $file){
+    mutation actualizarAvatar($file: Upload){
+        actualizarAvatar(file: $file){
             status,
             urlAvatar
         }

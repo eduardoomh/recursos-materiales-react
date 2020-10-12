@@ -10,7 +10,29 @@
         @include flexbox();
         font-size: 1.3em;
     }
-    div{
+    &__contenido{
         @include flexbox();
+    }
+    &__avatar{
+        @include flexbox();
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 2em;
+        padding: 0;
+
+        div{
+            @include min-w(12rem);
+            overflow: hidden;
+
+            img{
+                @include min-h(12rem);
+                object-fit: cover;
+                border: 1px solid #aeabab;
+                border-radius: 50%;
+            }
+        }
+
+
+
     }
 }

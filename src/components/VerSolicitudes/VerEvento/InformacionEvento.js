@@ -22,7 +22,7 @@ export default function InformacionEvento(props) {
         },
         {
           menuItem: 'Evidencia',
-          render: () => <Evidencias />,
+          render: () => <Evidencias id={data.id} />,
         },
         {
           menuItem: 'Aprobacion',

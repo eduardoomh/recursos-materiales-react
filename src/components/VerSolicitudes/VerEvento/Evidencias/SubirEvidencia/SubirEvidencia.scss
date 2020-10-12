@@ -1,0 +1,18 @@
+@import "../../../../../scss/index.scss";
+
+.subir-evidencia{
+    &__contenido{
+        @include flexbox();
+        flex-direction: column;
+
+        p{
+            font-size: 1.3em;
+        }
+
+        .boton-guindo{
+            @include boton();
+            @include min-h(3rem);
+            @include min-w(10rem);
+        }
+    }
+}

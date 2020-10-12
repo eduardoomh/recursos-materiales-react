@@ -142,6 +142,18 @@ header{
                 }
             }
 
+            .avatar-imagen{
+                @include min-h(3rem);
+                @include min-w(3rem);
+                overflow: hidden;
+                margin-right: .5em;
+
+                img{
+                    @include min-h(3rem);
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+            }
 
             .user-submenu{
                 @include submenu;

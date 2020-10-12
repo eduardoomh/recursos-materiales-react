@@ -6,6 +6,7 @@ import Register from "../../components/Authenticated/Register/Register";
 export default function Authenticated(){
 
     const [ isLogin, setIsLogin ] = useState(true);
+    const [ loading, setLoading] = useState(false);
 
     const changeLogin = () => {
         setIsLogin(!isLogin);
@@ -14,7 +15,15 @@ export default function Authenticated(){
         <div className="authenticated">
             <h1>Sistema de Gestión de Recursos Materiales y Servicios</h1>
             {
-               isLogin === true ? <Login  /> : <Register setIsLogin={setIsLogin} />
+               isLogin === true ? <Login 
+                                    loading={loading} 
+                                    setLoading={setLoading} 
+                                /> : 
+                                <Register 
+                                    setIsLogin={setIsLogin} 
+                                    loading={loading} 
+                                    setLoading={setLoading} 
+                                />
             }
             {
                 isLogin === true ? (

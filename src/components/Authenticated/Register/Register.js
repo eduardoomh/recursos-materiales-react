@@ -8,7 +8,7 @@ import { CREAR_USUARIO } from "../../../gql/usuario";
 import "./Register.scss";
 
 export default function Register(props) {
-    const { setIsLogin } = props;
+    const { setIsLogin, loading, setLoading } = props;
     const [dataUser, setDataUser] = useState(false);
     const [crearUsuario] = useMutation(CREAR_USUARIO);
     const [abrir, setAbrir] = useState(false)
@@ -35,6 +35,7 @@ export default function Register(props) {
         }),
         onSubmit: async (formData) => {
             try {
+                setLoading(true);
                 const nuevoUsuario = formData;
                 delete nuevoUsuario.repetir_contrasena;
 
@@ -43,12 +44,14 @@ export default function Register(props) {
                         input: nuevoUsuario
                     }
                 });
+                setLoading(false);
                 toast.success("Usuario registrado correctamente");
                 setDataUser(data.crearUsuario.nombre);
                 abrirModal();
 
             }
             catch (err) {
+                setLoading(false);
                 toast.error(err.message);
             }
         }
@@ -118,7 +121,7 @@ export default function Register(props) {
                     error={formik.errors.repetir_contrasena}
 
                 />
-                <Button type="input">Crear Cuenta</Button>
+                <Button type="input" loading={loading}>Crear Cuenta</Button>
             </Form>
             <Modal
                 centered={true}

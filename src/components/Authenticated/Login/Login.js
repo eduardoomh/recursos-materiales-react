@@ -9,8 +9,9 @@ import { setToken, decodeToken } from "../../../utils/reutilizables/token";
 import { Form, Button, Image } from "semantic-ui-react";
 import "./Login.scss";
 import logo from "../../../assets/img/logo.png";
-
-export default function Login(){
+ 
+export default function Login(props){
+    const { loading, setLoading } = props;
     const { setLogin } = useIdentity();
     const [login] = useMutation(LOGIN);
 
@@ -24,8 +25,9 @@ export default function Login(){
             contrasena: Yup.string().required("La contraseña es obligatoria.")
         }),
         onSubmit: async (formData) => {
- 
+            
             try{       
+                setLoading(true);
                 const {data} = await login({
                     variables: {
                         input: formData
@@ -34,10 +36,12 @@ export default function Login(){
                 const {token} = data.login;
                 setToken(token);
                 setLogin(decodeToken(token));
+                setLoading(false);
                 toast.success("Ha ingresado exitosamente al sistema");
                 console.log(token);
             }
             catch(err){
+                setLoading(false);
                 toast.error(err.message);
                 console.log(err.message);
             }
@@ -65,7 +69,7 @@ export default function Login(){
                 onChange={formik.handleChange}
                 error={formik.errors.contrasena}
             />
-            <Button type="submit">Ingresar</Button>
+            <Button type="submit" loading={loading}>Ingresar</Button>
         </Form>
 
     )
