@@ -12,13 +12,10 @@ export default function Card(props){
     }
 
     return(
-        <article className="card"> 
+        <article className="card" onClick={() => cardClick()}> 
             <p className="contenido">{contenido}</p>
             <p className="botones">
-                <Button onClick={() => cardClick()} className="boton-guindo" icon labelPosition="right">
-                    Mas informacion
-                    <Icon name="angle right" />
-                </Button> 
+                <Icon name="angle right" size="big"  />
             </p>
         </article>
     )

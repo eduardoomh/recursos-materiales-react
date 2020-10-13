@@ -4,6 +4,7 @@ import "./VerMantenimiento.scss";
 import { useQuery } from "@apollo/client";
 import { OBTENER_MANTENIMIENTO } from "../../../gql/mantenimiento";
 import { OBTENER_PERMISO_USUARIO } from "../../../gql/permiso";
+import { OBTENER_EVIDENCIAS } from "../../../gql/evidencia";
 import useIdentity from "../../../utils/hooks/useIdentity";
 import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import Banner from "../../../components/reutilizables/Banner/Banner";
@@ -28,11 +29,20 @@ export default function VerMantenimiento(){
         }
     })
 
+    const { data: evidencias, loading: loadingEvidencias, refetch: refrescarEvidencias } = useQuery(OBTENER_EVIDENCIAS, {
+        variables: {
+            input:{
+                id: id,
+                tipo: "mantenimientos"
+            }
+        }
+    })
+
 
     return(
         <div className="ver-mantenimiento">
             {
-                mantenimiento && permiso && !loadingMantenimiento && !loadingPermiso ? (
+                mantenimiento && permiso && evidencias && !loadingMantenimiento && !loadingPermiso && !loadingEvidencias ? (
                     <>
                         <Banner titulo={mantenimiento.obtenerMantenimiento.nombre} />
                         <Titulo titulo={transformarFecha(mantenimiento.obtenerMantenimiento.fecha)} />
@@ -41,7 +51,9 @@ export default function VerMantenimiento(){
                             loading={loading} 
                             setLoading={setLoading}
                             refetch={refetch}
-                            permiso={permiso.obtenerPermisoUsuario}   
+                            permiso={permiso.obtenerPermisoUsuario}  
+                            evidencias={evidencias.obtenerEvidencias}
+                            refrescarEvidencias={refrescarEvidencias} 
                         />
                     </>
                 )

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import "./VerSalida.scss";
 import { useQuery } from "@apollo/client";
 import { OBTENER_SALIDA } from "../../../gql/salida";
+import { OBTENER_EVIDENCIAS } from "../../../gql/evidencia";
 import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import Banner from "../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../components/reutilizables/Titulo/Titulo";
@@ -16,6 +17,15 @@ export default function VerSalida(){
     const { data: salida, loading: loadingSalida, refetch } = useQuery(OBTENER_SALIDA, {
         variables: {
             id: id
+        }
+    })
+
+    const { data: evidencias, loading: loadingEvidencias, refetch: refrescarEvidencias } = useQuery(OBTENER_EVIDENCIAS, {
+        variables: {
+            input:{
+                id: id,
+                tipo: "salidas"
+            }
         }
     })
 
@@ -37,7 +47,13 @@ export default function VerSalida(){
                     <>
                         <Banner titulo={salida.obtenerSalida.destino} />
                         <Titulo titulo={transformarFecha(salida.obtenerSalida.fecha)} />
-                        <InformacionSalida data={salida.obtenerSalida} loading={loading} setLoading={setLoading} />
+                        <InformacionSalida 
+                            data={salida.obtenerSalida} 
+                            loading={loading} 
+                            setLoading={setLoading} 
+                            evidencias={evidencias.obtenerEvidencias}
+                            refrescarEvidencias={refrescarEvidencias}
+                        />
                     </>
                 )
                 : <Cargando />

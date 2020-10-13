@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Button, Icon } from "semantic-ui-react";
-import useIdentity from "../../../../utils/hooks/useIdentity";
-import CheckStatus from "../../../reutilizables/CheckStatus/CheckStatus";
+import useIdentity from "../../../utils/hooks/useIdentity";
+import CheckStatus from "../../reutilizables/CheckStatus/CheckStatus";
+import AprobarModal from "../../reutilizables/AprobarModal/AprobarModal";
 import "./Aprobacion.scss";
-import AprobarModal from "../../../reutilizables/AprobarModal/AprobarModal";
 
 export default function Aprobacion(props) {
-    const { verificado, aprobado, refetch, query, departamento, permiso } = props;
+    const { verificado, aprobado, refetch, query, departamento, permiso, tipo } = props;
     const [abrir, setAbrir] = useState(false);
     const { identity } = useIdentity();
 
@@ -24,7 +24,6 @@ export default function Aprobacion(props) {
                 verificado={verificado}
                 aprobado={aprobado}
             />
-
             <p>
                 {
                     verificado && aprobado ?
@@ -35,27 +34,27 @@ export default function Aprobacion(props) {
             </p>
             {
                 !verificado && identity.estatus === "administrador" &&
-                    <>
-                        <div>
-                            <Button icon labelPosition='right' className="boton-guindo" onClick={() => abrirModal()} >
-                                Verificar Solicitud
+                <>
+                    <div>
+                        <Button icon labelPosition='right' className="boton-guindo" onClick={() => abrirModal()} >
+                            Verificar Solicitud
                                 <Icon name='check' />
-                            </Button>
-                        </div>
-                    </>
+                        </Button>
+                    </div>
+                </>
             }
-             {
+            {
                 verificado && !aprobado && permiso?.departamento.id === departamento && permiso?.puesto.nombre === "Jefe" &&
-                    <>
-                        <div>
-                            <Button icon labelPosition='right' className="boton-guindo" onClick={() => abrirModal()} >
-                                Aprobar Solicitud
+                <>
+                    <div>
+                        <Button icon labelPosition='right' className="boton-guindo" onClick={() => abrirModal()} >
+                            Aprobar Solicitud
                                 <Icon name='check' />
-                            </Button>
-                        </div>
-                    </>
+                        </Button>
+                    </div>
+                </>
             }
-            <AprobarModal abrir={abrir} cerrar={cerrarModal} tipo="evento" verificado={verificado} refetch={refetch} query={query} />
+            <AprobarModal abrir={abrir} cerrar={cerrarModal} tipo={tipo} verificado={verificado} refetch={refetch} query={query} />
         </div>
     )
 }

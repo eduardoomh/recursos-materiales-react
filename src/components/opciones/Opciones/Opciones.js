@@ -4,11 +4,11 @@ import { Button, Icon } from "semantic-ui-react";
 import "./Opciones.scss";
 
 export default function Aprobacion(props){
-    const { id } = props;
+    const { id, tipo} = props;
     const history = useHistory();
 
     const gotoUpdate = (id) => {
-        history.push(`/actualizar/salida/${id}`);
+        history.push(`/actualizar/${tipo}/${id}`);
     }
     
     return(

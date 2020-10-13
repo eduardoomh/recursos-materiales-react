@@ -8,10 +8,11 @@ import { Modal, Button, Icon, Table } from "semantic-ui-react";
 import "./ModalUsuarios.scss";
 
 export default function ModalUsuarios(props) {
-    const { id, abrir, cerrar, refrescarAprobados, refrescarPendientes } = props;
+    const { id, abrir, cerrarModal, refrescarAprobados, refrescarPendientes } = props;
     const [abrirDos, setAbrirDos] = useState(false);
     const { identity } = useIdentity();
     const [aprobarUsuario] = useMutation(APROBAR_USUARIO);
+
     const { data, loading, refetch } = useQuery(OBTENER_USUARIO, {
         variables: {
             id: id
@@ -30,7 +31,7 @@ export default function ModalUsuarios(props) {
             refrescarAprobados();
             refrescarPendientes();
             setAbrirDos(false);
-            cerrar();
+            cerrarModal();
 
         }
         catch (error) {
@@ -43,11 +44,15 @@ export default function ModalUsuarios(props) {
         setAbrirDos(true);
     }
 
+    const cerrarConfirmacion = () => {
+        setAbrirDos(false);
+    }
+
 
     return (
         <>
             <Modal
-                onClose={cerrar}
+                onClose={cerrarModal}
                 open={abrir}
                 className="modal-usuario-box"
             >
@@ -105,7 +110,7 @@ export default function ModalUsuarios(props) {
                     }
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button onClick={cerrar} primary>
+                    <Button onClick={cerrarModal} primary>
                         Cerrar <Icon name='right chevron' />
                     </Button>
                 </Modal.Actions>
@@ -114,14 +119,14 @@ export default function ModalUsuarios(props) {
             <Modal
                 size="mini"
                 open={abrirDos}
-                onClose={abrirDos}
+                onClose={() => cerrarConfirmacion()}
             >
                 <Modal.Header>Aprobar usuario</Modal.Header>
                 <Modal.Content>
                     <p>Esta seguro de querer aprobar este usuario?</p>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button negative onClick={() => setAbrirDos(false)}>
+                    <Button negative onClick={() => cerrarConfirmacion()}>
                         No
           </Button>
                     <Button positive onClick={() => aprobar()}>

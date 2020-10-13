@@ -1,13 +1,13 @@
 import React from "react";
 import { Tab } from "semantic-ui-react";
 import { scrollTop } from "../../../utils/reutilizables/scroll";
-import Evidencias from "./Evidencias/Evidencias";
-import Opciones from "./Opciones/Opciones";
+import Evidencias from "../../evidencias/Evidencias/Evidencias";
+import Opciones from "../../opciones/Opciones/Opciones";
 import Informacion from "./Informacion/Informacion";
 import "./InformacionSalida.scss";
 
 export default function InformacionSalida(props) {
-    const { data, loading } = props;
+    const { data, loading, evidencias, refrescarEvidencias } = props;
     scrollTop();
 
     const panes = [
@@ -17,11 +17,15 @@ export default function InformacionSalida(props) {
         },
         {
           menuItem: 'Evidencia',
-          render: () => <Evidencias />,
+          render: () => <Evidencias                       
+                          id={data.id} 
+                          evidencias={evidencias} 
+                          refrescarEvidencias={refrescarEvidencias} 
+                          tipo="salidas" />,
         },
         {
           menuItem: 'Opciones',
-          render: () => <Opciones id={data.id} />,
+          render: () => <Opciones id={data.id} tipo="salida" />,
         },
       ]
 

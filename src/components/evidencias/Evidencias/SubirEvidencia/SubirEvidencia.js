@@ -1,13 +1,13 @@
 import React, { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { useMutation } from "@apollo/client";
-import { CREAR_EVIDENCIA } from "../../../../../gql/evidencia";
+import { CREAR_EVIDENCIA } from "../../../../gql/evidencia";
 import { toast } from "react-toastify";
 import { Icon, Button, Modal } from "semantic-ui-react";
 import "./SubirEvidencia.scss";
 
 export default function SubirEvidencia(props) {
-    const { abrir, cerrarModal, id } = props;
+    const { abrir, cerrarModal, id, refrescarEvidencias, tipo } = props;
     const [loading, setLoading] = useState(false);
     const [crearEvidencia] = useMutation(CREAR_EVIDENCIA);
 
@@ -17,12 +17,13 @@ export default function SubirEvidencia(props) {
 
         try {
             setLoading(true);
-            const result = await crearEvidencia({ variables: { file, input: {solicitud: id, tipo: "eventos"} } });
+            const result = await crearEvidencia({ variables: { file, input: {solicitud: id, tipo: tipo} } });
             const { data } = result;
 
             if(data.crearEvidencia === true){
                 setLoading(false);
                 toast.success("La imagen de evidencia ha sido guardada");
+                refrescarEvidencias();
                 cerrarModal();
             }else{
                 toast.error("La evidencia no ha sido guardada");

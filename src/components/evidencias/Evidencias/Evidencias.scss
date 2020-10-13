@@ -1,0 +1,40 @@
+@import "../../../scss/index.scss";
+
+.evidencias{
+    @include min-w(50rem);
+    margin-top: 3em;
+    p{
+        @include min-h(8rem);
+        @include flexbox();
+        font-size: 1.3em;
+    }
+
+    &__boton{
+        @include flexbox();
+    }
+
+    &__contenido{
+        display: grid !important;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        margin-bottom: 2em;
+        border: 1px solid #d7c4c4;
+
+        &:hover{
+            cursor: pointer;
+            background-color: #f9f9f9;
+        }
+
+        p{
+            grid-column: 1/2;
+            grid-row:1/2; 
+
+            span{
+                color: $guindo;
+                margin-left: .5em;
+                margin-right: .5em;
+                font-weight: bold;
+            }
+        }
+    }
+}

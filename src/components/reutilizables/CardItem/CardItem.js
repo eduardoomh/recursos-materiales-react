@@ -5,7 +5,7 @@ import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import "./CardItem.scss";
 
 export default function CardItem(props){
-    const {tipo, id, fecha, contenido } = props;
+    const {tipo, id, fecha, contenido, aprobado } = props;
     const history = useHistory();
     let icono;
 
@@ -29,17 +29,15 @@ export default function CardItem(props){
     }
 
     return(
-        <article className="cardItem"> 
+        <article className="cardItem" onClick={() => cardClick()}> 
             <div className="cardItem__icono">
                 <Icon name={icono} size="big" color="red" />
             </div>
             <p className="contenido">{contenido}</p>
             <p className="fecha">{transformarFecha(fecha)}</p>
             <p className="botones">
-                <Button onClick={() => cardClick()} className="boton-guindo" icon labelPosition="right">
-                    Ver Solicitud
-                    <Icon name="angle right" />
-                </Button> 
+            <p>{aprobado ? "Aprobado" : "pendiente"}</p>
+                <Icon name="angle right" size="big" color="red" />
             </p>
         </article>
     )

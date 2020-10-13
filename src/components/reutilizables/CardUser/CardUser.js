@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Icon, Button, Image } from "semantic-ui-react";
-import ModalUsuario from "../../reutilizables/ModalUsuarios/ModalUsuarios";
+import { Icon, Image } from "semantic-ui-react";
+import ModalUsuarios from "../../reutilizables/ModalUsuarios/ModalUsuarios";
 import defaultAvatar from "../../../assets/img/default_user.png";
 import "./CardUser.scss";
 
@@ -19,7 +19,7 @@ export default function CardUser(props) {
 
 
     return (
-        <article className="cardUser">
+        <article className="cardUser" onClick={() => abrirModal()}>
             <div className="cardUser__avatar">
                 <div>
                     <Image src={avatar === null ? defaultAvatar : avatar} />
@@ -29,15 +29,13 @@ export default function CardUser(props) {
             <p className="contenido">{nombre}</p>
             <p className="fecha">{permiso || `Se unio el ${fecha}`}</p>
             <p className="botones">
-                <Button onClick={() => abrirModal()} className="boton-guindo" icon labelPosition="right">
-                    Ver Usuario
-                    <Icon name="angle right" />
-                </Button>
+                <p>Ver datos</p>
+                <Icon name="angle right" size="big" />
             </p>
-            <ModalUsuario
+            <ModalUsuarios
                 id={id}
                 abrir={abrir}
-                cerrar={cerrarModal}
+                cerrarModal={cerrarModal}
                 refrescarAprobados={refrescarAprobados}
                 refrescarPendientes={refrescarPendientes}
             />

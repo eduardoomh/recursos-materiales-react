@@ -21,6 +21,7 @@ export default function Lista(props){
                         fecha={c.fecha}
                         status={c.aprobado}
                         contenido={c.nombre || c.destino}
+                        aprobado={c.aprobado}
                     /> 
                 )
             }

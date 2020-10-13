@@ -63,7 +63,7 @@ export default function ModalFoto(props) {
     return (
         <div className="modal-foto">
             <Modal
-                size="tiny"
+                size="tiny" 
                 open={abrir}
                 onClose={cerrarModal}
             >

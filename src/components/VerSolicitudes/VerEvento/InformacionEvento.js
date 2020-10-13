@@ -4,13 +4,13 @@ import { scrollTop } from "../../../utils/reutilizables/scroll";
 import { useMutation } from "@apollo/client";
 import { APROBAR_EVENTO } from "../../../gql/evento";
 import Informacion from "./Informacion/informacion";
-import Aprobacion from "./Aprobacion/Aprobacion";
-import Evidencias from "./Evidencias/Evidencias";
-import Opciones from "./Opciones/Opciones";
+import Aprobacion from "../../aprobacion/Aprobacion/Aprobacion";
+import Evidencias from "../../evidencias/Evidencias/Evidencias";
+import Opciones from "../../opciones/Opciones/Opciones";
 import "./InformacionEvento.scss";
 
 export default function InformacionEvento(props) {
-    const { data, loading, refetch, permiso } = props;
+    const { data, loading, refetch, permiso, evidencias, refrescarEvidencias } = props;
     const [ aprobarEvento ] = useMutation(APROBAR_EVENTO);
     
     scrollTop();
@@ -22,7 +22,12 @@ export default function InformacionEvento(props) {
         },
         {
           menuItem: 'Evidencia',
-          render: () => <Evidencias id={data.id} />,
+          render: () => <Evidencias 
+                          id={data.id} 
+                          evidencias={evidencias} 
+                          refrescarEvidencias={refrescarEvidencias} 
+                          tipo="eventos"
+                        />,
         },
         {
           menuItem: 'Aprobacion',
@@ -37,7 +42,7 @@ export default function InformacionEvento(props) {
         },
         {
           menuItem: 'Opciones',
-          render: () => <Opciones id={data.id} />,
+          render: () => <Opciones id={data.id} tipo="evento" />,
         },
       ]
 

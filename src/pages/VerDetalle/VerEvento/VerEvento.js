@@ -4,6 +4,7 @@ import "./VerEvento.scss";
 import { useQuery } from "@apollo/client";
 import { OBTENER_EVENTO } from "../../../gql/evento";
 import { OBTENER_PERMISO_USUARIO } from "../../../gql/permiso";
+import { OBTENER_EVIDENCIAS } from "../../../gql/evidencia";
 import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import useIdentity from "../../../utils/hooks/useIdentity";
 import Banner from "../../../components/reutilizables/Banner/Banner";
@@ -29,10 +30,19 @@ export default function VerEvento() {
         }
     })
 
+    const { data: evidencias, loading: loadingEvidencias, refetch: refrescarEvidencias } = useQuery(OBTENER_EVIDENCIAS, {
+        variables: {
+            input:{
+                id: id,
+                tipo: "eventos"
+            }
+        }
+    })
+
     return (
         <div className="ver-evento">
             {
-                evento && permiso && !loadingEvento && !loadingPermiso ? (
+                evento && permiso && evidencias && !loadingEvento && !loadingPermiso && !loadingEvidencias ? (
                     <>
                         <Banner titulo={evento.obtenerEvento.nombre} />
                         <Titulo titulo={transformarFecha(evento.obtenerEvento.fecha)} />
@@ -42,6 +52,8 @@ export default function VerEvento() {
                             setLoading={setLoading} 
                             refetch={refetch} 
                             permiso={permiso.obtenerPermisoUsuario} 
+                            evidencias={evidencias.obtenerEvidencias}
+                            refrescarEvidencias={refrescarEvidencias}
                         />
                     </>
                 )

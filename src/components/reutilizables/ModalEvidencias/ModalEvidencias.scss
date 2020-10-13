@@ -1,0 +1,20 @@
+@import "../../../scss/index.scss";
+
+.modal-evidencias{
+
+    &__imagenes{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 2em 1fr;
+        margin-bottom: 1em;
+
+        div{
+            @include flexbox();
+        }
+
+        p{
+            @include flexbox();
+            font-size: 1.3em;
+        }
+    }
+}
