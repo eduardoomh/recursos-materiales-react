@@ -38,6 +38,7 @@ export default function InformacionMantenimiento(props) {
                       departamento={data.departamento.id}
                       permiso={permiso}
                       tipo="mantenimiento"
+                      data={data}
                   />,
     },
     {

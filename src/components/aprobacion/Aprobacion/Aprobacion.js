@@ -3,19 +3,27 @@ import { Button, Icon } from "semantic-ui-react";
 import useIdentity from "../../../utils/hooks/useIdentity";
 import CheckStatus from "../../reutilizables/CheckStatus/CheckStatus";
 import AprobarModal from "../../reutilizables/AprobarModal/AprobarModal";
+import FormatoPdf from "../FormatoPdf/FormatoPdf";
 import "./Aprobacion.scss";
 
 export default function Aprobacion(props) {
-    const { verificado, aprobado, refetch, query, departamento, permiso, tipo } = props;
+    const { verificado, aprobado, refetch, query, departamento, permiso, tipo, data} = props;
     const [abrir, setAbrir] = useState(false);
+    const [abrirPDF, setAbrirPDF] = useState(false);
     const { identity } = useIdentity();
 
     const cerrarModal = () => {
         setAbrir(false);
+        setAbrirPDF(false);
     }
 
-    const abrirModal = () => {
-        setAbrir(true);
+    const abrirModal = (data) => {
+        if(data){
+            setAbrirPDF(true);
+        }else{
+           setAbrir(true); 
+        }
+        
     }
 
     return (
@@ -54,6 +62,18 @@ export default function Aprobacion(props) {
                     </div>
                 </>
             }
+            {
+                verificado && aprobado  &&
+                <>
+                    <div>
+                        <Button icon labelPosition='right' className="boton-guindo" onClick={() => abrirModal(true)} >
+                            Generar Reporte
+                                <Icon name='file pdf' />
+                        </Button>
+                    </div>
+                </>
+            }
+            <FormatoPdf abrir={abrirPDF} cerrarModal={cerrarModal} data={data} tipo={tipo}/>
             <AprobarModal abrir={abrir} cerrar={cerrarModal} tipo={tipo} verificado={verificado} refetch={refetch} query={query} />
         </div>
     )

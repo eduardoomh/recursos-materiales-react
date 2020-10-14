@@ -1,0 +1,17 @@
+@import "../../../../scss/index.scss";
+
+.tabla-orden{
+    padding: 3em;
+    padding-right: 2em;
+
+    p{
+        @include flexbox();
+        font-size: 20px;
+        font-weight: bold;
+        @include min-h(5em);
+    }
+
+    td{
+        font-size: 20px;
+    }
+}

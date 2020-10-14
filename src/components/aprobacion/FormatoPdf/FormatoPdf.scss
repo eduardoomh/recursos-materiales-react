@@ -1,0 +1,14 @@
+@import "../../../scss/index.scss";
+
+.pdf-modal{
+
+
+    &__boton{
+        @include flexbox();    
+        margin-bottom: 4em;
+
+        .boton-guindo{
+            @include boton();
+        }
+    }
+}
