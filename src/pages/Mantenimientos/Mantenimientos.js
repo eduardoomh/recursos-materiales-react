@@ -25,14 +25,14 @@ export default function Mantenimientos(){
             <BannerSolicitud 
                 titulo="Solicitudes de Mantenimientos" 
                 query={BUSCAR_MANTENIMIENTO} 
-                tipo="mantenimientos"
+                tipo="mantenimiento"
             />
             {
                 !loadingReparaciones ?
 
                 <SolicitudList
                     data={reparaciones.obtenerReparaciones}
-                    tipo="mantenimientos"
+                    tipo="mantenimiento"
                     loading={loading}
                     setLoading={setLoading}
                 />

@@ -1,97 +1,74 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Formik } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@apollo/client";
-import { CREAR_PERMISO } from "../../../../gql/permiso";
+import { CREAR_PUESTO } from "../../../../gql/puesto";
 import { toast } from "react-toastify";
 import { Form, Button, Loader } from "semantic-ui-react";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
-import SelectFormik from "../../../reutilizables/SelectFormik/SelectFormik";
 import ModalMensaje from "../../../reutilizables/ModalMensaje/ModalMensaje";
 import "./FormPuesto.scss";
 
-export default function FormPuesto(props) {
-    const { usuarios, puestos, departamentos } = props;
+export default function FormPuesto() {
     const [loading, setLoading] = useState(false);
     const [abrir, setAbrir] = useState(false);
+    const [crearPuesto] = useMutation(CREAR_PUESTO);
     const history = useHistory();
-    const [crearPermiso] = useMutation(CREAR_PERMISO);
-
-    const departamentosOptions = departamentos.map(d => {
-        return { key: d.id, text: d.nombre, value: d.id }
-    })
-
-    const usuariosOptions = usuarios.map(d => {
-        return { key: d.id, text: `${d.nombre} ${d.apellidos}`, value: d.id }
-    })
-
-    const PuestosOptions = puestos.map(d => {
-        return { key: d.id, text: d.nombre, value: d.id }
-    })
 
     const abrirModal = () => {
         setAbrir(true);
+
     }
 
     const cerrarModal = () => {
         setAbrir(false);
-        history.push("/admin/puestos");
+        history.push("/admin/puestos/ref");
     }
 
+    const formik = useFormik({
+        initialValues: emptyValues(),
+        validationSchema: validation(),
+        onSubmit: async (formData) => {
+            try {
+                setLoading(true);
+                const puesto = formData;
+
+                await crearPuesto({
+                    variables: {
+                        input: puesto
+                    }
+                });
+                setLoading(false);
+                abrirModal();
+
+            }
+            catch (err) {
+                setLoading(false);
+                toast.error(err.message);
+            }
+        }
+    })
 
     return (
         <>
-            <Formik
-                initialValues={emptyValues()}
-                validationSchema={validation()}
-                onSubmit={async (values, options) => {
-                    try {
-                        setLoading(true);
-                        const permiso = values;
+            <div className="formulario-admin">
+                <Form onSubmit={formik.handleSubmit}>
+                    <Form.Input
+                        label="Nombre del puesto"
+                        name="nombre"
+                        icon='clipboard outline'
+                        value={formik.values.nombre}
+                        onChange={formik.handleChange}
+                        error={formik.errors.nombre}
+                    />
 
-                        await crearPermiso({
-                            variables: {
-                                input: permiso
-                            }
-                        });
-                        setLoading(false);
-                        abrirModal();
+                    <Button type="submit">Crear Puesto</Button>
+                </Form>
+                <MessageForm />
 
-                    }
-                    catch (err) {
-                        setLoading(false);
-                        toast.error(err.message);
-                    }
-                }}
-            >
-                {({ handleSubmit }) => (
-                    <div className="formulario-admin">
-                        <Form onSubmit={handleSubmit}>
-                            <SelectFormik
-                                name="usuario"
-                                options={usuariosOptions}
-                                label="Nombre del usuario"
-                            />
-                            <SelectFormik
-                                name="departamento"
-                                options={departamentosOptions}
-                                label="Departamento al que pertenece"
-                            />
-                            <SelectFormik
-                                name="puesto"
-                                options={PuestosOptions}
-                                label="Puesto a ser asignado"
-                            />
-
-                            <Button type="submit">Crear Permiso</Button>
-                        </Form>
-                        <MessageForm />
-
-                    </div>
-                )}
-            </Formik>
+            </div>
             <ModalBasic show={loading}>
                 <Loader active={loading} size="big">Cargando Pagina...</Loader>
             </ModalBasic>
@@ -99,8 +76,8 @@ export default function FormPuesto(props) {
                 centered={true}
                 open={abrir}
                 onClose={cerrarModal}
-                titulo="Petición Exitosa"
-                texto="El Permiso se ha creado con éxito."
+                titulo="Peticion Exitosa"
+                texto="El Puesto se ha creado con éxito."
                 boton="Salir"
             />
         </>
@@ -109,16 +86,12 @@ export default function FormPuesto(props) {
 
 function emptyValues() {
     return {
-        usuario: "",
-        departamento: "",
-        puesto: ""
+        nombre: ""
     }
 }
 
 function validation() {
     return Yup.object({
-        usuario: Yup.string().required("Este campo es obligatorio"),
-        departamento: Yup.string().required("Este campo es obligatorio"),
-        puesto: Yup.string().required("Este campo es obligatorio"),
+        nombre: Yup.string().required("Este campo es obligatorio")
     })
 }

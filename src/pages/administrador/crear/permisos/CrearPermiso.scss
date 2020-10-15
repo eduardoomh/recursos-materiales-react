@@ -1,0 +1,6 @@
+@import "../../../../scss/pages/crear-solicitud.scss";
+
+//Estilos para crear una solicitud
+.crear-permiso{
+    @include CrearSolicitud();
+}

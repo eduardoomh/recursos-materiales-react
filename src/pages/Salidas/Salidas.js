@@ -26,14 +26,14 @@ export default function Salidas(){
             <BannerSolicitud 
                 titulo="Solicitudes de Salidas" 
                 query={BUSCAR_SALIDA} 
-                tipo="salidas"
+                tipo="salida"
             />
             {
                 !loadingSalidas ?
 
                 <SolicitudList
                     data={salidas.obtenerSalidas}
-                    tipo="salidas"
+                    tipo="salida"
                     loading={loading}
                     setLoading={setLoading}
                 />

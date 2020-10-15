@@ -24,7 +24,7 @@ export default function FormSubdireccion() {
 
     const cerrarModal = () => {
         setAbrir(false);
-        history.push("/admin/subdirecciones");
+        history.push("/admin/subdirecciones/ref");
     }
 
     const formik = useFormik({

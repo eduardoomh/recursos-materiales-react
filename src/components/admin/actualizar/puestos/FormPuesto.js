@@ -1,98 +1,76 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Formik } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@apollo/client";
-import { ACTUALIZAR_PERMISO } from "../../../../gql/permiso";
+import { ACTUALIZAR_PUESTO } from "../../../../gql/puesto";
 import { toast } from "react-toastify";
 import { Form, Button, Loader } from "semantic-ui-react";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
-import SelectFormik from "../../../reutilizables/SelectFormik/SelectFormik";
 import ModalMensaje from "../../../reutilizables/ModalMensaje/ModalMensaje";
 import "./FormPuesto.scss";
 
 export default function FormPuesto(props) {
-    const { usuarios, puestos, departamentos, solicitud } = props;
+    const {solicitud} = props;
     const [loading, setLoading] = useState(false);
     const [abrir, setAbrir] = useState(false);
+    const [actualizarPuesto] = useMutation(ACTUALIZAR_PUESTO);
     const history = useHistory();
-    const [actualizarPermiso] = useMutation(ACTUALIZAR_PERMISO);
-
-    const departamentosOptions = departamentos.map(d => {
-        return { key: d.id, text: d.nombre, value: d.id }
-    })
-
-    const usuariosOptions = usuarios.map(d => {
-        return { key: d.id, text: `${d.nombre} ${d.apellidos}`, value: d.id }
-    })
-
-    const PuestosOptions = puestos.map(d => {
-        return { key: d.id, text: d.nombre, value: d.id }
-    })
 
     const abrirModal = () => {
         setAbrir(true);
+
     }
 
     const cerrarModal = () => {
         setAbrir(false);
-        history.push(`/admin/puestos/${solicitud.id}`);
+        history.push(`/admin/puesto/${solicitud.id}`);
     }
 
+    const formik = useFormik({
+        initialValues: emptyValues(solicitud),
+        validationSchema: validation(),
+        onSubmit: async (formData) => {
+            try {
+                setLoading(true);
+                const puesto = formData;
+
+                await actualizarPuesto({
+                    variables: {
+                        id: solicitud.id,
+                        input: puesto
+                    }
+                });
+                setLoading(false);
+                abrirModal();
+
+            }
+            catch (err) {
+                setLoading(false);
+                toast.error(err.message);
+            }
+        }
+    })
 
     return (
         <>
-            <Formik
-                initialValues={emptyValues(solicitud)}
-                validationSchema={validation()}
-                onSubmit={async (values, options) => {
-                    try {
-                        setLoading(true);
-                        const permiso = values;
+            <div className="formulario-admin">
+                <Form onSubmit={formik.handleSubmit}>
+                    <Form.Input
+                        label="Nombre del puesto"
+                        name="nombre"
+                        icon='clipboard outline'
+                        value={formik.values.nombre}
+                        onChange={formik.handleChange}
+                        error={formik.errors.nombre}
+                    />
 
-                        await actualizarPermiso({
-                            variables: {
-                                id: solicitud.id,
-                                input: permiso
-                            }
-                        });
-                        setLoading(false);
-                        abrirModal();
+                    <Button type="submit">Actualizar Puesto</Button>
+                </Form>
+                <MessageForm />
 
-                    }
-                    catch (err) {
-                        setLoading(false);
-                        toast.error(err.message);
-                    }
-                }}
-            >
-                {({ handleSubmit }) => (
-                    <div className="formulario-admin">
-                        <Form onSubmit={handleSubmit}>
-                            <SelectFormik
-                                name="usuario"
-                                options={usuariosOptions}
-                                label="Nombre del usuario"
-                            />
-                            <SelectFormik
-                                name="departamento"
-                                options={departamentosOptions}
-                                label="Departamento al que pertenece"
-                            />
-                            <SelectFormik
-                                name="puesto"
-                                options={PuestosOptions}
-                                label="Puesto a ser asignado"
-                            />
-
-                            <Button type="submit">Actualizar Permiso</Button>
-                        </Form>
-                        <MessageForm />
-
-                    </div>
-                )}
-            </Formik>
+            </div>
             <ModalBasic show={loading}>
                 <Loader active={loading} size="big">Cargando Pagina...</Loader>
             </ModalBasic>
@@ -100,8 +78,8 @@ export default function FormPuesto(props) {
                 centered={true}
                 open={abrir}
                 onClose={cerrarModal}
-                titulo="Petición Exitosa"
-                texto="El Permiso se ha actualizado con éxito."
+                titulo="Actualizacion Exitosa"
+                texto="El Puesto se ha actualizado con éxito."
                 boton="Salir"
             />
         </>
@@ -109,18 +87,14 @@ export default function FormPuesto(props) {
 }
 
 function emptyValues(props) {
-    const {usuario, departamento, puesto} = props;
     return {
-        usuario: usuario.id,
-        departamento: departamento.id,
-        puesto: puesto.id
+        nombre: props.nombre
     }
 }
 
 function validation() {
     return Yup.object({
-        usuario: Yup.string().required("Este campo es obligatorio"),
-        departamento: Yup.string().required("Este campo es obligatorio"),
-        puesto: Yup.string().required("Este campo es obligatorio"),
+        nombre: Yup.string().required("Este campo es obligatorio")
     })
 }
+

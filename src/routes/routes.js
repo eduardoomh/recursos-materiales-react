@@ -16,42 +16,52 @@ import ActualizarSalida from "../pages/ActualizarSolicitud/ActualizarSalida/Actu
 import Perfil from "../pages/usuario/Perfil/Perfil";
 import EditarPerfil from "../pages/usuario/EditarPerfil/EditarPerfil";
 import MisSolicitudes from "../pages/usuario/MisSolicitudes/MisSolicitudes";
+
+//paginas admin de ver
 import Departamentos from "../pages/administrador/ver/departamentos/Departamentos";
 import Vehiculos from "../pages/administrador/ver/vehiculos/Vehiculos";
-import Espacios from "../pages/administrador/ver/espacios/Espacios";
-import Statusorders from "../pages/administrador/ver/statusorders/Statusorders";
-import Cargos from "../pages/administrador/ver/cargos/Cargos";
+import Sitios from "../pages/administrador/ver/sitios/Sitios";
+import Tipoordenes from "../pages/administrador/ver/tipoordenes/Tipoordenes";
 import Puestos from "../pages/administrador/ver/puestos/Puestos";
-import Statusvehiculos from "../pages/administrador/ver/statusvehiculos/Statusvehiculos";
+import Permisos from "../pages/administrador/ver/permisos/Permisos";
+import Organizaciones from "../pages/administrador/ver/organizaciones/Organizaciones";
 import Subdirecciones from "../pages/administrador/ver/subdirecciones/Subdirecciones";
-import Ubicaciones from "../pages/administrador/ver/ubicaciones/Ubicaciones";
-import CrearCargo from "../pages/administrador/crear/cargos/CrearCargo";
-import CrearDepartamento from "../pages/administrador/crear/departamentos/CrearDepartamento";
-import CrearEspacio from "../pages/administrador/crear/espacios/CrearEspacio";
+import Edificios from "../pages/administrador/ver/edificios/Edificios";
+
+//paginas admin de crear
 import CrearPuesto from "../pages/administrador/crear/puestos/CrearPuesto";
-import CrearStatusorder from "../pages/administrador/crear/statusorders/CrearStatusorder";
-import CrearStatusvehiculo from "../pages/administrador/crear/statusvehiculos/CrearStatusvehiculo";
+import CrearDepartamento from "../pages/administrador/crear/departamentos/CrearDepartamento";
+import CrearSitio from "../pages/administrador/crear/sitios/CrearSitio";
+import CrearPermiso from "../pages/administrador/crear/permisos/CrearPermiso";
+import CrearTipoorden from "../pages/administrador/crear/tipoordenes/CrearTipoorden";
+import CrearOrganizacion from "../pages/administrador/crear/organizaciones/CrearOrganizacion";
 import CrearSubdireccion from "../pages/administrador/crear/subdirecciones/CrearSubdireccion";
-import CrearUbicacion from "../pages/administrador/crear/ubicaciones/CrearUbicacion";
+import CrearEdificio from "../pages/administrador/crear/edificios/CrearEdificio";
 import CrearVehiculo from "../pages/administrador/crear/vehiculos/CrearVehiculo";
-import EditCargo from "../pages/administrador/actualizar/cargos/EditCargo";
-import EditDepartamento from "../pages/administrador/actualizar/departamentos/EditDepartamento";
-import EditEspacio from "../pages/administrador/actualizar/espacios/EditEspacio";
+
+//paginas admin de editar
 import EditPuesto from "../pages/administrador/actualizar/puestos/EditPuesto";
-import EditStatusorder from "../pages/administrador/actualizar/statusorders/EditStatusorder";
-import EditStatusvehiculo from "../pages/administrador/actualizar/statusvehiculos/EditStatusvehiculo";
+import EditDepartamento from "../pages/administrador/actualizar/departamentos/EditDepartamento";
+import EditSitio from "../pages/administrador/actualizar/sitios/EditSitio";
+import EditPermiso from "../pages/administrador/actualizar/permisos/EditPermiso";
+import EditTipoorden from "../pages/administrador/actualizar/tipoordenes/EditTipoorden";
+import EditOrganizacion from "../pages/administrador/actualizar/organizaciones/EditOrganizacion";
 import EditSubdireccion from "../pages/administrador/actualizar/subdirecciones/EditSubdireccion";
-import EditUbicacion from "../pages/administrador/actualizar/ubicaciones/EditUbicacion";
+import EditEdificio from "../pages/administrador/actualizar/edificios/EditEdificio";
 import EditVehiculo from "../pages/administrador/actualizar/vehiculos/EditVehiculo";
-import DetalleCargo from "../pages/administrador/detalle/cargos/DetalleCargo";
-import DetalleDepartamento from "../pages/administrador/detalle/departamentos/DetalleDepartamento";
-import DetalleEspacio from "../pages/administrador/detalle/espacios/DetalleEspacio";
+
+//paginas admin de detalle
 import DetallePuesto from "../pages/administrador/detalle/puestos/DetallePuesto";
-import DetalleStatusorder from "../pages/administrador/detalle/statusorders/DetalleStatusorder";
-import DetalleStatusvehiculo from "../pages/administrador/detalle/statusvehiculos/DetalleStatusvehiculo";
+import DetalleDepartamento from "../pages/administrador/detalle/departamentos/DetalleDepartamento";
+import DetalleSitio from "../pages/administrador/detalle/sitios/DetalleSitio";
+import DetallePermiso from "../pages/administrador/detalle/permisos/DetallePermiso";
+import DetalleTipoorden from "../pages/administrador/detalle/tipoordenes/DetalleTipoorden";
+import DetalleOrganizacion from "../pages/administrador/detalle/organizaciones/DetalleOrganizacion";
 import DetalleSubdireccion from "../pages/administrador/detalle/subdirecciones/DetalleSubdireccion";
-import DetalleUbicacion from "../pages/administrador/detalle/ubicaciones/DetalleUbicacion";
+import DetalleEdificio from "../pages/administrador/detalle/edificios/DetalleEdificio";
 import DetalleVehiculo from "../pages/administrador/detalle/vehiculos/DetalleVehiculo";
+
+//pagina admin de ver usuarios
 import Usuarios from "../pages/usuario/Usuarios/Usuarios";
 
 
@@ -69,7 +79,19 @@ export const routes = [
         exact: true
     },
     {
+        path: "/mantenimientos/:refresh",
+        layout: LayoutBasic,
+        component: Mantenimientos,
+        exact: true
+    },
+    {
         path: "/eventos",
+        layout: LayoutBasic,
+        component: Eventos,
+        exact: true
+    },
+    {
+        path: "/eventos/:refresh",
         layout: LayoutBasic,
         component: Eventos,
         exact: true
@@ -81,25 +103,31 @@ export const routes = [
         exact: true
     },
     {
+        path: "/salidas/:refresh",
+        layout: LayoutBasic,
+        component: Salidas,
+        exact: true
+    },
+    {
         path: "/calendario",
         layout: LayoutBasic,
         component: Calendario,
         exact: true
     },
     {
-        path: "/mantenimientos/:id",
+        path: "/mantenimiento/:id",
         layout: LayoutBasic,
         component: VerMantenimiento,
         exact: true
     },
     {
-        path: "/eventos/:id",
+        path: "/evento/:id",
         layout: LayoutBasic,
         component: VerEvento,
         exact: true
     },
     {
-        path: "/salidas/:id",
+        path: "/salida/:id",
         layout: LayoutBasic,
         component: VerSalida,
         exact: true
@@ -169,6 +197,13 @@ export const routesAdmin = [
         admin: true
     },
     {
+        path: "/admin/departamentos/:refresh",
+        layout: LayoutBasic,
+        component: Departamentos,
+        exact: true,
+        admin: true
+    },
+    {
         path: "/admin/vehiculos",
         layout: LayoutBasic,
         component: Vehiculos,
@@ -176,23 +211,44 @@ export const routesAdmin = [
         admin: true
     },
     {
-        path: "/admin/statusorders",
+        path: "/admin/vehiculos/:refresh",
         layout: LayoutBasic,
-        component: Statusorders,
+        component: Vehiculos,
         exact: true,
         admin: true
     },
     {
-        path: "/admin/locaciones",
+        path: "/admin/tipoordenes",
         layout: LayoutBasic,
-        component: Espacios,
+        component: Tipoordenes,
         exact: true,
         admin: true
     },
     {
-        path: "/admin/cargos",
+        path: "/admin/tipoordenes/:refresh",
         layout: LayoutBasic,
-        component: Cargos,
+        component: Tipoordenes,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/sitios",
+        layout: LayoutBasic,
+        component: Sitios,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/sitios/:refresh",
+        layout: LayoutBasic,
+        component: Sitios,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/puestos/:refresh",
+        layout: LayoutBasic,
+        component: Puestos,
         exact: true,
         admin: true
     },
@@ -204,9 +260,30 @@ export const routesAdmin = [
         admin: true
     },
     {
-        path: "/admin/statusvehiculos",
+        path: "/admin/permisos",
         layout: LayoutBasic,
-        component: Statusvehiculos,
+        component: Permisos,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/permisos/:refresh",
+        layout: LayoutBasic,
+        component: Permisos,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/organizaciones",
+        layout: LayoutBasic,
+        component: Organizaciones,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/organizaciones/:refresh",
+        layout: LayoutBasic,
+        component: Organizaciones,
         exact: true,
         admin: true
     },
@@ -218,16 +295,30 @@ export const routesAdmin = [
         admin: true
     },
     {
-        path: "/admin/ubicaciones",
+        path: "/admin/subdirecciones/:refresh",
         layout: LayoutBasic,
-        component: Ubicaciones,
+        component: Subdirecciones,
         exact: true,
         admin: true
     },
     {
-        path: "/admin/crear/cargo",
+        path: "/admin/edificios",
         layout: LayoutBasic,
-        component: CrearCargo,
+        component: Edificios,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/edificios/refresh",
+        layout: LayoutBasic,
+        component: Edificios,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/crear/puesto",
+        layout: LayoutBasic,
+        component: CrearPuesto,
         exact: true,
         admin: true
     },
@@ -246,30 +337,30 @@ export const routesAdmin = [
         admin: true
     },
     {
-        path: "/admin/crear/statusorder",
+        path: "/admin/crear/tipoorden",
         layout: LayoutBasic,
-        component: CrearStatusorder,
+        component: CrearTipoorden,
         exact: true,
         admin: true
     },
     {
-        path: "/admin/crear/locacion",
+        path: "/admin/crear/sitio",
         layout: LayoutBasic,
-        component: CrearEspacio,
+        component: CrearSitio,
         exact: true,
         admin: true
     },
     {
-        path: "/admin/crear/puesto",
+        path: "/admin/crear/permiso",
         layout: LayoutBasic,
-        component: CrearPuesto,
+        component: CrearPermiso,
         exact: true,
         admin: true
     },
     {
-        path: "/admin/crear/statusvehiculo",
+        path: "/admin/crear/organizacion",
         layout: LayoutBasic,
-        component: CrearStatusvehiculo,
+        component: CrearOrganizacion,
         exact: true,
         admin: true
     },
@@ -281,30 +372,9 @@ export const routesAdmin = [
         admin: true
     },
     {
-        path: "/admin/crear/ubicacion",
+        path: "/admin/crear/edificio",
         layout: LayoutBasic,
-        component: CrearUbicacion,
-        exact: true,
-        admin: true
-    },
-    {
-        path: "/admin/actualizar/cargo/:id",
-        layout: LayoutBasic,
-        component: EditCargo,
-        exact: true,
-        admin: true
-    },
-    {
-        path: "/admin/actualizar/departamento/:id",
-        layout: LayoutBasic,
-        component: EditDepartamento,
-        exact: true,
-        admin: true
-    },
-    {
-        path: "/admin/actualizar/espacio/:id",
-        layout: LayoutBasic,
-        component: EditEspacio,
+        component: CrearEdificio,
         exact: true,
         admin: true
     },
@@ -316,16 +386,37 @@ export const routesAdmin = [
         admin: true
     },
     {
-        path: "/admin/actualizar/statusorder/:id",
+        path: "/admin/actualizar/departamento/:id",
         layout: LayoutBasic,
-        component: EditStatusorder,
+        component: EditDepartamento,
         exact: true,
         admin: true
     },
     {
-        path: "/admin/actualizar/statusvehiculo/:id",
+        path: "/admin/actualizar/sitio/:id",
         layout: LayoutBasic,
-        component: EditStatusvehiculo,
+        component: EditSitio,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/actualizar/permiso/:id",
+        layout: LayoutBasic,
+        component: EditPermiso,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/actualizar/tipoorden/:id",
+        layout: LayoutBasic,
+        component: EditTipoorden,
+        exact: true,
+        admin: true
+    },
+    {
+        path: "/admin/actualizar/organizacion/:id",
+        layout: LayoutBasic,
+        component: EditOrganizacion,
         exact: true,
         admin: true
     },
@@ -337,9 +428,9 @@ export const routesAdmin = [
         admin: true
     },
     {
-        path: "/admin/actualizar/ubicacion/:id",
+        path: "/admin/actualizar/edificio/:id",
         layout: LayoutBasic,
-        component: EditUbicacion,
+        component: EditEdificio,
         exact: true,
         admin: true
     },
@@ -351,14 +442,14 @@ export const routesAdmin = [
         admin: true
     },
     {
-        path: "/admin/cargos/:id",
+        path: "/admin/puesto/:id",
         layout: LayoutBasic,
-        component: DetalleCargo,
+        component: DetallePuesto,
         exact: true,
         admin: true  
     },
     {
-        path: "/admin/departamentos/:id",
+        path: "/admin/departamento/:id",
         layout: LayoutBasic,
         component: DetalleDepartamento,
         exact: true,
@@ -366,39 +457,39 @@ export const routesAdmin = [
 
     },
     {
-        path: "/admin/espacios/:id",
+        path: "/admin/sitio/:id",
         layout: LayoutBasic,
-        component: DetalleEspacio,
+        component: DetalleSitio,
         exact: true,
         admin: true  
 
     },
     {
-        path: "/admin/puestos/:id",
+        path: "/admin/permiso/:id",
         layout: LayoutBasic,
-        component: DetallePuesto,
+        component: DetallePermiso,
         exact: true,
         admin: true  
 
     },
     {
-        path: "/admin/statusorders/:id",
+        path: "/admin/tipoorden/:id",
         layout: LayoutBasic,
-        component: DetalleStatusorder,
+        component: DetalleTipoorden,
         exact: true,
         admin: true  
 
     },
     {
-        path: "/admin/statusvehiculos/:id",
+        path: "/admin/organizacion/:id",
         layout: LayoutBasic,
-        component: DetalleStatusvehiculo,
+        component: DetalleOrganizacion,
         exact: true,
         admin: true  
 
     },
     {
-        path: "/admin/subdirecciones/:id",
+        path: "/admin/subdireccion/:id",
         layout: LayoutBasic,
         component: DetalleSubdireccion,
         exact: true,
@@ -406,15 +497,15 @@ export const routesAdmin = [
 
     },
     {
-        path: "/admin/ubicaciones/:id",
+        path: "/admin/edificio/:id",
         layout: LayoutBasic,
-        component: DetalleUbicacion,
+        component: DetalleEdificio,
         exact: true,
         admin: true 
 
     },
     {
-        path: "/admin/vehiculos/:id",
+        path: "/admin/vehiculo/:id",
         layout: LayoutBasic,
         component: DetalleVehiculo,
         exact: true,

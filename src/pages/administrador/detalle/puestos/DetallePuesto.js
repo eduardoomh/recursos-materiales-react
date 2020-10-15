@@ -3,18 +3,18 @@ import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import "./DetallePuesto.scss";
 import { useQuery } from "@apollo/client";
-import { OBTENER_PERMISO } from "../../../../gql/permiso";
+import { OBTENER_PUESTO } from "../../../../gql/puesto";
 import Banner from "../../../../components/reutilizables/Banner/Banner";
 import Titulo from "../../../../components/reutilizables/Titulo/Titulo";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
 import InfoPuesto from "../../../../components/admin/detalle/puestos/InfoPuesto";
 
-export default function DetallePuesto(){
+export default function DetallePuesto() {
     const [loading, setLoading] = useState(false);
     const { id } = useParams();
     scrollTop();
 
-    const { data: permiso, loading: loadingPermiso, refetch } = useQuery(OBTENER_PERMISO, {
+    const { data: puesto, loading: loadingPuesto, refetch } = useQuery(OBTENER_PUESTO, {
         variables: {
             id: id
         }
@@ -22,27 +22,27 @@ export default function DetallePuesto(){
 
     useEffect(() => {
 
-        if (permiso) {
+        if (puesto) {
             refetch();
         }
         return () => {
- 
+
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
 
-    return(
+    return (
         <div className="ver-puesto">
-            <Banner titulo="Detalle del Puesto" />
-            <Titulo titulo="Informacion sobre el puesto seleccionado seleccionado" />
+            <Banner titulo="Informacion del puesto" />
+            <Titulo titulo="puede editar la informacion si lo requiere" />
             {
-                permiso && !loadingPermiso ? (
+                puesto && !loadingPuesto ? (
                     <>
-                        <InfoPuesto data={permiso.obtenerPermiso} loading={loading} setLoading={setLoading} />
+                        <InfoPuesto data={puesto.obtenerPuesto} loading={loading} setLoading={setLoading} />
                     </>
                 )
-                : <Loader active inline='centered' size='massive' />
+                    : <Loader active inline='centered' size='massive' />
             }
         </div>
     )

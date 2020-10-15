@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
 import {  OBTENER_VEHICULOS } from "../../../../gql/vehiculo";
@@ -8,9 +9,10 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 
 export default function Vehiculos() {
     const [ loading, setLoading ] = useState(true);
+    const { refresh } = useParams();
     scrollTop();
 
-    const {data: vehiculos, loading: loadingVehiculos} = useQuery(OBTENER_VEHICULOS, {
+    const {data: vehiculos, loading: loadingVehiculos, refetch: refrescarVehiculos} = useQuery(OBTENER_VEHICULOS, {
         variables: {
             input: {
                 cantidad: 15,
@@ -19,6 +21,11 @@ export default function Vehiculos() {
         }
     })
 
+    useEffect(() => {
+        if(refresh){
+            refrescarVehiculos();
+        }
+    },[]);
 
 
     return (
@@ -30,7 +37,7 @@ export default function Vehiculos() {
 
                         <SolicitudGrid
                             data={vehiculos.obtenerVehiculos}
-                            tipo="vehiculos"
+                            tipo="vehiculo"
                             loading={loading}
                             setLoading={setLoading}
                         />

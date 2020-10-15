@@ -26,7 +26,7 @@ export default function FormularioActualizar(props) {
 
     const cerrarModal = () => {
         setAbrir(false);
-        history.push(`/eventos/${solicitud.id}`);
+        history.push(`/evento/${solicitud.id}`);
     }
 
     const departamentosOptions = departamentos.map(d => {

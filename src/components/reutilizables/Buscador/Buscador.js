@@ -20,7 +20,7 @@ export default function Buscador(props){
     console.log(data);
     useEffect(() => {
         switch(tipo){
-            case "eventos":
+            case "evento":
                 if(size(data?.buscarEvento) > 0){
                     const elementos = [];
                     data.buscarEvento.forEach((e, index) => {
@@ -37,7 +37,7 @@ export default function Buscador(props){
                     setResults([]);
                 }
             break;
-            case "mantenimientos":
+            case "mantenimiento":
                 if(size(data?.buscarMantenimiento) > 0){
                     const elementos = [];
                     data.buscarMantenimiento.forEach((e, index) => {
@@ -54,7 +54,7 @@ export default function Buscador(props){
                     setResults([]);
                 }
             break;
-            case "salidas":
+            case "salida":
                 if(size(data?.buscarSalida) > 0){
                     const elementos = [];
                     data.buscarSalida.forEach((e, index) => {

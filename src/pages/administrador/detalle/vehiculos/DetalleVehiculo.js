@@ -31,7 +31,6 @@ export default function DetalleVehiculo(){
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
-
     return(
         <div className="ver-vehiculo">
             <Banner titulo="Detalle del Vehiculo" />
@@ -39,6 +38,7 @@ export default function DetalleVehiculo(){
             {
                 vehiculo && !loadingVehiculo ? (
                     <>
+                    
                         <InfoVehiculo data={vehiculo.obtenerVehiculo} loading={loading} setLoading={setLoading} />
                     </>
                 )

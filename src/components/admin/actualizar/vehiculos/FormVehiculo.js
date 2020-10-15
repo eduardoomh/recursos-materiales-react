@@ -24,7 +24,7 @@ export default function FormVehiculo(props) {
 
     const cerrarModal = () => {
         setAbrir(false);
-        history.push(`/admin/vehiculos/${solicitud.id}`);
+        history.push(`/admin/vehiculo/${solicitud.id}`);
     }
 
 

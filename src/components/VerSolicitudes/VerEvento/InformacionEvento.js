@@ -38,6 +38,8 @@ export default function InformacionEvento(props) {
                           query={aprobarEvento} 
                           departamento={data.departamento.id}
                           permiso={permiso}
+                          tipo="evento"
+                          data={data}
                         />,
         },
         {

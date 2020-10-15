@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
 import { OBTENER_DEPARTAMENTOS } from "../../../../gql/departamento";
@@ -8,9 +9,10 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 
 export default function Departamentos() {
     const [ loading, setLoading ] = useState(true);
+    const { refresh } = useParams();
     scrollTop();
 
-    const {data: departamentos, loading: loadingDepartamentos} = useQuery(OBTENER_DEPARTAMENTOS, {
+    const {data: departamentos, loading: loadingDepartamentos, refetch: refrescarDepartamentos} = useQuery(OBTENER_DEPARTAMENTOS, {
         variables: {
             input: {
                 cantidad: 15,
@@ -18,6 +20,12 @@ export default function Departamentos() {
             }
         }
     })
+
+    useEffect(() => {
+        if(refresh){
+            refrescarDepartamentos();
+        }
+    },[]);
 
     return (
         <>
@@ -28,7 +36,7 @@ export default function Departamentos() {
 
                         <SolicitudGrid
                             data={departamentos.obtenerDepartamentos}
-                            tipo="departamentos"
+                            tipo="departamento"
                             loading={loading}
                             setLoading={setLoading}
                         />

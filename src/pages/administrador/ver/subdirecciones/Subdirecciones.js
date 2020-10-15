@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Loader } from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
 import { OBTENER_SUBDIRECCIONES } from "../../../../gql/subdireccion";
@@ -8,9 +9,10 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 
 export default function Espacios() {
     const [ loading, setLoading ] = useState(true);
+    const { refresh } = useParams();
     scrollTop();
 
-    const {data: subdirecciones, loading: loadingSubdirecciones} = useQuery(OBTENER_SUBDIRECCIONES, {
+    const {data: subdirecciones, loading: loadingSubdirecciones, refetch: refrescarSubdirecciones} = useQuery(OBTENER_SUBDIRECCIONES, {
         variables: {
             input: {
                 cantidad: 15,
@@ -18,6 +20,12 @@ export default function Espacios() {
             }
         }
     })
+
+    useEffect(() => {
+        if(refresh){
+            refrescarSubdirecciones();
+        }
+    },[]);
 
 
     return (
@@ -29,7 +37,7 @@ export default function Espacios() {
 
                         <SolicitudGrid
                             data={subdirecciones.obtenerSubdirecciones}
-                            tipo="subdirecciones"
+                            tipo="subdireccion"
                             loading={loading}
                             setLoading={setLoading}
                         />

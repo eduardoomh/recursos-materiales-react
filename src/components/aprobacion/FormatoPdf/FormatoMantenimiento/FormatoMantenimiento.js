@@ -1,6 +1,7 @@
 import React from "react";
-import { Table, Header, Rating, Button } from "semantic-ui-react";
+import { Table, Image } from "semantic-ui-react";
 import { transformarFecha } from "../../../../utils/reutilizables/fecha";
+import logo from "../../../../assets/img/logo.png";
 import "./FormatoMantenimiento.scss";
 
 export default function FormatoMantenimiento(props) {
@@ -11,10 +12,11 @@ export default function FormatoMantenimiento(props) {
                 <Table.Body>
                     <Table.Row>
                         <Table.Cell rowSpan="3">
-                            lOGO
+                           <Image src={logo} />
+                           <p>Instituto Tecnologico de Matamoros</p>
                         </Table.Cell>
                         <Table.Cell >
-                            FORMATO PARA ORDEN DE TRABAJO DE MANTENIMIENTO
+                            Formato para orden de Mantenimiento
                         </Table.Cell>
                         <Table.Cell collapsing>
                             Codigo SGI-ITM-AD-PO-001-04

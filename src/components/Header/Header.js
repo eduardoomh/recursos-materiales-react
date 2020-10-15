@@ -41,13 +41,13 @@ export default function Header(props) {
                                     <ul className="solicitud-submenu left">
                                         <li><Link to="/admin/departamentos">Departamentos</Link></li>
                                         <li><Link to="/admin/vehiculos">Vehiculos</Link></li>
-                                        <li><Link to="/admin/locaciones">Locaciones</Link></li>
-                                        <li><Link to="/admin/statusorders">Estado de mantenimientos</Link></li>
-                                        <li><Link to="/admin/statusvehiculos">Estado de vehiculos</Link></li>
-                                        <li><Link to="/admin/ubicaciones">Ubicaciones</Link></li>
+                                        <li><Link to="/admin/sitios">Sitios</Link></li>
+                                        <li><Link to="/admin/tipoordenes">Tipo de ordenes</Link></li>
+                                        <li><Link to="/admin/organizaciones">Organizaciones</Link></li>
+                                        <li><Link to="/admin/edificios">Edificios</Link></li>
                                         <li><Link to="/admin/subdirecciones">Subdirecciones</Link></li>
-                                        <li><Link to="/admin/cargos">Cargos</Link></li>
                                         <li><Link to="/admin/puestos">Puestos</Link></li>
+                                        <li><Link to="/admin/permisos">Permisos</Link></li>
                                     </ul>
                                 </li>
                             )
@@ -69,13 +69,13 @@ export default function Header(props) {
                                     <ul className="solicitud-submenu left">
                                         <li><Link to="/admin/crear/departamento">Departamento</Link></li>
                                         <li><Link to="/admin/crear/vehiculo">Vehiculo</Link></li>
-                                        <li><Link to="/admin/crear/locacion">Locacion</Link></li>
-                                        <li><Link to="/admin/crear/statusorder">Estado de mantenimiento</Link></li>
-                                        <li><Link to="/admin/crear/statusvehiculo">Estado de vehiculo</Link></li>
-                                        <li><Link to="/admin/crear/ubicacion">Ubicacion</Link></li>
+                                        <li><Link to="/admin/crear/sitio">Sitio</Link></li>
+                                        <li><Link to="/admin/crear/tipoorden">Tipo de orden</Link></li>
+                                        <li><Link to="/admin/crear/organizacion">Organizacion</Link></li>
+                                        <li><Link to="/admin/crear/edificio">Edificio</Link></li>
                                         <li><Link to="/admin/crear/subdireccion">Subdireccion</Link></li>
-                                        <li><Link to="/admin/crear/cargo">Cargo</Link></li>
                                         <li><Link to="/admin/crear/puesto">Puesto</Link></li>
+                                        <li><Link to="/admin/crear/permiso">Permiso</Link></li>
                                     </ul>
                                 </li>
                             )

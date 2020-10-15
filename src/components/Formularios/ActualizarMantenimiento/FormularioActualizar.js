@@ -27,7 +27,7 @@ export default function FormularioMantenimiento(props) {
 
     const cerrarModal = () => {
         setAbrir(false);
-        history.push(`/mantenimientos/${solicitud.id}`);
+        history.push(`/mantenimiento/${solicitud.id}`);
     }
 
     const departamentosOptions = departamentos.map(d => {

@@ -26,7 +26,7 @@ export default function FormularioEvento(props) {
 
     const cerrarModal = () => {
         setAbrir(false);
-        history.push("/eventos");
+        history.push("/eventos/ref");
     }
 
     const departamentosOptions = departamentos.map(d => {

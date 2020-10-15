@@ -23,7 +23,7 @@ export default function FormVehiculo() {
 
     const cerrarModal = () => {
         setAbrir(false);
-        history.push("/admin/vehiculos");
+        history.push("/admin/vehiculos/ref");
     }
 
 

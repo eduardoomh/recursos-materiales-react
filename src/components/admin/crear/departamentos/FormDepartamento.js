@@ -25,7 +25,7 @@ export default function FormDepartamento(props) {
 
     const cerrarModal = () => {
         setAbrir(false);
-        history.push("/admin/departamentos");
+        history.push("/admin/departamentos/ref");
     }
 
     const subdireccionesOptions = subdirecciones.map(d => {

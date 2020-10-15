@@ -28,7 +28,7 @@ export default function Eventos() {
             <BannerSolicitud 
                 titulo="Solicitudes de Eventos" 
                 query={BUSCAR_EVENTO} 
-                tipo="eventos"
+                tipo="evento"
             />
             
             {
@@ -36,7 +36,7 @@ export default function Eventos() {
 
                 <SolicitudList
                     data={eventos.obtenerEventos}
-                    tipo="eventos"
+                    tipo="evento"
                     loading={loading}
                     setLoading={setLoading}
                 />

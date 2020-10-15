@@ -26,7 +26,7 @@ export default function FormularioSalida(props) {
 
     const cerrarModal = () => {
         setAbrir(false);
-        history.push(`/salidas/${solicitud.id}`);
+        history.push(`/salida/${solicitud.id}`);
     }
 
 

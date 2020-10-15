@@ -12,7 +12,7 @@ export default function InfoPuesto(props) {
     const gotoUpdate = (id) => {
         history.push(`/admin/actualizar/puesto/${id}`);
     }
-
+ 
     return (
         <div className="informacion-puesto">
 
@@ -22,16 +22,8 @@ export default function InfoPuesto(props) {
                         <>
 
                             <BoxFormData
-                                titulo="Usuario"
-                                data={`${data.usuario.nombre} ${data.usuario.apellidos}`}
-                            />
-                            <BoxFormData
-                                titulo="Puesto"
-                                data={data.puesto.nombre}
-                            />
-                            <BoxFormData
-                                titulo="Departamento"
-                                data={data.departamento.nombre}
+                                titulo="Nombre del puesto"
+                                data={data.nombre}
                             />
 
                             <BoxFormData
@@ -46,7 +38,7 @@ export default function InfoPuesto(props) {
 
                             <BoxFormData
                                 titulo=""
-                                data={<Button className="boton-guindo" onClick={() => gotoUpdate(data.id)}>Actualizar Permiso</Button>}
+                                data={<Button className="boton-guindo" onClick={() => gotoUpdate(data.id)}>Actualizar Puesto</Button>}
                             />
                         </>
                     )
@@ -54,6 +46,8 @@ export default function InfoPuesto(props) {
                         (
                             "cargando..."
                         )
+
+
 
                 }
 
