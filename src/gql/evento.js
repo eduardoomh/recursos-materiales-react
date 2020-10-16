@@ -28,6 +28,7 @@ export const OBTENER_EVENTO = gql`
             departamento{
                 id
                 nombre
+                jefe
             }
             usuario{
                 id
@@ -73,6 +74,12 @@ export const BUSCAR_EVENTO = gql`
 export const APROBAR_EVENTO = gql`
     mutation aprobarEvento($id: ID! $input: actualizarEvento! $contrasena: String!){
         aprobarEvento(id: $id input: $input contrasena: $contrasena)
+    }
+`;
+
+export const BORRAR_EVENTO = gql`
+    mutation borrarEvento($id: ID!){
+        borrarEvento(id: $id)
     }
 `;
 

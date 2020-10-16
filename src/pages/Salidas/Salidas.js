@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import "./Salidas.scss";
 import { Loader} from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
@@ -9,9 +10,10 @@ import SolicitudList from "../../components/reutilizables/SolicitudList/Solicitu
 
 export default function Salidas(){ 
     const [ loading, setLoading ] = useState(true);
+    const { refresh } = useParams();
     scrollTop();
     
-    const { data: salidas, loading: loadingSalidas} = useQuery(OBTENER_SALIDAS, {
+    const { data: salidas, loading: loadingSalidas, refetch: refrescarSalidas} = useQuery(OBTENER_SALIDAS, {
         variables: {
             input: {
                 cantidad: 15,
@@ -19,6 +21,12 @@ export default function Salidas(){
             }
         }
     })
+
+    useEffect(() => {
+        if(refresh){
+            refrescarSalidas();
+        }
+    },[]);
 
 
     return(

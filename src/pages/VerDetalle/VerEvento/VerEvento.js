@@ -5,6 +5,7 @@ import { useQuery } from "@apollo/client";
 import { OBTENER_EVENTO } from "../../../gql/evento";
 import { OBTENER_PERMISO_USUARIO } from "../../../gql/permiso";
 import { OBTENER_EVIDENCIAS } from "../../../gql/evidencia";
+import { OBTENER_USUARIOS } from "../../../gql/usuario";
 import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import useIdentity from "../../../utils/hooks/useIdentity";
 import Banner from "../../../components/reutilizables/Banner/Banner";
@@ -39,10 +40,23 @@ export default function VerEvento() {
         }
     })
 
+    const { data: administrador, loading: loadingAdministrador} = useQuery(OBTENER_USUARIOS, {
+        variables: {
+            input: {
+                cantidad: 15,
+                pagina: 1
+            },
+            filtro: {
+                propiedad: "estatus",
+                atributo: "administrador"
+            }
+        }
+    })
+
     return (
         <div className="ver-evento">
             {
-                evento && permiso && evidencias && !loadingEvento && !loadingPermiso && !loadingEvidencias ? (
+                evento && permiso && evidencias && administrador && !loadingEvento && !loadingPermiso && !loadingEvidencias && !loadingAdministrador ? (
                     <>
                         <Banner titulo={evento.obtenerEvento.nombre} />
                         <Titulo titulo={transformarFecha(evento.obtenerEvento.fecha)} />
@@ -54,6 +68,7 @@ export default function VerEvento() {
                             permiso={permiso.obtenerPermisoUsuario} 
                             evidencias={evidencias.obtenerEvidencias}
                             refrescarEvidencias={refrescarEvidencias}
+                            administrador={`${administrador.obtenerUsuarios[0].nombre} ${administrador.obtenerUsuarios[0].apellidos}`}
                         />
                     </>
                 )

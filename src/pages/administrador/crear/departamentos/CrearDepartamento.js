@@ -1,5 +1,6 @@
 import React from "react";
 import "./CrearDepartamento.scss";
+import { Loader } from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
 import { OBTENER_SUBDIRECCIONES } from "../../../../gql/subdireccion"
 import Banner from "../../../../components/reutilizables/Banner/Banner";
@@ -23,8 +24,10 @@ const { data: subdirecciones, loading: loadingSubdirections } = useQuery(OBTENER
             <Banner titulo="Crear nuevo Departamento" />
             <Titulo titulo="Rellene el formulario con los datos que se le indiquen." />
             {
-                !loadingSubdirections && (
+                !loadingSubdirections ? (
                     <FormDepartamento subdirecciones={subdirecciones.obtenerSubdirecciones} />
+                ):(
+                    <Loader active inline='centered' size='massive' />
                 )
             }
             

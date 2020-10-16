@@ -54,6 +54,12 @@ export const ACTUALIZAR_SALIDA = gql`
     }
 `;
 
+export const BORRAR_SALIDA = gql`
+    mutation borrarSalida($id: ID!){
+        borrarSalida(id: $id)
+    }
+`;
+
 export const BUSCAR_SALIDA = gql`
     query buscarSalida($search: String){
         buscarSalida(search: $search){

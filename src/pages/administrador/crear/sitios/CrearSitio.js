@@ -1,5 +1,6 @@
 import React from "react";
 import "./CrearSitio.scss";
+import { Loader } from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
 import { OBTENER_EDIFICIOS } from "../../../../gql/edificio"
 import Banner from "../../../../components/reutilizables/Banner/Banner";
@@ -22,8 +23,10 @@ export default function CrearSitio(){
             <Banner titulo="Crear nuevo Sitio" />
             <Titulo titulo="Rellene el formulario con los datos que se le indiquen." />
             {
-                !loadingEdificios && (
+                !loadingEdificios ? (
                     <FormSitio edificios={edificios.obtenerEdificios} />
+                ):(
+                    <Loader active inline='centered' size='massive' />
                 )
             }
         </div>

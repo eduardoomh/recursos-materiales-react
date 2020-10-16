@@ -7,7 +7,7 @@ import FormatoPdf from "../FormatoPdf/FormatoPdf";
 import "./Aprobacion.scss";
 
 export default function Aprobacion(props) {
-    const { verificado, aprobado, refetch, query, departamento, permiso, tipo, data} = props;
+    const { verificado, aprobado, refetch, query, departamento, permiso, tipo, data, administrador} = props;
     const [abrir, setAbrir] = useState(false);
     const [abrirPDF, setAbrirPDF] = useState(false);
     const { identity } = useIdentity();
@@ -73,7 +73,7 @@ export default function Aprobacion(props) {
                     </div>
                 </>
             }
-            <FormatoPdf abrir={abrirPDF} cerrarModal={cerrarModal} data={data} tipo={tipo}/>
+            <FormatoPdf abrir={abrirPDF} cerrarModal={cerrarModal} data={data} tipo={tipo} administrador={administrador}/>
             <AprobarModal abrir={abrir} cerrar={cerrarModal} tipo={tipo} verificado={verificado} refetch={refetch} query={query} />
         </div>
     )

@@ -15,13 +15,13 @@ export default function CardItem(props){
     }
 
     switch(tipo){
-        case "eventos":
+        case "evento":
             icono = "address book"
             break;
-        case "mantenimientos":
+        case "mantenimiento":
             icono = "cogs"
             break;
-        case "salidas":
+        case "salida":
             icono = "car"
             break;
         default:

@@ -10,7 +10,7 @@ import Opciones from "../../opciones/Opciones/Opciones";
 import "./InformacionEvento.scss";
 
 export default function InformacionEvento(props) {
-    const { data, loading, refetch, permiso, evidencias, refrescarEvidencias } = props;
+    const { data, loading, refetch, permiso, evidencias, refrescarEvidencias, administrador } = props;
     const [ aprobarEvento ] = useMutation(APROBAR_EVENTO);
     
     scrollTop();
@@ -40,6 +40,7 @@ export default function InformacionEvento(props) {
                           permiso={permiso}
                           tipo="evento"
                           data={data}
+                          administrador={administrador}
                         />,
         },
         {

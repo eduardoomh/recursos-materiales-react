@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import "./Mantenimientos.scss";
 import { Loader} from "semantic-ui-react";
 import { useQuery } from "@apollo/client";
@@ -9,9 +10,10 @@ import SolicitudList from "../../components/reutilizables/SolicitudList/Solicitu
 
 export default function Mantenimientos(){
     const [ loading, setLoading ] = useState(true);
+    const { refresh } = useParams();
     scrollTop();
     
-    const { data: reparaciones, loading: loadingReparaciones} = useQuery(OBTENER_REPARACIONES, {
+    const { data: reparaciones, loading: loadingReparaciones, refetch: refrescarMantenimientos} = useQuery(OBTENER_REPARACIONES, {
         variables: {
             input: {
                 cantidad: 15,
@@ -19,6 +21,13 @@ export default function Mantenimientos(){
             }
         }
     })
+
+    useEffect(() => {
+        if(refresh){
+            refrescarMantenimientos();
+        }
+    },[]);
+
 
     return(
         <div className="mantenimientos">

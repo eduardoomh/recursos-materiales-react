@@ -10,7 +10,7 @@ import Informacion from "./Informacion/Informacion";
 import "./InformacionMantenimiento.scss";
 
 export default function InformacionMantenimiento(props) {
-  const { data, loading, refetch, permiso, evidencias, refrescarEvidencias } = props;
+  const { data, loading, refetch, permiso, evidencias, refrescarEvidencias, administrador } = props;
   const [aprobarMantenimiento] = useMutation(APROBAR_MANTENIMIENTO);
   scrollTop();
 
@@ -39,6 +39,7 @@ export default function InformacionMantenimiento(props) {
                       permiso={permiso}
                       tipo="mantenimiento"
                       data={data}
+                      administrador={administrador}
                   />,
     },
     {

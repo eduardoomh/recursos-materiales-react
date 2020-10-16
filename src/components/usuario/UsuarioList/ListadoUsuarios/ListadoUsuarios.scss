@@ -1,0 +1,10 @@
+@import "../../../../scss/index.scss";
+
+.listado-usuarios{
+    &__mensaje{
+
+        @include flexbox();
+        @include min-h(8rem);
+        font-size: 1.4em;
+    }
+}

@@ -56,6 +56,7 @@ export const OBTENER_MANTENIMIENTO = gql`
             departamento{
                 id
                 nombre
+                jefe
             }
             usuario{
                 id
@@ -93,6 +94,12 @@ export const BUSCAR_MANTENIMIENTO = gql`
 export const APROBAR_MANTENIMIENTO = gql`
     mutation aprobarMantenimiento($id: ID! $input: actualizarMantenimiento! $contrasena: String!){
         aprobarMantenimiento(id: $id input: $input contrasena: $contrasena)
+    }
+`;
+
+export const BORRAR_MANTENIMIENTO = gql`
+    mutation borrarMantenimiento($id: ID!){
+        borrarMantenimiento(id: $id)
     }
 `;
 

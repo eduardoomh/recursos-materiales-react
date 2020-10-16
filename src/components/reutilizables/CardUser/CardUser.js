@@ -5,7 +5,7 @@ import defaultAvatar from "../../../assets/img/default_user.png";
 import "./CardUser.scss";
 
 export default function CardUser(props) {
-    const { nombre, permiso, avatar, fecha, id, refrescarAprobados, refrescarPendientes } = props;
+    const { nombre, permiso, avatar, fecha, id, refrescarAprobados, refrescarPendientes, refrescarInactivos } = props;
     const [abrir, setAbrir] = useState(false);
 
     const abrirModal = () => {
@@ -38,6 +38,7 @@ export default function CardUser(props) {
                 cerrarModal={cerrarModal}
                 refrescarAprobados={refrescarAprobados}
                 refrescarPendientes={refrescarPendientes}
+                refrescarInactivos={refrescarInactivos}
             />
         </article>
     )

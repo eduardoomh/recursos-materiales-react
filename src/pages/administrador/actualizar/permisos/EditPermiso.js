@@ -4,7 +4,7 @@ import { Loader } from "semantic-ui-react";
 import "./EditPermiso.scss";
 import { useQuery } from "@apollo/client";
 import { OBTENER_PERMISO } from "../../../../gql/permiso";
-import { OBTENER_USUARIOS } from "../../../../gql/usuario";
+import { OBTENER_USUARIOS_FORM } from "../../../../gql/usuario";
 import { OBTENER_DEPARTAMENTOS } from "../../../../gql/departamento";
 import { OBTENER_PUESTOS } from "../../../../gql/puesto";
 import { scrollTop } from "../../../../utils/reutilizables/scroll";
@@ -22,11 +22,15 @@ export default function EditPermiso() {
         }
     });
 
-    const { data: usuarios, loading: loadingUsuarios } = useQuery(OBTENER_USUARIOS, {
+    const { data: usuarios, loading: loadingUsuarios } = useQuery(OBTENER_USUARIOS_FORM, {
         variables: {
             input: {
                 cantidad: 15,
                 pagina: 1
+            },
+            filtro: {
+                propiedad: "estatus",
+                atributo: "aprobado"
             }
         }
     });

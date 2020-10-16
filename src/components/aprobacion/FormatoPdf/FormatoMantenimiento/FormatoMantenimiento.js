@@ -5,7 +5,7 @@ import logo from "../../../../assets/img/logo.png";
 import "./FormatoMantenimiento.scss";
 
 export default function FormatoMantenimiento(props) {
-    const { data } = props;
+    const { data, administrador } = props;
     return (
         <div className="tabla-orden">
             <Table celled padded>
@@ -94,7 +94,7 @@ export default function FormatoMantenimiento(props) {
                             Verificado y Liberado por:
                         </Table.Cell>
                         <Table.Cell>
-                            Usuario Administrador
+                            {administrador}
                         </Table.Cell>
                     </Table.Row>
                     <Table.Row>
@@ -110,7 +110,7 @@ export default function FormatoMantenimiento(props) {
                             Aprobado por:
                         </Table.Cell>
                         <Table.Cell>
-                            Jefe de departamento
+                            {data.departamento.jefe}
                         </Table.Cell>
                     </Table.Row>
                     <Table.Row>

@@ -8,7 +8,7 @@ import "./FormatoPdf.scss";
 /* global jsPDF */
 
 export default function FormatoPdf(props) {
-    const { abrir, cerrarModal, tipo, data } = props;
+    const { abrir, cerrarModal, tipo, data, administrador } = props;
 
     const generarPdf = () => {
         const input = document.getElementById('pdf-modal__contenido');
@@ -55,8 +55,8 @@ export default function FormatoPdf(props) {
                     <div id="pdf-modal__contenido">
                         {
                             tipo === "evento" ? 
-                                <FormatoEvento data={data} />
-                                : <FormatoMantenimiento data={data} />
+                                <FormatoEvento data={data} administrador={administrador} />
+                                : <FormatoMantenimiento data={data} administrador={administrador} />
                         }
                     </div>
                     <div className="pdf-modal__boton">

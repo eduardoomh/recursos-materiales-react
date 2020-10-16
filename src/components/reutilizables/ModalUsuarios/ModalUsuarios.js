@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { OBTENER_USUARIO, APROBAR_USUARIO } from "../../../gql/usuario";
+import { OBTENER_USUARIO, MODIFICAR_USUARIOS } from "../../../gql/usuario";
 import useIdentity from "../../../utils/hooks/useIdentity";
 import { formatDate } from "../../../utils/reutilizables/fecha";
 import { toast } from "react-toastify";
+import ModalConfirmacion from "./ModalConfirmacion/ModalConfirmacion";
 import { Modal, Button, Icon, Table } from "semantic-ui-react";
 import "./ModalUsuarios.scss";
 
 export default function ModalUsuarios(props) {
-    const { id, abrir, cerrarModal, refrescarAprobados, refrescarPendientes } = props;
+    const { id, abrir, cerrarModal, refrescarAprobados, refrescarPendientes, refrescarInactivos } = props;
     const [abrirDos, setAbrirDos] = useState(false);
+    const [dato, setDato] = useState("");
     const { identity } = useIdentity();
-    const [aprobarUsuario] = useMutation(APROBAR_USUARIO);
+    const [modificarUsuarios] = useMutation(MODIFICAR_USUARIOS);
 
     const { data, loading, refetch } = useQuery(OBTENER_USUARIO, {
         variables: {
@@ -19,20 +21,24 @@ export default function ModalUsuarios(props) {
         }
     });
 
-    const aprobar = async () => {
+
+    const actualizar = async (datoActualizar) => {
         try {
-            await aprobarUsuario({
+            await modificarUsuarios({
                 variables: {
-                    id: id
+                    id: id,
+                    input: {
+                        estatus: datoActualizar
+                    }
                 }
             })
-            toast.success("El usuario ha sido aprobado");
+            toast.success(datoActualizar === "inactivo" ? "El usuario ha sido inactivado" : "El usuario ha sido aprobado");
             refetch();
             refrescarAprobados();
             refrescarPendientes();
+            refrescarInactivos();
             setAbrirDos(false);
             cerrarModal();
-
         }
         catch (error) {
             console.log(error.message);
@@ -40,7 +46,8 @@ export default function ModalUsuarios(props) {
         }
     }
 
-    const abrirConfirmacion = () => {
+    const abrirConfirmacion = (d) => {
+        setDato(d);
         setAbrirDos(true);
     }
 
@@ -62,47 +69,70 @@ export default function ModalUsuarios(props) {
                         data && !loading && (
                             <>
                                 <div className="modal-usuario-informacion">
-                                
-                                <Table celled>
-                                    <Table.Header>
-                                        <Table.Row>
-                                            <Table.HeaderCell>Datos</Table.HeaderCell>
-                                            <Table.HeaderCell></Table.HeaderCell>
-                                        </Table.Row>
-                                    </Table.Header>
 
-                                    <Table.Body>
-                                        <Table.Row>
-                                            <Table.Cell>Nombre Completo</Table.Cell>
-                                            <Table.Cell>{`${data.obtenerUsuario.nombre} ${data.obtenerUsuario.apellidos}`}</Table.Cell>
-                                        </Table.Row>
-                                    <Table.Row>
-                                            <Table.Cell>Correo electronico</Table.Cell>
-                                            <Table.Cell>{data.obtenerUsuario.correo}</Table.Cell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                            <Table.Cell>Numero de control</Table.Cell>
-                                            <Table.Cell>{data.obtenerUsuario.numero_control}</Table.Cell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                            <Table.Cell>fecha de creacion</Table.Cell>
-                                            <Table.Cell>{formatDate(data.obtenerUsuario.createdAt)}</Table.Cell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                            <Table.Cell>Estatus</Table.Cell>
-                                            <Table.Cell>{data.obtenerUsuario.estatus}</Table.Cell>
-                                        </Table.Row>
-                                    </Table.Body>
-                                </Table>
-                            </div>
+                                    <Table celled>
+                                        <Table.Header>
+                                            <Table.Row>
+                                                <Table.HeaderCell>Datos</Table.HeaderCell>
+                                                <Table.HeaderCell></Table.HeaderCell>
+                                            </Table.Row>
+                                        </Table.Header>
+
+                                        <Table.Body>
+                                            <Table.Row>
+                                                <Table.Cell>Nombre Completo</Table.Cell>
+                                                <Table.Cell>{`${data.obtenerUsuario.nombre} ${data.obtenerUsuario.apellidos}`}</Table.Cell>
+                                            </Table.Row>
+                                            <Table.Row>
+                                                <Table.Cell>Correo electronico</Table.Cell>
+                                                <Table.Cell>{data.obtenerUsuario.correo}</Table.Cell>
+                                            </Table.Row>
+                                            <Table.Row>
+                                                <Table.Cell>Numero de control</Table.Cell>
+                                                <Table.Cell>{data.obtenerUsuario.numero_control}</Table.Cell>
+                                            </Table.Row>
+                                            <Table.Row>
+                                                <Table.Cell>fecha de creacion</Table.Cell>
+                                                <Table.Cell>{formatDate(data.obtenerUsuario.createdAt)}</Table.Cell>
+                                            </Table.Row>
+                                            <Table.Row>
+                                                <Table.Cell>Estatus</Table.Cell>
+                                                <Table.Cell>{data.obtenerUsuario.estatus}</Table.Cell>
+                                            </Table.Row>
+                                        </Table.Body>
+                                    </Table>
+                                </div>
                             </>
                         )
                     }
                     {
                         data && !loading && data.obtenerUsuario.estatus === "pendiente" && identity.estatus === "administrador" && (
                             <div className="modal-usuario-boton">
-                                <Button onClick={() => abrirConfirmacion()} className="boton-guindo">
-                                    Aprobar usuario
+                                <Button onClick={() => abrirConfirmacion("aprobado")} className="boton-guindo" icon labelPosition="right">
+                                    Aprobar 
+                                    <Icon name="user plus"/>
+                            </Button>
+                            </div>
+
+                        )
+                    }
+                    {
+                        data && !loading && data.obtenerUsuario.estatus === "aprobado" && identity.estatus === "administrador" && (
+                            <div className="modal-usuario-boton">
+                                <Button onClick={() => abrirConfirmacion("inactivo")} className="boton-guindo" icon labelPosition="right">
+                                    Inactivar
+                                    <Icon name="user cancel"/>
+                            </Button>
+                            </div>
+
+                        )
+                    }
+                    {
+                        data && !loading && data.obtenerUsuario.estatus === "inactivo" && identity.estatus === "administrador" && (
+                            <div className="modal-usuario-boton">
+                                <Button onClick={() => abrirConfirmacion("aprobado")} className="boton-guindo" icon labelPosition="right">
+                                    Aprobar 
+                                    <Icon name="user plus"/>
                             </Button>
                             </div>
 
@@ -116,24 +146,12 @@ export default function ModalUsuarios(props) {
                 </Modal.Actions>
             </Modal>
 
-            <Modal
-                size="mini"
-                open={abrirDos}
-                onClose={() => cerrarConfirmacion()}
-            >
-                <Modal.Header>Aprobar usuario</Modal.Header>
-                <Modal.Content>
-                    <p>Esta seguro de querer aprobar este usuario?</p>
-                </Modal.Content>
-                <Modal.Actions>
-                    <Button negative onClick={() => cerrarConfirmacion()}>
-                        No
-          </Button>
-                    <Button positive onClick={() => aprobar()}>
-                        Si
-          </Button>
-                </Modal.Actions>
-            </Modal>
+            <ModalConfirmacion
+                abrir={abrirDos}
+                cerrarConfirmacion={cerrarConfirmacion}
+                actualizar={actualizar}
+                dato={dato}
+            />
         </>
     )
 }

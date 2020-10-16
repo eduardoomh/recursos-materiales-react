@@ -17,33 +17,8 @@ export const LOGIN = gql`
 `;
 
 export const OBTENER_USUARIOS = gql`
-    query obtenerUsuarios($input: PaginateInput!){
-        obtenerUsuarios(input: $input){
-            id
-            nombre
-            apellidos
-            createdAt
-        }
-  
-    }
-`;
-
-export const OBTENER_USUARIOS_APROBADOS = gql`
-    query obtenerUsuarios($input: PaginateInput!){
-        obtenerUsuarios(input: $input){
-            id
-            nombre
-            avatar
-            apellidos
-            createdAt
-        }
-  
-    }
-`;
-
-export const OBTENER_USUARIOS_PENDIENTES = gql`
-    query obtenerUsuariosPendientes($input: PaginateInput!){
-        obtenerUsuariosPendientes(input: $input){
+    query obtenerUsuarios($input: PaginateInput!, $filtro: FiltroUsuario!){
+        obtenerUsuarios(input: $input, filtro: $filtro){
             id
             nombre
             apellidos
@@ -53,6 +28,18 @@ export const OBTENER_USUARIOS_PENDIENTES = gql`
   
     }
 `;
+
+export const OBTENER_USUARIOS_FORM = gql`
+    query obtenerUsuarios($input: PaginateInput!, $filtro: FiltroUsuario!){
+        obtenerUsuarios(input: $input, filtro: $filtro){
+            id
+            nombre
+            apellidos
+        }
+  
+    }
+`;
+
 
 export const OBTENER_USUARIO = gql`
     query obtenerUsuario($id: ID!){
@@ -111,8 +98,8 @@ export const BUSCAR = gql`
 `;
 
 
-export const APROBAR_USUARIO = gql`
-    mutation aprobarUsuario($id: ID!){
-        aprobarUsuario(id: $id)
+export const MODIFICAR_USUARIOS = gql`
+    mutation modificarUsuarios($id: ID! $input: actualizarUsuarioInput!){
+        modificarUsuarios(id: $id input: $input)
     }
 `;

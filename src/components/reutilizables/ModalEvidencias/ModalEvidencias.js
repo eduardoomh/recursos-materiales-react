@@ -20,7 +20,7 @@ export default function ModalEvidencias(props){
                             return <div className="modal-evidencias__imagenes" key={e.id}>
                                        <p>Subida el {formatDate(e.createdAt)}</p>
                                         <div>
-                                            <Image src={e.imagen}  />
+                                            <Image src={e.imagen} rounded/>
                                         </div>
                                     </div>
                         })

@@ -1,27 +1,37 @@
 import React from "react";
 import { Tab } from "semantic-ui-react";
-import Aprobados from "./Aprobados/Aprobados";
-import Pendientes from "./Pendientes/Pendientes";
+import ListadoUsuarios from "./ListadoUsuarios/ListadoUsuarios";
 import "./UsuarioList.scss";
 
 export default function UsuarioList(props){
-    const {aprobados, pendientes, refetchAprobados, refetchPendientes} = props;
+    const {aprobados, pendientes, inactivos, refetchAprobados, refetchPendientes, refetchInactivos} = props;
 
     const panes = [
         {
           menuItem: 'Aprobados',
-          render: () => <Aprobados 
+          render: () => <ListadoUsuarios 
                           data={aprobados} 
                           refrescarAprobados={refetchAprobados} 
                           refrescarPendientes={refetchPendientes}
+                          refrescarInactivos={refetchInactivos}
                         />,
         },
         {
           menuItem: 'Pendientes',
-          render: () => <Pendientes 
+          render: () => <ListadoUsuarios 
                           data={pendientes} 
                           refrescarAprobados={refetchAprobados} 
                           refrescarPendientes={refetchPendientes}
+                          refrescarInactivos={refetchInactivos}
+                        />,
+        },
+        {
+          menuItem: 'Inactivos',
+          render: () => <ListadoUsuarios 
+                          data={inactivos} 
+                          refrescarAprobados={refetchAprobados} 
+                          refrescarPendientes={refetchPendientes}
+                          refrescarInactivos={refetchInactivos}
                         />,
         }
       ]
