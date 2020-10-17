@@ -17,3 +17,9 @@ mutation crearEvidencia($file: Upload $input: crearEvidencia!){
 }
 `;
 
+export const BORRAR_EVIDENCIA = gql`
+mutation borrarEvidencia($id: ID!){
+    borrarEvidencia(id: $id)
+}
+`;
+

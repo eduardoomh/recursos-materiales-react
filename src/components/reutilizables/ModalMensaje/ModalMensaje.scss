@@ -1,0 +1,17 @@
+@import "../../../scss/index.scss";
+
+.modal-mensaje{
+
+    &__contenido{
+        div{
+            @include flexbox();
+            @include min-w(100%);
+        }
+
+        p{
+            @include flexbox();
+            @include min-h(4rem);
+            font-size: 1.4em;
+        }
+    }
+}

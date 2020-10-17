@@ -44,8 +44,22 @@ export default function Evidencias(props) {
                     <Icon name='folder open outline' />
                 </Button>
             </div>
-            <SubirEvidencia abrir={abrir} cerrarModal={cerrarModal} id={id} refrescarEvidencias={refrescarEvidencias} tipo={tipo} />
-            <ModalEvidencias abrir={open} cerrarModal={cerrarModal} evidencias={evidencias} tipo={tipo}/>
+
+            <SubirEvidencia 
+                abrir={abrir} 
+                cerrarModal={cerrarModal} 
+                id={id} 
+                refrescarEvidencias={refrescarEvidencias} 
+                tipo={tipo} 
+            />
+
+            <ModalEvidencias 
+                abrir={open} 
+                cerrarModal={cerrarModal} 
+                evidencias={evidencias} 
+                tipo={tipo} 
+                refrescarEvidencias={refrescarEvidencias}
+            />
         </div>
     )
 }

@@ -1,0 +1,18 @@
+@import "../../../../scss/index.scss";
+
+.modal-contrasena{
+
+    .ui.form{
+        label{
+            font-size: 1.1em;
+        }
+
+    }
+
+    &__boton{
+        @include flexbox();
+        button{
+            @include boton();
+        }
+    }
+}

@@ -14,5 +14,11 @@
     }
     div{
         @include flexbox();
+        flex-direction: column;
+        grid-gap: 2em;
+
+        button{
+            @include min-w(16em);
+        }
     }
 }
