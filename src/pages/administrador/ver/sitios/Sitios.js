@@ -10,17 +10,26 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 
 export default function Sitios() {
     const [ loading, setLoading ] = useState(true);
+    const [ solicitudesArray, setSolicitudesArray] = useState(false);
+    const [ pagina, setPagina] = useState(1);
+    const [ cantidad ] = useState(6);
     const { refresh } = useParams();
-    scrollTop();
 
     const {data: sitios, loading: loadingSitios, refetch: refrescarSitios} = useQuery(OBTENER_SITIOS, {
         variables: {
             input: {
-                cantidad: 15,
-                pagina: 1
+                cantidad: cantidad,
+                pagina: pagina
             }
         }
     })
+
+
+    useEffect(() => {
+        if(!sitios){
+            scrollTop();
+        }
+    },[]);
 
     useEffect(() => {
         if(refresh){
@@ -28,18 +37,34 @@ export default function Sitios() {
         }
     },[]);
 
+    useEffect(() => {
+        if(sitios){
+            refrescarSitios();
+        }
+    },[pagina]);
+
+    useEffect(() => {
+        if(sitios){
+            setSolicitudesArray(sitios.obtenerSitios);
+            setLoading(false);
+        }
+    },[sitios]);
+
     return (
         <>
             <div className="sitios">
                 <Banner titulo="Sitios" />
                 {
-                    !loadingSitios ?
+                    solicitudesArray ?
 
                         <SolicitudGrid
-                            data={sitios.obtenerSitios}
+                            data={solicitudesArray}
                             tipo="sitio"
                             loading={loading}
                             setLoading={setLoading}
+                            pagina={pagina}
+                            setPagina={setPagina}
+                            cantidad={cantidad}
                         />
                         : <Loader active inline='centered' size='massive' />
                 }

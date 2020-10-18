@@ -1,31 +1,52 @@
 import React from "react";
 import CardItem from "../CardItem/CardItem";
+import Paginacion from "../Paginacion/Paginacion";
 import "./List.scss";
 
-export default function Lista(props){
-    const { data, tipo} = props;
+export default function Lista(props) {
+    const { data, tipo, pagina, setPagina, cantidad, loading, setLoading } = props;
 
     return (
         <div className="list-box">
-            
+
             {
                 data.length === 0 ?
-                <p className="empty">No existen solicitudes de esta categoria aun.</p>
-                :
-                data.map(
-                    c => 
-                    <CardItem 
-                        tipo={tipo}
-                        id={c.id}
-                        key={c.id}
-                        fecha={c.fecha}
-                        status={c.aprobado}
-                        contenido={c.nombre || c.destino}
-                        aprobado={c.aprobado}
-                    /> 
-                )
+                    <p className="empty">No hay datos para mostrar.</p>
+                    :
+                    <div className="list-box__map">
+                        {
+                            data.map(
+                                c =>
+                                    <CardItem
+                                        tipo={tipo}
+                                        id={c.id}
+                                        key={c.id}
+                                        fecha={c.fecha}
+                                        status={c.aprobado}
+                                        contenido={c.nombre || c.destino}
+                                        aprobado={c.aprobado}
+                                    />
+                            )
+                        }
+                    </div>
+ 
             }
-            
+            {
+                data.length === 0 && pagina === 1 ? (
+                    <p></p>
+                )
+                    :
+                    (
+                      <Paginacion 
+                            setLoading={setLoading}
+                            setPagina={setPagina}
+                            pagina={pagina}
+                            cantidad={cantidad}
+                            longitud={data.length}
+                       />
+                    )
+            }
+
         </div>
     )
 }

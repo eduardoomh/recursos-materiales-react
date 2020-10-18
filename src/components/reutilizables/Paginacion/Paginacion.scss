@@ -1,19 +1,14 @@
 @import "../../../scss/index.scss";
 
-.paginacion{
+.lista-paginacion{
     @include flexbox();
-    @include min-h(6rem);
-
-    button{
-        
-
-    }
+    @include min-h(4rem);
+    grid-gap: 2em;
+    margin-top: 1em;
 
     p{
-        @include flexbox();
-        @include min-h(100%);
-        @include min-w(2.5rem);
-        font-size: 1.2em;
+        font-size: 1.3em;
+        font-weight: bold;
         margin: 0;
     }
 }

@@ -4,7 +4,21 @@ import ListadoUsuarios from "./ListadoUsuarios/ListadoUsuarios";
 import "./UsuarioList.scss";
 
 export default function UsuarioList(props){
-    const {aprobados, pendientes, inactivos, refetchAprobados, refetchPendientes, refetchInactivos} = props;
+    const {
+            aprobados, 
+            pendientes, 
+            inactivos, 
+            refetchAprobados, 
+            refetchPendientes, 
+            refetchInactivos,
+            paginaAprobados,
+            paginaPendientes,
+            paginaInactivos,
+            setPaginaAprobados,
+            setPaginaPendientes,
+            setPaginaInactivos,
+            cantidad
+    } = props;
 
     const panes = [
         {
@@ -14,6 +28,9 @@ export default function UsuarioList(props){
                           refrescarAprobados={refetchAprobados} 
                           refrescarPendientes={refetchPendientes}
                           refrescarInactivos={refetchInactivos}
+                          cantidad={cantidad}
+                          pagina={paginaAprobados}
+                          setPagina={setPaginaAprobados}
                         />,
         },
         {
@@ -23,6 +40,9 @@ export default function UsuarioList(props){
                           refrescarAprobados={refetchAprobados} 
                           refrescarPendientes={refetchPendientes}
                           refrescarInactivos={refetchInactivos}
+                          cantidad={cantidad}
+                          pagina={paginaPendientes}
+                          setPagina={setPaginaPendientes}
                         />,
         },
         {
@@ -32,6 +52,9 @@ export default function UsuarioList(props){
                           refrescarAprobados={refetchAprobados} 
                           refrescarPendientes={refetchPendientes}
                           refrescarInactivos={refetchInactivos}
+                          cantidad={cantidad}
+                          pagina={paginaInactivos}
+                          setPagina={setPaginaInactivos}
                         />,
         }
       ]

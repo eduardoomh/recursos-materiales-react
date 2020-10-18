@@ -9,17 +9,26 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 
 export default function Vehiculos() {
     const [ loading, setLoading ] = useState(true);
+    const [ solicitudesArray, setSolicitudesArray] = useState(false);
+    const [ pagina, setPagina] = useState(1);
+    const [ cantidad ] = useState(6);
     const { refresh } = useParams();
-    scrollTop();
 
     const {data: vehiculos, loading: loadingVehiculos, refetch: refrescarVehiculos} = useQuery(OBTENER_VEHICULOS, {
         variables: {
             input: {
-                cantidad: 15,
-                pagina: 1
+                cantidad: cantidad,
+                pagina: pagina
             }
         }
     })
+
+
+    useEffect(() => {
+        if(!vehiculos){
+            scrollTop();
+        }
+    },[]);
 
     useEffect(() => {
         if(refresh){
@@ -27,19 +36,34 @@ export default function Vehiculos() {
         }
     },[]);
 
+    useEffect(() => {
+        if(vehiculos){
+            refrescarVehiculos();
+        }
+    },[pagina]);
+
+    useEffect(() => {
+        if(vehiculos){
+            setSolicitudesArray(vehiculos.obtenerVehiculos);
+            setLoading(false);
+        }
+    },[vehiculos]);
 
     return (
         <>
             <div className="vehiculos">
                 <Banner titulo="Vehiculos" />
                 {
-                    !loadingVehiculos ?
+                    solicitudesArray ?
 
                         <SolicitudGrid
-                            data={vehiculos.obtenerVehiculos}
+                            data={solicitudesArray}
                             tipo="vehiculo"
                             loading={loading}
                             setLoading={setLoading}
+                            pagina={pagina}
+                            setPagina={setPagina}
+                            cantidad={cantidad}
                         />
                         : <Loader active inline='centered' size='massive' />
                 }

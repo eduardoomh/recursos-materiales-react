@@ -10,23 +10,45 @@ import SolicitudList from "../../components/reutilizables/SolicitudList/Solicitu
 
 export default function Mantenimientos(){
     const [ loading, setLoading ] = useState(true);
+    const [ solicitudesArray, setSolicitudesArray] = useState(false);
+    const [ pagina, setPagina] = useState(1);
+    const [ cantidad ] = useState(6);
     const { refresh } = useParams();
-    scrollTop();
+    
     
     const { data: reparaciones, loading: loadingReparaciones, refetch: refrescarMantenimientos} = useQuery(OBTENER_REPARACIONES, {
         variables: {
             input: {
-                cantidad: 15,
-                pagina: 1
+                cantidad: cantidad,
+                pagina: pagina
             }
         }
-    })
+    })  
+
+    useEffect(() => {
+        if(!reparaciones){
+            scrollTop();
+        }
+    },[]);
 
     useEffect(() => {
         if(refresh){
             refrescarMantenimientos();
         }
     },[]);
+
+    useEffect(() => {
+        if(reparaciones){
+            refrescarMantenimientos();
+        }
+    },[pagina]);
+
+    useEffect(() => {
+        if(reparaciones){
+            setSolicitudesArray(reparaciones.obtenerReparaciones);
+            setLoading(false);
+        }
+    },[reparaciones]);
 
 
     return(
@@ -37,13 +59,16 @@ export default function Mantenimientos(){
                 tipo="mantenimiento"
             />
             {
-                !loadingReparaciones ?
+                solicitudesArray ?
 
                 <SolicitudList
-                    data={reparaciones.obtenerReparaciones}
+                    data={solicitudesArray}
                     tipo="mantenimiento"
                     loading={loading}
                     setLoading={setLoading}
+                    pagina={pagina}
+                    setPagina={setPagina}
+                    cantidad={cantidad}
                 />
                 : <Loader active inline='centered' size='massive' />
 

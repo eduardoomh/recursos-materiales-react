@@ -7,4 +7,10 @@
         @include min-h(8rem);
         font-size: 1.4em;
     }
-}
+
+    &__map{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, 6rem);
+    }
+} 

@@ -9,17 +9,25 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 
 export default function Espacios() {
     const [ loading, setLoading ] = useState(true);
+    const [ solicitudesArray, setSolicitudesArray] = useState(false);
+    const [ pagina, setPagina] = useState(1);
+    const [ cantidad ] = useState(6);
     const { refresh } = useParams();
-    scrollTop();
 
     const {data: subdirecciones, loading: loadingSubdirecciones, refetch: refrescarSubdirecciones} = useQuery(OBTENER_SUBDIRECCIONES, {
         variables: {
             input: {
-                cantidad: 15,
-                pagina: 1
+                cantidad: cantidad,
+                pagina: pagina
             }
         }
     })
+
+    useEffect(() => {
+        if(!subdirecciones){
+            scrollTop();
+        }
+    },[]);
 
     useEffect(() => {
         if(refresh){
@@ -27,19 +35,35 @@ export default function Espacios() {
         }
     },[]);
 
+    useEffect(() => {
+        if(subdirecciones){
+            refrescarSubdirecciones();
+        }
+    },[pagina]);
+
+    useEffect(() => {
+        if(subdirecciones){
+            setSolicitudesArray(subdirecciones.obtenerSubdirecciones);
+            setLoading(false);
+        }
+    },[subdirecciones]);
+
 
     return (
         <>
             <div className="subdirecciones">
                 <Banner titulo="Subdirecciones" />
                 {
-                    !loadingSubdirecciones ?
+                    solicitudesArray ?
 
                         <SolicitudGrid
-                            data={subdirecciones.obtenerSubdirecciones}
+                            data={solicitudesArray}
                             tipo="subdireccion"
                             loading={loading}
                             setLoading={setLoading}
+                            pagina={pagina}
+                            setPagina={setPagina}
+                            cantidad={cantidad}
                         />
                         : <Loader active inline='centered' size='massive' />
                 }

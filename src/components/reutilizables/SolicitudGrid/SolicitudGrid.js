@@ -5,7 +5,7 @@ import Filtrado from "../Filtrado/Filtrado";
 import Grid from "../Grid/Grid";
 
 export default function SolicitudGrid(props) {
-    const { data, tipo } = props;
+    const { data, tipo, pagina, setPagina, cantidad, loading, setLoading } = props;
     const textTitulo = "Datos de administrador"
 
     const [titulo, setTitulo] = useState(textTitulo);
@@ -20,7 +20,15 @@ export default function SolicitudGrid(props) {
         <div className="solicitud-grid">
             <Titulo titulo={titulo} />
             <Filtrado setTitulo={setTitulo} filtro={filtro} setFiltro={setFiltro} />
-            <Grid data={data} tipo={tipo} />
+            <Grid 
+                data={data} 
+                tipo={tipo}
+                pagina={pagina} 
+                setPagina={setPagina} 
+                cantidad={cantidad} 
+                loading={loading}
+                setLoading={setLoading} 
+            />
         </div> 
     )
 }

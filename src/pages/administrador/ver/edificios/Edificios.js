@@ -9,23 +9,45 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 
 export default function Edificios() {
     const [ loading, setLoading ] = useState(true);
+    const [ solicitudesArray, setSolicitudesArray] = useState(false);
+    const [ pagina, setPagina] = useState(1);
+    const [ cantidad ] = useState(6);
     const { refresh } = useParams();
-    scrollTop();
 
     const {data: edificios, loading: loadingEdificios, refetch: refrescarEdificios} = useQuery(OBTENER_EDIFICIOS, {
         variables: {
             input: {
-                cantidad: 15,
-                pagina: 1
+                cantidad: cantidad,
+                pagina: pagina
             }
         }
     })
+
+
+    useEffect(() => {
+        if(!edificios){
+            scrollTop();
+        }
+    },[]);
 
     useEffect(() => {
         if(refresh){
             refrescarEdificios();
         }
     },[]);
+
+    useEffect(() => {
+        if(edificios){
+            refrescarEdificios();
+        }
+    },[pagina]);
+
+    useEffect(() => {
+        if(edificios){
+            setSolicitudesArray(edificios.obtenerEdificios);
+            setLoading(false);
+        }
+    },[edificios]);
 
 
 
@@ -34,13 +56,16 @@ export default function Edificios() {
             <div className="edificios">
                 <Banner titulo="Edificios" />
                 {
-                    !loadingEdificios ?
+                    solicitudesArray ?
 
                         <SolicitudGrid
-                            data={edificios.obtenerEdificios}
+                            data={solicitudesArray}
                             tipo="edificio"
                             loading={loading}
                             setLoading={setLoading}
+                            pagina={pagina}
+                            setPagina={setPagina}
+                            cantidad={cantidad}
                         />
                         : <Loader active inline='centered' size='massive' />
                 }

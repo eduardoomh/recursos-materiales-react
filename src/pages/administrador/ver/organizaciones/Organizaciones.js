@@ -9,23 +9,45 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 
 export default function Organizaciones() {
     const [ loading, setLoading ] = useState(true);
+    const [ solicitudesArray, setSolicitudesArray] = useState(false);
+    const [ pagina, setPagina] = useState(1);
+    const [ cantidad ] = useState(6);
     const { refresh } = useParams();
-    scrollTop();
 
     const {data: acomodosillas, loading: loadingAcomodosillas, refetch: refrescarAcomodosillas} = useQuery(OBTENER_ACOMODOSILLAS, {
         variables: {
             input: {
-                cantidad: 15,
-                pagina: 1
+                cantidad: cantidad,
+                pagina: pagina
             }
         }
     })
+
+
+    useEffect(() => {
+        if(!acomodosillas){
+            scrollTop();
+        }
+    },[]);
 
     useEffect(() => {
         if(refresh){
             refrescarAcomodosillas();
         }
     },[]);
+
+    useEffect(() => {
+        if(acomodosillas){
+            refrescarAcomodosillas();
+        }
+    },[pagina]);
+
+    useEffect(() => {
+        if(acomodosillas){
+            setSolicitudesArray(acomodosillas.obtenerAcomodosillas);
+            setLoading(false);
+        }
+    },[acomodosillas]);
 
 
 
@@ -34,13 +56,16 @@ export default function Organizaciones() {
             <div className="organizaciones">
                 <Banner titulo="Organizacion de Eventos" />
                 {
-                    !loadingAcomodosillas ?
+                    solicitudesArray ?
 
                         <SolicitudGrid
-                            data={acomodosillas.obtenerAcomodosillas}
+                            data={solicitudesArray}
                             tipo="organizacion"
                             loading={loading}
                             setLoading={setLoading}
+                            pagina={pagina}
+                            setPagina={setPagina}
+                            cantidad={cantidad}
                         />
                         : <Loader active inline='centered' size='massive' />
                 }

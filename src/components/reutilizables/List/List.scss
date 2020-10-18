@@ -1,17 +1,21 @@
 @import "../../../scss/index.scss";
 
 .list-box{
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(15, 6rem);
     @include min-w(100vw);
-    @include min-h(100%);
     padding: 2em 5em;
 
+    &__map{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(6, 6rem);
+    }
+
     .empty{
-        grid-column: 2/span 3;
+        grid-column: 1/2;
         grid-row: 1/3;
         @include flexbox();
+        @include min-h(10rem);
         font-size: 1.3em;
     }
+
 }

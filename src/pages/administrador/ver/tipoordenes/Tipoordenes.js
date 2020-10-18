@@ -9,17 +9,26 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 
 export default function Tipoordenes() {
     const [ loading, setLoading ] = useState(true);
+    const [ solicitudesArray, setSolicitudesArray] = useState(false);
+    const [ pagina, setPagina] = useState(1);
+    const [ cantidad ] = useState(6);
     const { refresh } = useParams();
-    scrollTop();
 
     const {data: tipoorders, loading: loadingTipoorders, refetch: refrescarTipoorders} = useQuery(OBTENER_TIPOORDERS, {
         variables: {
             input: {
-                cantidad: 15,
-                pagina: 1
+                cantidad: cantidad,
+                pagina: pagina
             }
         }
     })
+
+
+    useEffect(() => {
+        if(!tipoorders){
+            scrollTop();
+        }
+    },[]);
 
     useEffect(() => {
         if(refresh){
@@ -27,18 +36,34 @@ export default function Tipoordenes() {
         }
     },[]);
 
+    useEffect(() => {
+        if(tipoorders){
+            refrescarTipoorders();
+        }
+    },[pagina]);
+
+    useEffect(() => {
+        if(tipoorders){
+            setSolicitudesArray(tipoorders.obtenerTipoorders);
+            setLoading(false);
+        }
+    },[tipoorders]);
+
     return (
         <>
             <div className="tipoordenes">
                 <Banner titulo="Tipo de Ordenes" />
                 {
-                    !loadingTipoorders ?
+                    solicitudesArray ?
 
                         <SolicitudGrid
-                            data={tipoorders.obtenerTipoorders}
+                            data={solicitudesArray}
                             tipo="tipoorden"
                             loading={loading}
                             setLoading={setLoading}
+                            pagina={pagina}
+                            setPagina={setPagina}
+                            cantidad={cantidad}
                         />
                         : <Loader active inline='centered' size='massive' />
                 }

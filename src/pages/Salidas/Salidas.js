@@ -10,23 +10,46 @@ import SolicitudList from "../../components/reutilizables/SolicitudList/Solicitu
 
 export default function Salidas(){ 
     const [ loading, setLoading ] = useState(true);
+    const [ solicitudesArray, setSolicitudesArray] = useState(false);
+    const [ pagina, setPagina] = useState(1);
+    const [ cantidad ] = useState(6);
     const { refresh } = useParams();
-    scrollTop();
     
+
     const { data: salidas, loading: loadingSalidas, refetch: refrescarSalidas} = useQuery(OBTENER_SALIDAS, {
         variables: {
             input: {
-                cantidad: 15,
-                pagina: 1
+                cantidad: cantidad,
+                pagina: pagina
             }
         }
     })
+
+
+    useEffect(() => {
+        if(!salidas){
+            scrollTop();
+        }
+    },[]);
 
     useEffect(() => {
         if(refresh){
             refrescarSalidas();
         }
     },[]);
+
+    useEffect(() => {
+        if(salidas){
+            refrescarSalidas();
+        }
+    },[pagina]);
+
+    useEffect(() => {
+        if(salidas){
+            setSolicitudesArray(salidas.obtenerSalidas);
+            setLoading(false);
+        }
+    },[salidas]);
 
 
     return(
@@ -37,13 +60,16 @@ export default function Salidas(){
                 tipo="salida"
             />
             {
-                !loadingSalidas ?
+                solicitudesArray ?
 
                 <SolicitudList
-                    data={salidas.obtenerSalidas}
+                    data={solicitudesArray}
                     tipo="salida"
                     loading={loading}
                     setLoading={setLoading}
+                    pagina={pagina}
+                    setPagina={setPagina}
+                    cantidad={cantidad}
                 />
                 : <Loader active inline='centered' size='massive' />
 

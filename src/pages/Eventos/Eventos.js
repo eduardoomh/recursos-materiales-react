@@ -12,23 +12,45 @@ import SolicitudList from "../../components/reutilizables/SolicitudList/Solicitu
 
 export default function Eventos() {
     const [loading, setLoading] = useState(true);
+    const [ solicitudesArray, setSolicitudesArray] = useState(false);
+    const [ pagina, setPagina] = useState(1);
+    const [ cantidad ] = useState(6);
     const { refresh } = useParams();
-    scrollTop();
 
     const { data: eventos, loading: loadingEventos, refetch: refrescarEventos} = useQuery(OBTENER_EVENTOS, {
         variables: {
             input: {
-                cantidad: 15,
-                pagina: 1
+                cantidad: cantidad,
+                pagina: pagina
             }
         }
     })
+
+
+    useEffect(() => {
+        if(!eventos){
+            scrollTop();
+        }
+    },[]);
 
     useEffect(() => {
         if(refresh){
             refrescarEventos();
         }
     },[]);
+
+    useEffect(() => {
+        if(eventos){
+            refrescarEventos();
+        }
+    },[pagina]);
+
+    useEffect(() => {
+        if(eventos){
+            setSolicitudesArray(eventos.obtenerEventos);
+            setLoading(false);
+        }
+    },[eventos]);
 
  
     return (
@@ -40,13 +62,16 @@ export default function Eventos() {
             />
             
             {
-                !loadingEventos ?
+                solicitudesArray ?
 
                 <SolicitudList
-                    data={eventos.obtenerEventos}
+                    data={solicitudesArray}
                     tipo="evento"
                     loading={loading}
                     setLoading={setLoading}
+                    pagina={pagina}
+                    setPagina={setPagina}
+                    cantidad={cantidad}
                 />
                 : <Loader active inline='centered' size='massive' />
 
