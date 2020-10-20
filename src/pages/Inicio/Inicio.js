@@ -1,55 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./Inicio.scss";
 import { useQuery } from "@apollo/client";
-import { OBTENER_SUBDIRECCIONES } from "../../gql/subdireccion";
-import { OBTENER_EDIFICIOS } from "../../gql/edificio";
-import { OBTENER_TIPOORDERS } from "../../gql/tipoorder";
+import { SOLICITUDES_HOY } from "../../gql/general";
 import Banner from "../../components/Inicio/Banner/Banner";
 import Container from "../../components/Inicio/Container/Container";
-import { saveStorage } from "../../servicios/reutilizables/localStorage";
 import { scrollTop } from "../../utils/reutilizables/scroll";
+import { format } from "date-fns";
 
 
 export default function Inicio() {
-    const { data: subdirecciones} = useQuery(OBTENER_SUBDIRECCIONES, {
+    const [count, setCount] = useState(0);
+    const { data: solicitudesHoy, refetch} = useQuery(SOLICITUDES_HOY, {
         variables: {
-            input: {
-                cantidad: 15,
-                pagina: 1
-            }
+            input: format(new Date(), "yyyy-MM-dd")
         }
     })
 
-    const { data: edificios} = useQuery(OBTENER_EDIFICIOS, {
-        variables: {
-            input: {
-                cantidad: 15,
-                pagina: 1
-            }
-        }
-    })
-
-    const { data: tipoorders} = useQuery(OBTENER_TIPOORDERS, {
-        variables: {
-            input: {
-                cantidad: 15,
-                pagina: 1
-            }
-        }
-    })
-
-    if(subdirecciones) saveStorage("subdirecciones", subdirecciones.obtenerSubdirecciones); 
-    if(edificios) saveStorage("edificios", edificios.obtenerEdificios); 
-    if(tipoorders) saveStorage("tipoorders", tipoorders.obtenerTipoorders); 
 
     useEffect(() => {
         scrollTop();
+        refetch();
 
-    }, []);
+        if(solicitudesHoy){
+            setCount(solicitudesHoy.solicitudesHoy);
+        }
+        
+    }, [solicitudesHoy]);
 
     return (
         <>
-            <Banner />
+            <Banner count={count} />
             <Container/>
         </>
 

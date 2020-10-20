@@ -7,8 +7,7 @@
         grid-template-columns: 1fr;
         grid-template-rows: 1fr;
         background-color: #FAFAFA;
-        min-height: 22rem;
-        max-height: 22rem;
+        @include min-h(22rem);
         background-repeat: repeat;
         background-size: contain;
 
@@ -16,38 +15,57 @@
             grid-column: 1/2;
             grid-row: 1/2;
             display: grid;
-            grid-template-columns: 1fr;
-            grid-template-rows: 2fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows: 1fr;
             padding: 1em;
             background-image: linear-gradient(to left, #feb, #ffe185);
 
-            h1{
-                grid-column: 1/2;
-                grid-row: 1/2;
-                @include flexbox();
-                text-align: center;
-                padding: 1em;
-                font-size: 2em;
-                color: $guindo;
+                h1{               
+                    grid-column: 1/span 3;
+                    grid-row: 1/2; 
+                    @include flexbox();
+                    justify-content: flex-start;
+                    padding: 1em;
+                    font-size: 2.2em;
+                    color: $guindo;
+                   
             }
-            p{
-                grid-column: 1/2;
-                grid-row: 2/3;
-                @include flexbox();
-                align-items: flex-start;
 
-                button{
-                    @include boton();
-                    font-size: 1.2em;
-                    margin-right: 2rem;
-                    background-color: $guindo;
-                    color: $dorado-claro;
-                    
-                    &:hover{
-                      background-color: $dorado-claro;
-                      color: $guindo;
+            .boton-box{
+
+                &__calendario-pendientes{
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    grid-template-rows: 13rem 1fr;
+                    justify-content: center;
+                    @include min-w(15rem);
+                    @include min-h(20rem);
+                    background-color: white;
+                    border-radius: 6px;
+                    border: 1px solid rgb(226, 226, 226);
+                    padding: .4em;
+                    cursor: pointer;
+
+                    img{
+                        border-radius: 6px;
+                        @include min-h(13rem);
+
                     }
-                }   
+                    p{
+                        grid-column: 1/2;
+                        grid-row: 2/3;
+                        @include flexbox();
+                        font-size: 1.2em;
+                        text-align: center;
+                        padding: 0 .1em;
+                        
+
+                    }
+
+                    a{
+                        background-color: red;
+                    }
+                }
             }
 
 

@@ -16,6 +16,7 @@ import ActualizarSalida from "../pages/ActualizarSolicitud/ActualizarSalida/Actu
 import Perfil from "../pages/usuario/Perfil/Perfil";
 import EditarPerfil from "../pages/usuario/EditarPerfil/EditarPerfil";
 import MisSolicitudes from "../pages/usuario/MisSolicitudes/MisSolicitudes";
+import Error404 from "../pages/Error/Error404/Error404";
 
 //paginas admin de ver
 import Departamentos from "../pages/administrador/ver/departamentos/Departamentos";
@@ -526,7 +527,7 @@ export const routesAdmin = [
 export const errorRoute = [
     {
         layout: LayoutBasic,
-        component: Inicio
+        component: Error404
     }
 ];
 

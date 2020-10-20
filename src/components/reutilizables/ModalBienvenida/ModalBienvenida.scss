@@ -1,0 +1,36 @@
+@import "../../../scss/index.scss";
+
+.modal-bienvenida{
+    &__parrafo{
+        @include flexbox();
+        font-size: 1.7em;
+        font-weight: bold;
+    }
+
+    &__lista{
+        @include flexbox();
+        font-size: 1.3em;
+    }
+
+    &__imagen{
+        @include flexbox();
+
+        div{
+            @include min-h(8rem);
+            @include min-w(8rem);
+            overflow: hidden;
+
+            img{
+                @include min-h(8rem);
+                border-radius: 50%;
+                object-fit: cover;
+                border: 1px solid #ECE4E4;
+            }
+        }
+
+    }
+
+    button{
+        @include boton();
+    }
+}

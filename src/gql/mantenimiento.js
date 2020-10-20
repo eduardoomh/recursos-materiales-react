@@ -12,6 +12,18 @@ export const OBTENER_REPARACIONES = gql`
     }
 `;
 
+export const OBTENER_MANTENIMIENTOS_FILTRO = gql`
+    query obtenerMantenimientosFiltro($input: PaginateInput! $filtro: Filtro!){
+        obtenerMantenimientosFiltro(input: $input filtro: $filtro){
+            id
+            nombre
+            fecha
+            aprobado
+        }
+  
+    }
+`;
+
 export const OBTENER_SERVICIOS = gql`
     query obtenerServicios($input: PaginateInput!){
         obtenerServicios(input: $input){

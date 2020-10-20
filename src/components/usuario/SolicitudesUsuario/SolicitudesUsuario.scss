@@ -1,0 +1,19 @@
+@import "../../../scss/index.scss";
+
+.solicitudes-usuario{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 3em 1fr;
+    @include flexbox();
+    margin-left: 2em;
+    margin-right: 2em;
+
+    .ui.pointing.secondary.menu{
+        grid-column: 1/2;
+        grid-row: 1/2;
+        margin-top: 2em;
+        font-size: 1.3em;
+    }
+
+     
+}

@@ -11,6 +11,17 @@ export const OBTENER_SALIDAS = gql`
     }
 `;
 
+export const OBTENER_SALIDAS_FILTRO = gql`
+    query obtenerSalidasFiltro($input: PaginateInput! $filtro: Filtro!){
+        obtenerSalidasFiltro(input: $input filtro: $filtro){
+            id
+            destino
+            fecha
+        }
+  
+    }
+`;
+
 export const OBTENER_SALIDA = gql`
     query obtenerSalida($id: ID!){
         obtenerSalida(id: $id){

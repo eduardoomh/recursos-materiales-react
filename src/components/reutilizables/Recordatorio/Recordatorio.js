@@ -22,9 +22,9 @@ export default function Recordatorio(props){
                 <p>{texto}</p> 
             </div>
 
-            <div>
+            <div className="recordatorio__botones">
                 <Button className="boton-guindo" onClick={() => gotoRoute(url1)} icon labelPosition='right' >
-                    solicitudes de {tipo}
+                    Lista de {tipo}s
                     <Icon name="angle right" />
                 </Button>
                 <Button className="boton-guindo" onClick={() => gotoRoute(url2)} icon labelPosition='right'>

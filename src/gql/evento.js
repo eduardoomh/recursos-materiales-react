@@ -12,6 +12,18 @@ export const OBTENER_EVENTOS = gql`
     }
 `;
 
+export const OBTENER_EVENTOS_FILTRO = gql`
+    query obtenerEventosFiltro($input: PaginateInput! $filtro: Filtro!){
+        obtenerEventosFiltro(input: $input filtro: $filtro){
+            id
+            nombre
+            fecha
+            aprobado
+        }
+  
+    }
+`;
+
 export const OBTENER_EVENTO = gql`
     query obtenerEvento($id: ID!){
         obtenerEvento(id: $id){

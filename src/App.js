@@ -8,9 +8,11 @@ import { clearStorage, getStorage } from "./servicios/reutilizables/localStorage
 import { getToken, decodeToken, removeToken } from "./utils/reutilizables/token";
 import './App.scss';
 import Authenticated from "./pages/Authenticated/Authenticated";
+import ModalBienvenida from "./components/reutilizables/ModalBienvenida/ModalBienvenida";
 
 function App() {
   const [identity, setIdentity] = useState(undefined);
+  const [Bienvenida, setBienvenida] = useState(false);
 
   useEffect(() => {
     const token = getToken();
@@ -41,13 +43,18 @@ function App() {
     return getStorage("token");
   }
 
+  const cambiarBienvenida = () => {
+    setBienvenida(!Bienvenida);
+  }
+
   const identityData = useMemo(
     () => ({
       identity,
       updateIdentity,
       logout,
       setLogin,
-      token
+      token,
+      cambiarBienvenida
     }),
     [identity]
   );
@@ -60,8 +67,9 @@ function App() {
         <ApolloProvider client={client}>
           <IdentityContext.Provider value={identityData}>
             {
-              !identity ? <Authenticated /> : <Navigation />
+              !identity ? <Authenticated /> : <Navigation  />
             }
+            <ModalBienvenida open={Bienvenida} close={cambiarBienvenida} />
           </IdentityContext.Provider>
         </ApolloProvider>
         <ToastContainer

@@ -2,7 +2,7 @@
 
 .recordatorio{
     display: grid;
-    grid-template-columns: 20rem 1fr 20rem;
+    grid-template-columns: 20rem 1fr 25rem;
     grid-template-rows: 1fr;
     @include min-h(15rem);
     @include min-w(97%);
@@ -14,7 +14,7 @@
         @include flexbox();
 
             img{
-                width: 12em;
+                @include min-w(100%);
                 padding: 1em;
             }
     }
@@ -27,7 +27,7 @@
 
         h4{
             @include flexbox();
-            font-size: 1.3em;
+            font-size: 1.4em;
             text-align: center;
         }
 
@@ -36,13 +36,13 @@
             @include min-h(100%);
             align-items: flex-start;
             text-align: center;
-            font-size: 1.3em;
+            font-size: 1.4em;
             color: $guindo;
         }
 
     }
 
-    div{
+    &__botones{
         @include flexbox();
         flex-direction: column;
         grid-gap: 1.5em;

@@ -12,7 +12,7 @@ import logo from "../../../assets/img/logo.png";
  
 export default function Login(props){
     const { loading, setLoading } = props;
-    const { setLogin } = useIdentity();
+    const { setLogin, cambiarBienvenida } = useIdentity();
     const [login] = useMutation(LOGIN);
 
     const formik = useFormik({
@@ -38,6 +38,7 @@ export default function Login(props){
                 setLogin(decodeToken(token));
                 setLoading(false);
                 toast.success("Ha ingresado exitosamente al sistema");
+                cambiarBienvenida();
                 console.log(token);
             }
             catch(err){

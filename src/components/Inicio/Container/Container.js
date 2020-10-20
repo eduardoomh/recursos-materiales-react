@@ -1,11 +1,9 @@
 import React from "react";
 import Titulo from "../../reutilizables/Titulo/Titulo";
 import Recordatorio from "../../reutilizables/Recordatorio/Recordatorio";
-import reparacion from "../../../assets/img/reparacion.png";
-import car from "../../../assets/img/car.png";
-import bitacora from "../../../assets/img/bitacora.png";
-import caja from "../../../assets/img/caja.png";
-import silla from "../../../assets/img/silla.png";
+import mantenimientoImagen from "../../../assets/img/mantenimiento-imagen.jpg";
+import vehiculo from "../../../assets/img/vehiculo.jpg";
+import eventoGrupo from "../../../assets/img/evento-grupo.jpg";
 import "./Container.scss";
 
 export default function Container() {
@@ -16,35 +14,21 @@ export default function Container() {
             <div className="box">
                 <Recordatorio
                     texto="Organice eventos, el lugar, la fecha, la hora, suba evidencias y genere la solicitud."
-                    imagen={silla}
+                    imagen={eventoGrupo}
                     tipo="Evento"
                     url1="/eventos"
                     url2="/nuevo/evento"
                 />
                 <Recordatorio
-                    texto="Organice fechas de reparaciones dentro de la institucion."
-                    imagen={reparacion}
-                    tipo="Reparacion"
+                    texto="Organice fechas de reparaciones, servicios o viajes segun los requerimientos de la institucion."
+                    imagen={mantenimientoImagen}
+                    tipo="Mantenimiento"
                     url1="/eventos"
                     url2="/nuevo/evento"
-                />
-                <Recordatorio
-                    texto="Organice servicios prestados por el departamento."
-                    imagen={caja}
-                    tipo="Servicio"
-                    url1="/eventos"
-                    url2="/nuevo/evento"
-                />
-                <Recordatorio
-                    texto="Organice salidas de la institucion en transporte."
-                    imagen={car}
-                    tipo="Transporte"
-                    url1="/eventos"
-                    url2="/nuevo/mantenimientos"
                 />
                 <Recordatorio
                     texto="Lleve un inventario de todos los vehiculos que entran y salen de la institucion."
-                    imagen={bitacora}
+                    imagen={vehiculo}
                     tipo="Salida"
                     url1="/eventos"
                     url2="/nuevo/evento"
