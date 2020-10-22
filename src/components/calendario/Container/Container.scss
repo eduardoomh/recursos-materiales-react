@@ -21,7 +21,7 @@
             grid-column: 1/2;
             grid-row: 1/2;
             display: grid;
-            grid-template-columns: 10rem 1fr 12rem;
+            grid-template-columns: 4rem 1fr 4rem;
             grid-template-rows: 6rem !important;
             @include min-h(6rem);
             align-items: center;
@@ -29,17 +29,10 @@
             padding: 0 1em;
             background-color: #f2f2e9;
 
-            button{
-                @include boton();
-                @include min-h(2.5em);
-                @include min-w(10em);
-                font-size: 1.2em;
-            }
-
             p{
                 @include flexbox();
                 @include min-h(100%);
-                font-size: 1.4em;
+                font-size: 1.6em;
                 font-weight: bold;
                 padding: 0;
                 margin: 0;

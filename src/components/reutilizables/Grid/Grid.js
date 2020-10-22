@@ -4,7 +4,7 @@ import Paginacion from "../Paginacion/Paginacion";
 import "./Grid.scss";
 
 export default function Grid(props) {
-    const { data, tipo, pagina, setPagina, cantidad, loading, setLoading } = props;
+    const { data, tipo, pagina, setPagina, cantidad,  setLoading } = props;
 
     return (
         <div className="grid-box">

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Button, Icon } from "semantic-ui-react";
+import { Button, Icon, Image } from "semantic-ui-react";
 import SubirEvidencia from "./SubirEvidencia/SubirEvidencia";
 import ModalEvidencias from "../../reutilizables/ModalEvidencias/ModalEvidencias";
+import ilustracion from "../../../assets/img/ilustraciones.jpg";
 import "./Evidencias.scss";
 
 export default function Evidencias(props) {
@@ -24,10 +25,14 @@ export default function Evidencias(props) {
 
     return (
         <div className="evidencias">
+            <div className="evidencias__image-container">
+                <Image src={ilustracion} />
+            </div>
             {
                 evidencias?.length > 0 ? (
                     <>
                         <div className="evidencias__contenido" onClick={openModal}>
+
                             <p>
                                 Cuenta con <span>{evidencias.length}</span> {evidencias.length > 1 ? "evidencias" : "evidencia"} de esta solicitud, haga clic para ver las imagenes.
                             </p>
@@ -45,19 +50,19 @@ export default function Evidencias(props) {
                 </Button>
             </div>
 
-            <SubirEvidencia 
-                abrir={abrir} 
-                cerrarModal={cerrarModal} 
-                id={id} 
-                refrescarEvidencias={refrescarEvidencias} 
-                tipo={tipo} 
+            <SubirEvidencia
+                abrir={abrir}
+                cerrarModal={cerrarModal}
+                id={id}
+                refrescarEvidencias={refrescarEvidencias}
+                tipo={tipo}
             />
 
-            <ModalEvidencias 
-                abrir={open} 
-                cerrarModal={cerrarModal} 
-                evidencias={evidencias} 
-                tipo={tipo} 
+            <ModalEvidencias
+                abrir={open}
+                cerrarModal={cerrarModal}
+                evidencias={evidencias}
+                tipo={tipo}
                 refrescarEvidencias={refrescarEvidencias}
             />
         </div>

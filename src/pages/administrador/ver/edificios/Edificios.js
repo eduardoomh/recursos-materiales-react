@@ -14,7 +14,7 @@ export default function Edificios() {
     const [ cantidad ] = useState(6);
     const { refresh } = useParams();
 
-    const {data: edificios, loading: loadingEdificios, refetch: refrescarEdificios} = useQuery(OBTENER_EDIFICIOS, {
+    const {data: edificios, refetch: refrescarEdificios} = useQuery(OBTENER_EDIFICIOS, {
         variables: {
             input: {
                 cantidad: cantidad,
@@ -28,18 +28,22 @@ export default function Edificios() {
         if(!edificios){
             scrollTop();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(refresh){
+            scrollTop();
             refrescarEdificios();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(edificios){
             refrescarEdificios();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[pagina]);
 
     useEffect(() => {
@@ -47,6 +51,7 @@ export default function Edificios() {
             setSolicitudesArray(edificios.obtenerEdificios);
             setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[edificios]);
 
 

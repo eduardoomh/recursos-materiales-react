@@ -39,7 +39,13 @@ export default function DetalleSubdireccion(){
             {
                 subdireccion && !loadingSubdireccion ? (
                     <>
-                        <InfoSubdireccion data={subdireccion.obtenerSubdireccion} loading={loading} setLoading={setLoading} />
+                        <InfoSubdireccion 
+                            data={subdireccion.obtenerSubdireccion} 
+                            loading={loading} 
+                            setLoading={setLoading} 
+                            tipo="subdireccion"
+                            plural="subdirecciones"
+                        />
                     </>
                 )
                 : <Loader active inline='centered' size='massive' />

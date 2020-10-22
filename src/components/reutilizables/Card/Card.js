@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory} from "react-router-dom";
-import { Icon, Button } from "semantic-ui-react";
+import { Icon  } from "semantic-ui-react";
 import "./Card.scss";
 
 export default function Card(props){

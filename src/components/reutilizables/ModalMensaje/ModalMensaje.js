@@ -4,12 +4,11 @@ import success from "../../../assets/img/success.jpg";
 import "./ModalMensaje.scss";
 
 export default function ModalMensaje(props) {
-    const { centered, open, onClose, titulo, texto, boton } = props;
+    const { open, onClose, titulo, texto, boton } = props;
 
     return (
         <div className="modal-mensaje">
             <Modal
-                centered={centered}
                 open={open}
                 onClose={onClose}
                 size="small"

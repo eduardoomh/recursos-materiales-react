@@ -13,4 +13,12 @@
         grid-template-columns: 1fr;
         grid-template-rows: repeat(6, 6rem);
     }
+
+    &__imagen{
+        @include flexbox();
+
+        img{
+            @include min-h(12rem);
+        }
+    }
 } 

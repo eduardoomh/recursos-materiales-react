@@ -39,7 +39,13 @@ export default function DetallePuesto() {
             {
                 puesto && !loadingPuesto ? (
                     <>
-                        <InfoPuesto data={puesto.obtenerPuesto} loading={loading} setLoading={setLoading} />
+                        <InfoPuesto 
+                            data={puesto.obtenerPuesto} 
+                            loading={loading} 
+                            setLoading={setLoading} 
+                            tipo="puesto"
+                            plural="puestos"
+                        />
                     </>
                 )
                     : <Loader active inline='centered' size='massive' />

@@ -7,7 +7,8 @@
     &__map{
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: repeat(6, 6rem);
+        grid-template-rows: repeat(6, 7rem);
+        grid-gap: .7em;
     }
  
     .empty{
@@ -16,6 +17,14 @@
         @include flexbox();
         @include min-h(10rem);
         font-size: 1.3em;
+    }
+
+    &__imagen{
+        @include flexbox();
+
+        img{
+            @include min-h(12rem);
+        }
     }
 
 }

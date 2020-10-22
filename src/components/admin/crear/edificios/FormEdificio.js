@@ -42,8 +42,6 @@ export default function FormEdificio() {
                 });
                 setLoading(false);
                 abrirModal();
-                toast.success("Edificio creado con exito");
-
 
             }
             catch (err) {

@@ -2,9 +2,18 @@
 
 .evidencias{
     @include min-w(50rem);
-    margin-top: 3em;
+    margin-top: 1em;
+
+    &__image-container{
+        @include flexbox();
+        @include min-h(12rem);
+
+        img{
+            @include min-h(12rem);
+        }
+    }
     p{
-        @include min-h(8rem);
+        @include min-h(7rem);
         @include flexbox();
         font-size: 1.3em;
     }

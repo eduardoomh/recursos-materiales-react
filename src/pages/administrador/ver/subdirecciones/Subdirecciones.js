@@ -14,7 +14,7 @@ export default function Espacios() {
     const [ cantidad ] = useState(6);
     const { refresh } = useParams();
 
-    const {data: subdirecciones, loading: loadingSubdirecciones, refetch: refrescarSubdirecciones} = useQuery(OBTENER_SUBDIRECCIONES, {
+    const {data: subdirecciones, refetch: refrescarSubdirecciones} = useQuery(OBTENER_SUBDIRECCIONES, {
         variables: {
             input: {
                 cantidad: cantidad,
@@ -27,18 +27,22 @@ export default function Espacios() {
         if(!subdirecciones){
             scrollTop();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(refresh){
+            scrollTop();
             refrescarSubdirecciones();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(subdirecciones){
             refrescarSubdirecciones();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[pagina]);
 
     useEffect(() => {
@@ -46,6 +50,7 @@ export default function Espacios() {
             setSolicitudesArray(subdirecciones.obtenerSubdirecciones);
             setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[subdirecciones]);
 
 

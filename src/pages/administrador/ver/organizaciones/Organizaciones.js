@@ -14,7 +14,7 @@ export default function Organizaciones() {
     const [ cantidad ] = useState(6);
     const { refresh } = useParams();
 
-    const {data: acomodosillas, loading: loadingAcomodosillas, refetch: refrescarAcomodosillas} = useQuery(OBTENER_ACOMODOSILLAS, {
+    const {data: acomodosillas, refetch: refrescarAcomodosillas} = useQuery(OBTENER_ACOMODOSILLAS, {
         variables: {
             input: {
                 cantidad: cantidad,
@@ -28,18 +28,22 @@ export default function Organizaciones() {
         if(!acomodosillas){
             scrollTop();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(refresh){
+            scrollTop();
             refrescarAcomodosillas();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(acomodosillas){
             refrescarAcomodosillas();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[pagina]);
 
     useEffect(() => {
@@ -47,6 +51,7 @@ export default function Organizaciones() {
             setSolicitudesArray(acomodosillas.obtenerAcomodosillas);
             setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[acomodosillas]);
 
 

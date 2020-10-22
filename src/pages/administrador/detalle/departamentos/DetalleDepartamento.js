@@ -40,7 +40,13 @@ export default function DetalleDepartamento(){
             {
                 departamento && !loadingDepartamento ? (
                     <>
-                        <InfoDepartamento data={departamento.obtenerDepartamento} loading={loading} setLoading={setLoading} />
+                        <InfoDepartamento 
+                            data={departamento.obtenerDepartamento} 
+                            loading={loading} 
+                            setLoading={setLoading} 
+                            tipo="departamento"
+                            plural="departamentos"
+                        />
                     </>
                 )
                 : <Loader active inline='centered' size='massive' />

@@ -1,0 +1,7 @@
+@import "../../../../../scss/index.scss";
+@import "../../../../../scss/contenedores/solicitudCaja.scss";
+
+.info-subdireccion{
+    @include solicitudCaja(4, "admin");
+     
+}

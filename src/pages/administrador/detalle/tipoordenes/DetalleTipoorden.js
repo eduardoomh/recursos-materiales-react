@@ -41,7 +41,13 @@ export default function DetalleTipoorden(){
             {
                 tipoorder && !loadingTipoorder ? (
                     <>
-                        <InfoTipoorden data={tipoorder.obtenerTipoorder} loading={loading} setLoading={setLoading} />
+                        <InfoTipoorden 
+                            data={tipoorder.obtenerTipoorder} 
+                            loading={loading} 
+                            setLoading={setLoading} 
+                            tipo="tipoorden"
+                            plura="tipoordenes"
+                        />
                     </>
                 )
                 : <Loader active inline='centered' size='massive' />

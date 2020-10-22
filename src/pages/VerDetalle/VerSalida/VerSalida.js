@@ -20,7 +20,7 @@ export default function VerSalida(){
         }
     })
 
-    const { data: evidencias, loading: loadingEvidencias, refetch: refrescarEvidencias } = useQuery(OBTENER_EVIDENCIAS, {
+    const { data: evidencias, refetch: refrescarEvidencias } = useQuery(OBTENER_EVIDENCIAS, {
         variables: {
             input:{
                 id: id,

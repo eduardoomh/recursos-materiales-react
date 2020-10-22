@@ -1,7 +1,9 @@
 import React from "react";
+import { Image } from "semantic-ui-react";
 import CardUser from "../../../reutilizables/CardUser/CardUser";
 import Paginacion from "../../../reutilizables/Paginacion/Paginacion";
 import { formatDate } from "../../../../utils/reutilizables/fecha";
+import noDatos from "../../../../assets/img/no_hay_datos.jpg";
 import "./ListadoUsuarios.scss";
 
 export default function ListadoUsuarios(props) {
@@ -28,7 +30,13 @@ export default function ListadoUsuarios(props) {
                             )
                         }
                     </div>
-                    : <p className="listado-usuarios__mensaje">No hay usuarios en esta categoria</p>
+                    : 
+                    <>
+                        <div className="listado-usuarios__imagen">
+                            <Image src={noDatos} />
+                        </div>
+                        <p className="listado-usuarios__mensaje">No hay usuarios en esta categoria</p>
+                    </>
             }
             {
                 data.length === 0 && pagina === 1 ? (

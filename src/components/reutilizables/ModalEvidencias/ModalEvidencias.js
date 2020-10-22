@@ -61,6 +61,7 @@ export default function ModalEvidencias(props) {
                                                     }
                                                     on='click'
                                                     position='top right'
+                                                    inverted
                                                 /></p>
                                         </div>
 

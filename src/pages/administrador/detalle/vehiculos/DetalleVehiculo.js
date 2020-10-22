@@ -10,7 +10,7 @@ import { scrollTop } from "../../../../utils/reutilizables/scroll";
 import InfoVehiculo from "../../../../components/admin/detalle/vehiculos/InfoVehiculo";
 
 export default function DetalleVehiculo(){
-    const [loading, setLoading] = useState(false);
+    const [loading ] = useState(false);
     const { id } = useParams();
     scrollTop();
 
@@ -39,7 +39,7 @@ export default function DetalleVehiculo(){
                 vehiculo && !loadingVehiculo ? (
                     <>
                     
-                        <InfoVehiculo data={vehiculo.obtenerVehiculo} loading={loading} setLoading={setLoading} />
+                        <InfoVehiculo data={vehiculo.obtenerVehiculo} loading={loading} tipo="vehiculo" plural="vehiculos" />
                     </>
                 )
                 : <Loader active inline='centered' size='massive' />

@@ -14,7 +14,7 @@ export default function Tipoordenes() {
     const [ cantidad ] = useState(6);
     const { refresh } = useParams();
 
-    const {data: tipoorders, loading: loadingTipoorders, refetch: refrescarTipoorders} = useQuery(OBTENER_TIPOORDERS, {
+    const {data: tipoorders,  refetch: refrescarTipoorders} = useQuery(OBTENER_TIPOORDERS, {
         variables: {
             input: {
                 cantidad: cantidad,
@@ -28,18 +28,22 @@ export default function Tipoordenes() {
         if(!tipoorders){
             scrollTop();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(refresh){
+            scrollTop();
             refrescarTipoorders();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(tipoorders){
             refrescarTipoorders();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[pagina]);
 
     useEffect(() => {
@@ -47,6 +51,7 @@ export default function Tipoordenes() {
             setSolicitudesArray(tipoorders.obtenerTipoorders);
             setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[tipoorders]);
 
     return (

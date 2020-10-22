@@ -39,7 +39,13 @@ export default function DetalleEdificio(){
             {
                 edificio && !loadingEdificio ? (
                     <>
-                        <InfoEdificio data={edificio.obtenerEdificio} loading={loading} setLoading={setLoading} />
+                        <InfoEdificio 
+                            data={edificio.obtenerEdificio} 
+                            loading={loading} 
+                            setLoading={setLoading} 
+                            tipo="edificio"
+                            plural="edificio"
+                        />
                     </>
                 )
                 : <Loader active inline='centered' size='massive' />

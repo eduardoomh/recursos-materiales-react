@@ -1,17 +1,26 @@
 import React from "react";
+import { Image } from "semantic-ui-react";
 import CardItem from "../CardItem/CardItem";
 import Paginacion from "../Paginacion/Paginacion";
+import noDatos from "../../../assets/img/no_hay_datos.jpg";
 import "./List.scss";
 
 export default function Lista(props) {
-    const { data, tipo, pagina, setPagina, cantidad, loading, setLoading } = props;
+    const { data, tipo, pagina, setPagina, cantidad, setLoading } = props;
 
     return (
         <div className="list-box">
 
             {
                 data.length === 0 ?
-                    <p className="empty">No hay datos para mostrar.</p>
+                    (
+                        <>
+                            <div className="list-box__imagen">
+                                <Image src={noDatos} />
+                            </div>
+                            <p className="empty">No hay datos para mostrar.</p>
+                        </>
+                    )
                     :
                     <div className="list-box__map">
                         {
@@ -29,7 +38,7 @@ export default function Lista(props) {
                             )
                         }
                     </div>
- 
+
             }
             {
                 data.length === 0 && pagina === 1 ? (
@@ -37,13 +46,13 @@ export default function Lista(props) {
                 )
                     :
                     (
-                      <Paginacion 
+                        <Paginacion
                             setLoading={setLoading}
                             setPagina={setPagina}
                             pagina={pagina}
                             cantidad={cantidad}
                             longitud={data.length}
-                       />
+                        />
                     )
             }
 

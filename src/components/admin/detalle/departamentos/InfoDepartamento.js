@@ -1,70 +1,31 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
-import { Button } from "semantic-ui-react";
-import { formatDate } from "../../../../utils/reutilizables/fecha";
-import BoxFormData from "../../../reutilizables/BoxFormData/BoxFormData";
+import { Tab } from "semantic-ui-react";
+import { scrollTop } from "../../../../utils/reutilizables/scroll";
+import Informacion from "./Informacion/Informacion";
+import Opciones from "../../opciones/Opciones";
 import "./InfoDepartamento.scss";
 
 export default function InfoDepartamento(props) {
-    const { data, loading } = props;
-    const history = useHistory();
+    const { data, loading, tipo, plural } = props;
 
-    const gotoUpdate = (id) => {
-        history.push(`/admin/actualizar/departamento/${id}`);
-    }
+    scrollTop();
+ 
+    const panes = [
+        {
+          menuItem: 'Informacion',
+          render: () => <Informacion data={data} loading={loading} />,
+        },
+        {
+          menuItem: 'Opciones',
+          render: () => <Opciones id={data.id} tipo={tipo} plural={plural} />,
+        },
+      ]
+
+    
 
     return (
         <div className="informacion-departamento">
-
-            <div>
-                {
-                    data !== "cargando ...." && loading === false ? (
-                        <>
-
-                            <BoxFormData
-                                titulo="Nombre del departamento"
-                                data={data.nombre}
-                            />
-
-                            <BoxFormData
-                                titulo="Correo electronico"
-                                data={data.correo}
-                            />
-                            <BoxFormData
-                                titulo="Telefono"
-                                data={data.telefono}
-                            />
-                            <BoxFormData
-                                titulo="Pertenece a la subdireccion"
-                                data={data.subdireccion.nombre}
-                            />
-                            <BoxFormData
-                                titulo="Ultima actualizacion"
-                                data={formatDate(data.updatedAt)}
-                            />
-
-                            <BoxFormData
-                                titulo="Fecha de creacion"
-                                data={formatDate(data.createdAt)}
-                            />
-
-                            <BoxFormData
-                                titulo=""
-                                data={<Button className="boton-guindo" onClick={() => gotoUpdate(data.id)}>Actualizar Departamento</Button>}
-                            />
-                        </>
-                    )
-                        :
-                        (
-                            "cargando..."
-                        )
-
-
-
-                }
-
-            </div>
-
+            <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
         </div>
 
     )

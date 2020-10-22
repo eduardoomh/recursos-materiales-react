@@ -33,3 +33,9 @@ mutation actualizarSubdireccion($id: ID! $input: actualizarSubdireccion!){
     actualizarSubdireccion(id: $id input: $input)
 }
 `;
+
+export const BORRAR_SUBDIRECCION = gql`
+mutation borrarSubdireccion($id: ID!){
+    borrarSubdireccion(id: $id)
+}
+`;

@@ -42,8 +42,6 @@ export default function FormSubdireccion() {
                 });
                 setLoading(false);
                 abrirModal();
-                toast.success("Subdireccion creada con exito");
-
 
             }
             catch (err) {

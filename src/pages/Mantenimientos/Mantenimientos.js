@@ -16,31 +16,35 @@ export default function Mantenimientos(){
     const { refresh } = useParams();
     
     
-    const { data: reparaciones, loading: loadingReparaciones, refetch: refrescarMantenimientos} = useQuery(OBTENER_REPARACIONES, {
+    const { data: reparaciones,  refetch: refrescarMantenimientos} = useQuery(OBTENER_REPARACIONES, {
         variables: {
             input: {
                 cantidad: cantidad,
                 pagina: pagina
             }
         }
+        
     })  
 
     useEffect(() => {
         if(!reparaciones){
             scrollTop();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(refresh){
             refrescarMantenimientos();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(reparaciones){
             refrescarMantenimientos();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[pagina]);
 
     useEffect(() => {
@@ -48,6 +52,7 @@ export default function Mantenimientos(){
             setSolicitudesArray(reparaciones.obtenerReparaciones);
             setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[reparaciones]);
 
 
@@ -55,8 +60,6 @@ export default function Mantenimientos(){
         <div className="mantenimientos">
             <BannerSolicitud 
                 titulo="Solicitudes de Mantenimientos" 
-                query={BUSCAR_MANTENIMIENTO} 
-                tipo="mantenimiento"
             />
             {
                 solicitudesArray ?
@@ -69,6 +72,7 @@ export default function Mantenimientos(){
                     pagina={pagina}
                     setPagina={setPagina}
                     cantidad={cantidad}
+                    query={BUSCAR_MANTENIMIENTO} 
                 />
                 : <Loader active inline='centered' size='massive' />
 

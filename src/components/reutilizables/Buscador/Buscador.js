@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import  { useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { size } from "lodash";
 import { transformarFecha } from "../../../utils/reutilizables/fecha";
-import { Search as SearchUI  } from "semantic-ui-react";
+import { Search as SearchUI, Modal, Button, Icon, Image } from "semantic-ui-react";
+import imagenInfo from "../../../assets/img/buscar-info.jpg";
 import "./Buscador.scss";
 
-export default function Buscador(props){
-    const { tipo, query } = props;
-    const [ search, setSearch ] = useState(null);
-    const [ results, setResults ] = useState([]);
+export default function Buscador(props) {
+    const { tipo, query, cerrar, abrir } = props;
+    const [search, setSearch] = useState(null);
+    const [results, setResults] = useState([]);
 
     const { data, loading } = useQuery(query, {
         variables: {
@@ -19,9 +20,9 @@ export default function Buscador(props){
 
     console.log(data);
     useEffect(() => {
-        switch(tipo){
+        switch (tipo) {
             case "evento":
-                if(size(data?.buscarEvento) > 0){
+                if (size(data?.buscarEvento) > 0) {
                     const elementos = [];
                     data.buscarEvento.forEach((e, index) => {
                         elementos.push({
@@ -32,13 +33,13 @@ export default function Buscador(props){
                         });
                     });
                     setResults(elementos);
-        
-                }else{
+
+                } else {
                     setResults([]);
                 }
-            break;
+                break;
             case "mantenimiento":
-                if(size(data?.buscarMantenimiento) > 0){
+                if (size(data?.buscarMantenimiento) > 0) {
                     const elementos = [];
                     data.buscarMantenimiento.forEach((e, index) => {
                         elementos.push({
@@ -49,13 +50,13 @@ export default function Buscador(props){
                         });
                     });
                     setResults(elementos);
-        
-                }else{
+
+                } else {
                     setResults([]);
                 }
-            break;
+                break;
             case "salida":
-                if(size(data?.buscarSalida) > 0){
+                if (size(data?.buscarSalida) > 0) {
                     const elementos = [];
                     data.buscarSalida.forEach((e, index) => {
                         elementos.push({
@@ -66,11 +67,11 @@ export default function Buscador(props){
                         });
                     });
                     setResults(elementos);
-        
-                }else{
+
+                } else {
                     setResults([]);
                 }
-            break;
+                break;
             default:
                 break;
         }
@@ -78,7 +79,7 @@ export default function Buscador(props){
     }, [data]);
 
     const onChange = (e) => {
-        if(e.target.value) setSearch(e.target.value);
+        if (e.target.value) setSearch(e.target.value);
         else setSearch(null);
     }
 
@@ -87,30 +88,53 @@ export default function Buscador(props){
         setResults([]);
     }
 
-    return(
-        <SearchUI 
-            className="buscar-elementos" 
-            fluid
-            size="small"
-            input={{icon: "search", iconPosition: "left"}}
-            loading={loading}
-            value={search || ""}
-            onSearchChange={onChange}
-            onResultSelect={handleResultSelect}
-            results={results}
-            resultRenderer={(e) => <ResultSearch data={e} tipo={tipo} />}
-        />
+    return (
+        <Modal
+            onClose={cerrar}
+            open={abrir}
+        >
+            <Modal.Header>Buscador</Modal.Header>
+            <Modal.Content scrolling>
+                <div className="buscar-elementos">
+                    <div className="buscar-elementos__input-box">
+                        <p>Busque las solicitudes de {tipo} por nombre</p>
+                        <SearchUI
+                            fluid
+                            size="small"
+                            input={{ icon: "search", iconPosition: "left" }}
+                            loading={loading}
+                            value={search || ""}
+                            onSearchChange={onChange}
+                            onResultSelect={handleResultSelect}
+                            results={results}
+                            resultRenderer={(e) => <ResultSearch data={e} tipo={tipo} />}
+                        />
+                    </div>
+                    <div className="buscar-elementos__resultados">
+                        <div>
+                            <Image src={imagenInfo} />
+                        </div>
+                    </div>
+
+                </div>
+            </Modal.Content>
+            <Modal.Actions>
+                <Button onClick={cerrar}>
+                    cerrar
+          </Button>
+            </Modal.Actions>
+        </Modal>
     );
 }
 
-function ResultSearch(props){
+function ResultSearch(props) {
     const { data, tipo } = props;
 
-    return(
+    return (
         <Link className="buscar-elementos__item" to={`/${tipo}/${data.identificador}`}>
             <div>
                 <p>{data.nombre}</p>
-                <p>{transformarFecha(data.fecha)}</p>
+                <p> <Icon name="clock" />{transformarFecha(data.fecha)}</p>
             </div>
         </Link>
     )

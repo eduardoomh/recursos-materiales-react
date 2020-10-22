@@ -16,7 +16,7 @@ export default function Salidas(){
     const { refresh } = useParams();
     
 
-    const { data: salidas, loading: loadingSalidas, refetch: refrescarSalidas} = useQuery(OBTENER_SALIDAS, {
+    const { data: salidas, refetch: refrescarSalidas} = useQuery(OBTENER_SALIDAS, {
         variables: {
             input: {
                 cantidad: cantidad,
@@ -30,18 +30,21 @@ export default function Salidas(){
         if(!salidas){
             scrollTop();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(refresh){
             refrescarSalidas();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(salidas){
             refrescarSalidas();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[pagina]);
 
     useEffect(() => {
@@ -49,6 +52,7 @@ export default function Salidas(){
             setSolicitudesArray(salidas.obtenerSalidas);
             setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[salidas]);
 
 
@@ -56,8 +60,6 @@ export default function Salidas(){
         <div className="salidas">
             <BannerSolicitud 
                 titulo="Solicitudes de Salidas" 
-                query={BUSCAR_SALIDA} 
-                tipo="salida"
             />
             {
                 solicitudesArray ?
@@ -70,6 +72,7 @@ export default function Salidas(){
                     pagina={pagina}
                     setPagina={setPagina}
                     cantidad={cantidad}
+                    query={BUSCAR_SALIDA} 
                 />
                 : <Loader active inline='centered' size='massive' />
 

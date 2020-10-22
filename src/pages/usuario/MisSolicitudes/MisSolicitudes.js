@@ -65,6 +65,7 @@ export default function MisSolicitudes(){
         if(!eventos || !mantenimientos || !salidas){
             scrollTop();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
 
@@ -72,36 +73,42 @@ export default function MisSolicitudes(){
         if(eventos){
             refrescarEventos();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[paginaEvento]);
 
     useEffect(() => {
         if(mantenimientos){
             refrescarMantenimientos();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[paginaMantenimiento]);
 
     useEffect(() => {
         if(salidas){
             refrescarSalidas();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[paginaSalida]);
 
     useEffect(() => {
         if(eventos){
             setEventosArray(eventos.obtenerEventosFiltro);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[eventos]);
 
     useEffect(() => {
         if(mantenimientos){
             setMantenimientosArray(mantenimientos.obtenerMantenimientosFiltro);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[mantenimientos]);
 
     useEffect(() => {
         if(salidas){
             setSalidasArray(salidas.obtenerSalidasFiltro);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[salidas]);
 
     return(

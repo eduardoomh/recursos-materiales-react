@@ -14,7 +14,7 @@ export default function Vehiculos() {
     const [ cantidad ] = useState(6);
     const { refresh } = useParams();
 
-    const {data: vehiculos, loading: loadingVehiculos, refetch: refrescarVehiculos} = useQuery(OBTENER_VEHICULOS, {
+    const {data: vehiculos, refetch: refrescarVehiculos} = useQuery(OBTENER_VEHICULOS, {
         variables: {
             input: {
                 cantidad: cantidad,
@@ -28,18 +28,22 @@ export default function Vehiculos() {
         if(!vehiculos){
             scrollTop();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(refresh){
+            scrollTop();
             refrescarVehiculos();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(vehiculos){
             refrescarVehiculos();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[pagina]);
 
     useEffect(() => {
@@ -47,6 +51,7 @@ export default function Vehiculos() {
             setSolicitudesArray(vehiculos.obtenerVehiculos);
             setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[vehiculos]);
 
     return (

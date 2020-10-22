@@ -14,7 +14,7 @@ export default function Departamentos() {
     const [ cantidad ] = useState(6);
     const { refresh } = useParams();
 
-    const {data: departamentos, loading: loadingDepartamentos, refetch: refrescarDepartamentos} = useQuery(OBTENER_DEPARTAMENTOS, {
+    const {data: departamentos, refetch: refrescarDepartamentos} = useQuery(OBTENER_DEPARTAMENTOS, {
         variables: {
             input: {
                 cantidad: cantidad,
@@ -27,18 +27,22 @@ export default function Departamentos() {
         if(!departamentos){
             scrollTop();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(refresh){
+            scrollTop();
             refrescarDepartamentos();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(departamentos){
             refrescarDepartamentos();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[pagina]);
 
     useEffect(() => {
@@ -46,6 +50,7 @@ export default function Departamentos() {
             setSolicitudesArray(departamentos.obtenerDepartamentos);
             setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[departamentos]);
 
     return (

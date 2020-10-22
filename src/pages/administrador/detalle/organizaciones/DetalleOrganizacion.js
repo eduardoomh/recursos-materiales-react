@@ -41,7 +41,13 @@ export default function DetalleOrganizacion(){
             {
                 acomodosilla && !loadingAcomodosilla ? (
                     <>
-                        <InfoOrganizacion data={acomodosilla.obtenerAcomodosilla} loading={loading} setLoading={setLoading} />
+                        <InfoOrganizacion 
+                            data={acomodosilla.obtenerAcomodosilla} 
+                            loading={loading} 
+                            setLoading={setLoading} 
+                            tipo="organizacion"
+                            plural="organizaciones"
+                        />
                     </>
                 )
                 : <Loader active inline='centered' size='massive' />

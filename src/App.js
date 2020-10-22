@@ -44,7 +44,7 @@ function App() {
   }
 
   const cambiarBienvenida = () => {
-    setBienvenida(!Bienvenida);
+    return setBienvenida(!Bienvenida);
   }
 
   const identityData = useMemo(
@@ -56,6 +56,7 @@ function App() {
       token,
       cambiarBienvenida
     }),
+    // eslint-disable-next-line
     [identity]
   );
 

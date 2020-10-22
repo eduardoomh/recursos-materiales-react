@@ -24,7 +24,8 @@ export default function Inicio() {
         if(solicitudesHoy){
             setCount(solicitudesHoy.solicitudesHoy);
         }
-        
+
+        // eslint-disable-next-line
     }, [solicitudesHoy]);
 
     return (

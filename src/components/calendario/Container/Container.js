@@ -6,8 +6,8 @@ import { useQuery } from "@apollo/client";
 import { EVENTO_FECHAS } from "../../../gql/evento";
 import { MANTENIMIENTO_FECHAS } from "../../../gql/mantenimiento";
 import ModalCalendario from "../Modal/ModalCalendario";
-import { Icon, Button } from "semantic-ui-react";
-import { Loader } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
+import { Loader, Popup } from "semantic-ui-react";
 import "./Container.scss";
 
 export default function Container(props) {
@@ -134,7 +134,7 @@ export default function Container(props) {
         setFinal(format(endOfMonth(new Date(currentYear, currentMonth, currentDay)), "yyyy-MM-dd"));
 
     }
-    if(loadingMantenimientos && loadingEventos) return <Loader active />
+    if (loadingMantenimientos && loadingEventos) return <Loader active />
 
     return (
         <div className="container-calendar">
@@ -148,13 +148,20 @@ export default function Container(props) {
                             mantenimientoFecha(mantenimientos.mantenimientoFechas)
                         }
                         <div className="header-calendar">
-                            <Button icon labelPosition="left" onClick={anteriorFecha}>
-                                <Icon name="angle left" />Anterior
-                        </Button>
-                            <p>Mes de {dateToday}</p>
-                            <Button icon labelPosition="right" onClick={siguienteFecha}>
-                                <Icon name="angle right" />Siguiente
-                        </Button>
+                            <Popup
+                                trigger={<Icon name="angle left" onClick={anteriorFecha} link size="big" />}
+                                content='Ir al mes anterior'
+                                inverted
+                                position="left center"
+                            />
+                            <p>{dateToday}</p>
+                            <Popup
+                                trigger={<Icon name="angle right" onClick={siguienteFecha} link size="big" />}
+                                content='Ir al mes siguiente'
+                                inverted
+                                position="right center"
+                            />
+                            
                         </div >
                         <div className="header-dias">
                             {
@@ -173,8 +180,29 @@ export default function Container(props) {
                                         }
                                         <span className={dia === currentDay && fechaActual === fechaComparacion ? "number" : ""}>{dia}</span>
                                         <div onClick={() => modalDatos(dia, eventos.eventoFechas, mantenimientos.mantenimientoFechas)} className="diaBox__box">
-                                            <span className="iconos">{dia === eventoDia ? <Icon name="address book" size="large" color="red" /> : ""}</span>
-                                            <span className="iconos">{dia === mantenimientoDia ? <Icon name="cogs" size="large" color="red" /> : ""}</span>
+                                            <span className="iconos">
+                                                {
+                                                    dia === eventoDia ?
+                                                        <Popup
+                                                            trigger={<Icon name="address book" size="large" color="red" />}
+                                                            content='Evento'
+                                                            inverted
+                                                        />
+                                                        :
+                                                        ""
+                                                }
+                                            </span>
+                                            <span className="iconos">
+                                                {
+                                                    dia === mantenimientoDia ?
+                                                        <Popup
+                                                            trigger={<Icon name="cogs" size="large" color="red" />}
+                                                            content='Mantenimiento'
+                                                            inverted
+                                                        />
+                                                        :
+                                                        ""
+                                                }</span>
                                         </div>
 
                                     </span>

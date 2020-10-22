@@ -14,7 +14,7 @@ export default function Permisos() {
     const [ cantidad ] = useState(6);
     const { refresh } = useParams();
     
-        const {data: permisos, loading: loadingPermisos, refetch: refrescarPermisos} = useQuery(OBTENER_PERMISOS, {
+        const {data: permisos, refetch: refrescarPermisos} = useQuery(OBTENER_PERMISOS, {
             variables: {
                 input: {
                     cantidad: cantidad,
@@ -27,18 +27,22 @@ export default function Permisos() {
             if(!permisos){
                 scrollTop();
             }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         },[]);
     
         useEffect(() => {
             if(refresh){
+                scrollTop();
                 refrescarPermisos();
             }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         },[]);
     
         useEffect(() => {
             if(permisos){
                 refrescarPermisos();
             }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         },[pagina]);
     
         useEffect(() => {
@@ -46,6 +50,7 @@ export default function Permisos() {
                 setSolicitudesArray(permisos.obtenerPermisos);
                 setLoading(false);
             }
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         },[permisos]);
     
 

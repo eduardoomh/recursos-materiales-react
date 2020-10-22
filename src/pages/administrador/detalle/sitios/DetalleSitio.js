@@ -38,7 +38,13 @@ export default function DetalleSitio(){
             {
                 sitio && !loadingSitio ? (
                     <>
-                        <InfoSitio data={sitio.obtenerSitio} loading={loading} setLoading={setLoading} />
+                        <InfoSitio 
+                            data={sitio.obtenerSitio} 
+                            loading={loading} 
+                            setLoading={setLoading} 
+                            tipo="sitio"
+                            plural="sitios"
+                        />
                     </>
                 )
                 : <Loader active inline='centered' size='massive' />

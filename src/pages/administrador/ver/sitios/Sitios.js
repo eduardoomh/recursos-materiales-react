@@ -15,7 +15,7 @@ export default function Sitios() {
     const [ cantidad ] = useState(6);
     const { refresh } = useParams();
 
-    const {data: sitios, loading: loadingSitios, refetch: refrescarSitios} = useQuery(OBTENER_SITIOS, {
+    const {data: sitios, refetch: refrescarSitios} = useQuery(OBTENER_SITIOS, {
         variables: {
             input: {
                 cantidad: cantidad,
@@ -29,18 +29,22 @@ export default function Sitios() {
         if(!sitios){
             scrollTop();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(refresh){
+            scrollTop();
             refrescarSitios();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(sitios){
             refrescarSitios();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[pagina]);
 
     useEffect(() => {
@@ -48,6 +52,7 @@ export default function Sitios() {
             setSolicitudesArray(sitios.obtenerSitios);
             setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[sitios]);
 
     return (

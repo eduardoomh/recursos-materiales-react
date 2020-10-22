@@ -17,7 +17,7 @@ export default function Eventos() {
     const [ cantidad ] = useState(6);
     const { refresh } = useParams();
 
-    const { data: eventos, loading: loadingEventos, refetch: refrescarEventos} = useQuery(OBTENER_EVENTOS, {
+    const { data: eventos, refetch: refrescarEventos} = useQuery(OBTENER_EVENTOS, {
         variables: {
             input: {
                 cantidad: cantidad,
@@ -31,18 +31,22 @@ export default function Eventos() {
         if(!eventos){
             scrollTop();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(refresh){
+            scrollTop();
             refrescarEventos();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(eventos){
             refrescarEventos();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[pagina]);
 
     useEffect(() => {
@@ -50,6 +54,7 @@ export default function Eventos() {
             setSolicitudesArray(eventos.obtenerEventos);
             setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[eventos]);
 
  
@@ -57,8 +62,6 @@ export default function Eventos() {
         <div className="eventos">
             <BannerSolicitud 
                 titulo="Solicitudes de Eventos" 
-                query={BUSCAR_EVENTO} 
-                tipo="evento"
             />
             
             {
@@ -72,6 +75,7 @@ export default function Eventos() {
                     pagina={pagina}
                     setPagina={setPagina}
                     cantidad={cantidad}
+                    query={BUSCAR_EVENTO} 
                 />
                 : <Loader active inline='centered' size='massive' />
 

@@ -1,29 +1,56 @@
 @import "../../../scss/index.scss";
 
 .buscar-elementos{
-    @include flexbox();
-    @include min-w(35rem);
-    @include min-h(100%);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 6rem 1fr;
+    @include min-h(35rem);
     margin-top: 0px;
 
+    &__input-box{
+        @include flexbox();
+        flex-direction: column;
+        @include min-w(100%);
+        @include min-h(100%);
+        padding: 1em;
 
-    .ui.left.icon.input{
-        width: 35rem;
-        @include min-h(2.7em);
-        font-size: 1.2em;
-        color: #000;
-
-        input{
-            border-radius: 4px;
-            color: #4d483c;
-            box-shadow: $box-shadow;
+        .ui.left.icon.input{
+            width: 35rem;
+            @include min-h(2.7em);
+            font-size: 1.2em;
+            color: #000;
+    
+            input{
+                border-radius: 4px;
+                color: #4d483c;
+                box-shadow: $box-shadow;
+            }
+     
         }
- 
+
+        p{
+            font-size: 1.5em;
+        }
+
     }
 
+    &__resultados{
+        @include min-h(24rem);
+        margin-top: 2em;
+        
+        div{
+            @include flexbox();
+            img{
+                @include min-h(24rem);
+            }
+        }
+    }
+
+
     .results{
-        max-height: 60vh;
+        max-height: 50vh;
         overflow-y: scroll;
+
     }
 
     &__item{
@@ -43,6 +70,7 @@
             }
             &:last-of-type{
                 color: $gris-oscuro;
+                font-size: 1.2em;
             }
         }
     }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Icon, Image, Popup } from "semantic-ui-react";
+import { Icon, Image, Popup } from "semantic-ui-react";
 import reservaCalendario from "../../../assets/img/reserva-calendario.jpg"
 import "./Banner.scss";
 

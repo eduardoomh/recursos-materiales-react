@@ -1,27 +1,13 @@
 import React from "react";
-import html2canvas from 'html2canvas';
 import { jsPDF } from "jspdf";
 import { Modal, Button, Icon } from "semantic-ui-react";
 import FormatoMantenimiento from "./FormatoMantenimiento/FormatoMantenimiento";
 import FormatoEvento from "./FormatoEvento/FormatoEvento";
 import "./FormatoPdf.scss";
-/* global jsPDF */
+
 
 export default function FormatoPdf(props) {
     const { abrir, cerrarModal, tipo, data, administrador } = props;
-
-    const generarPdf = () => {
-        const input = document.getElementById('pdf-modal__contenido');
-
-        html2canvas(input)
-            .then((canvas) => {
-                const imgData = canvas.toDataURL('imagen / png');
-                const pdf = new jsPDF();
-                pdf.fromHTML(imgData, 'PNG', 0, 0);
-                pdf.output('dataurlnewwindow',"download.pdf");
-            });
-        ;
-    }
 
     function printPDF() {
         var doc = new jsPDF('p', 'pt', "a4");

@@ -9,8 +9,6 @@ export default function Header(props) {
     const { show, setShow, setShowSubmenu, setShowSubmenuCrear, setShowSubmenuUsuario, setShowAdminCrear, setShowAdminVer } = props;
     const { logout, identity } = useIdentity();
 
-    const userName = `${identity.nombre} ${identity.apellidos}`;
-
     const showModal = (show) => {
         if (show === true) {
             setShowSubmenu(false);

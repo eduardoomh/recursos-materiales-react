@@ -1,58 +1,31 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
-import { Button } from "semantic-ui-react";
-import { formatDate } from "../../../../utils/reutilizables/fecha";
-import BoxFormData from "../../../reutilizables/BoxFormData/BoxFormData";
+import { Tab } from "semantic-ui-react";
+import { scrollTop } from "../../../../utils/reutilizables/scroll";
+import Informacion from "./Informacion/Informacion";
+import Opciones from "../../opciones/Opciones";
 import "./InfoEdificio.scss";
 
 export default function InfoEdificio(props) {
-    const { data, loading } = props;
-    const history = useHistory();
+    const { data, loading, tipo, plural } = props;
+ 
+    scrollTop();
+ 
+    const panes = [
+        {
+          menuItem: 'Informacion',
+          render: () => <Informacion data={data} loading={loading} />,
+        },
+        {
+          menuItem: 'Opciones',
+          render: () => <Opciones id={data.id} tipo={tipo} plural={plural} />,
+        },
+      ]
 
-    const gotoUpdate = (id) => {
-        history.push(`/admin/actualizar/edificio/${id}`);
-    }
+    
 
     return (
         <div className="informacion-edificio">
-
-            <div>
-                {
-                    data !== "cargando ...." && loading === false ? (
-                        <>
-
-                            <BoxFormData
-                                titulo="Nombre de la ubicacion"
-                                data={data.nombre}
-                            />
-
-                            <BoxFormData
-                                titulo="Ultima actualizacion"
-                                data={formatDate(data.updatedAt)}
-                            />
-
-                            <BoxFormData
-                                titulo="Creado hace"
-                                data={formatDate(data.createdAt)}
-                            />
-
-                            <BoxFormData
-                                titulo=""
-                                data={<Button className="boton-guindo" onClick={() => gotoUpdate(data.id)}>Actualizar Edificio</Button>}
-                            />
-                        </>
-                    )
-                        :
-                        (
-                            "cargando..."
-                        )
-
-
-
-                }
-
-            </div>
-
+            <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
         </div>
 
     )

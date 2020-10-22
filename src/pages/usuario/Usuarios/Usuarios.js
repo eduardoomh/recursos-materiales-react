@@ -17,7 +17,7 @@ export default function Usuarios() {
     const [ paginaInactivos, setPaginaInactivos] = useState(1);
     const [ cantidad ] = useState(6);
 
-    const { data: usuariosAprobados, loading: loadingAprobados, refetch: refetchAprobados } = useQuery(OBTENER_USUARIOS, {
+    const { data: usuariosAprobados, refetch: refetchAprobados } = useQuery(OBTENER_USUARIOS, {
         variables: {
             input: {
                 pagina: paginaAprobados,
@@ -31,7 +31,7 @@ export default function Usuarios() {
         }
     });
 
-    const { data: usuariosPendientes, loading: loadingPendientes, refetch: refetchPendientes } = useQuery(OBTENER_USUARIOS,{
+    const { data: usuariosPendientes, refetch: refetchPendientes } = useQuery(OBTENER_USUARIOS,{
         variables: {
             input: {
                 cantidad: cantidad,
@@ -44,7 +44,7 @@ export default function Usuarios() {
         }
     });
 
-    const { data: usuariosInactivos, loading: loadingInactivos, refetch: refetchInactivos } = useQuery(OBTENER_USUARIOS,{
+    const { data: usuariosInactivos, refetch: refetchInactivos } = useQuery(OBTENER_USUARIOS,{
         variables: {
             input: {
                 cantidad: cantidad,
@@ -61,41 +61,43 @@ export default function Usuarios() {
         if(usuariosAprobados){
             refetchAprobados();
         }
-
+       
+        // eslint-disable-next-line
     },[paginaAprobados]);
 
     useEffect(() => {
         if(usuariosPendientes){
             refetchPendientes();
         }
-
+        // eslint-disable-next-line
     },[paginaPendientes]);
 
     useEffect(() => {
         if(usuariosInactivos){
             refetchInactivos();
         }
+        // eslint-disable-next-line
     },[paginaInactivos]);
 
     useEffect(() => {
         if(usuariosAprobados){
             setAprobadosArray(usuariosAprobados.obtenerUsuarios);
         }
-
+        // eslint-disable-next-line
     },[usuariosAprobados]);
 
     useEffect(() => {
         if(usuariosPendientes){
             setPendientesArray(usuariosPendientes.obtenerUsuarios);
         }
-
+        // eslint-disable-next-line
     },[usuariosPendientes]);
 
     useEffect(() => {
         if(usuariosInactivos){
             setInactivosArray(usuariosInactivos.obtenerUsuarios);
         }
-
+        // eslint-disable-next-line
     },[usuariosInactivos]);
 
 

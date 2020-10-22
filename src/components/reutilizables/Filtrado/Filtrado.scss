@@ -4,13 +4,36 @@
 
 .filtrado{
     @include flexbox();
-    @include min-h(4rem);
+    @include min-h(6rem);
 
-    p{
-        @include flexbox();
-        @include min-h(inherit);
-        margin: 0 1em;
-        font-size: 1.1em;
-        color: $gris-oscuro;
+    .filtrado-box{
+        padding: .5em;
+           p{
+                @include flexbox();
+                @include min-h(inherit);
+                margin: 0 1em;
+                padding: .3em;
+                font-size: 1.1em;
+                color: $gris-oscuro;
+            } 
+
+            .ui.selection{
+                @include min-w(15rem);
+            }
+
+            i.icono-buscar{
+                @include min-w(15rem);
+                @include min-h(2.5rem);
+                padding-top: 20px;
+                margin: 0;
+                padding: .7em !important;
+                border-radius: 4px;
+
+                &:hover{
+                    border: 1px solid rgba(20, 20, 20, 0.85);
+                }
+            }
     }
+    
+
 }

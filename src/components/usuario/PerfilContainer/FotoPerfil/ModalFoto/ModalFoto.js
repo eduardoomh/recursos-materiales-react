@@ -49,7 +49,8 @@ export default function ModalFoto(props) {
             setLoading(false);
         }
 
-    }, []);
+        // eslint-disable-next-line
+    },[]);
 
 
     const { getRootProps, getInputProps } = useDropzone({

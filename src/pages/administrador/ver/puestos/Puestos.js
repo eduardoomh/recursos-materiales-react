@@ -14,7 +14,7 @@ export default function Puestos() {
     const [ cantidad ] = useState(6);
     const { refresh } = useParams();
 
-    const { data: puestos, loading: loadingPuestos, refetch: refrescarCargos } = useQuery(OBTENER_PUESTOS, {
+    const { data: puestos, refetch: refrescarCargos } = useQuery(OBTENER_PUESTOS, {
         variables: {
             input: {
                 cantidad: cantidad,
@@ -28,18 +28,22 @@ export default function Puestos() {
         if(!puestos){
             scrollTop();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(refresh){
+            scrollTop();
             refrescarCargos();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(() => {
         if(puestos){
             refrescarCargos();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[pagina]);
 
     useEffect(() => {
@@ -47,6 +51,7 @@ export default function Puestos() {
             setSolicitudesArray(puestos.obtenerPuestos);
             setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[puestos]);
 
     return (

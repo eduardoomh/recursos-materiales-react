@@ -4,7 +4,7 @@ import "./Paginacion.scss";
 
 
 export default function Paginacion(props){
-    const { setLoading, setPagina, pagina, cantidad, longitud } = props;
+    const { setPagina, pagina, cantidad, longitud } = props;
 
     const siguiente = () => {
         setPagina(pagina + 1);

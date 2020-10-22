@@ -39,7 +39,13 @@ export default function DetallePermiso(){
             {
                 permiso && !loadingPermiso ? (
                     <>
-                        <InfoPermiso data={permiso.obtenerPermiso} loading={loading} setLoading={setLoading} />
+                        <InfoPermiso 
+                            data={permiso.obtenerPermiso} 
+                            loading={loading} 
+                            setLoading={setLoading} 
+                            tipo="permiso"
+                            plural="permisos"
+                        />
                     </>
                 )
                 : <Loader active inline='centered' size='massive' />
