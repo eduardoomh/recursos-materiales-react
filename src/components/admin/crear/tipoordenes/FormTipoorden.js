@@ -4,7 +4,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@apollo/client";
 import { CREAR_TIPOORDER } from "../../../../gql/tipoorder";
-import { toast } from "react-toastify";
 import { Form, Button, Loader } from "semantic-ui-react";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
@@ -15,6 +14,12 @@ export default function FormTipoorden() {
     const [loading, setLoading] = useState(false);
     const [abrir, setAbrir] = useState(false);
     const [crearTipoorder] = useMutation(CREAR_TIPOORDER);
+    const [objetoMensaje, setObjetoMensaje] = useState({
+        titulo: "",
+        texto: "",
+        boton: "",
+        error: false
+    })
     const history = useHistory();
 
     const abrirModal = () => {
@@ -25,6 +30,12 @@ export default function FormTipoorden() {
     const cerrarModal = () => {
         setAbrir(false);
         history.push("/admin/tipoordenes/ref");
+    }
+
+    const cambiarMensaje = (data) => {
+        setObjetoMensaje(data);
+        setLoading(false);            
+        abrirModal();
     }
 
     const formik = useFormik({
@@ -40,13 +51,21 @@ export default function FormTipoorden() {
                         input: tipoorder
                     }
                 });
-                setLoading(false);
-                abrirModal();
+                cambiarMensaje({
+                    titulo: "Solicitud Exitosa",
+                    texto: "El tipo de servicio se ha creado exitosamente!",
+                    boton: "Entendido",
+                    error: false
+                })
 
             }
             catch (err) {
-                setLoading(false);
-                toast.error(err.message);
+                cambiarMensaje({
+                    titulo: "Solicitud Fallida",
+                    texto: err.mesage,
+                    boton: "Entendido",
+                    error: true
+                })
             }
         }
     })
@@ -78,9 +97,10 @@ export default function FormTipoorden() {
                 centered={true}
                 open={abrir}
                 onClose={cerrarModal}
-                titulo="Peticion Exitosa"
-                texto="El Tipo de orden se ha creado con éxito."
-                boton="Salir"
+                titulo={objetoMensaje.titulo}
+                texto={objetoMensaje.texto}
+                boton={objetoMensaje.boton}
+                error={objetoMensaje.error}
             />
         </>
     )

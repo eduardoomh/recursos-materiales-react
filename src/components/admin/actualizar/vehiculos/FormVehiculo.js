@@ -4,7 +4,6 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@apollo/client";
 import { ACTUALIZAR_VEHICULO } from "../../../../gql/vehiculo";
-import { toast } from "react-toastify";
 import { Form, Button, Loader } from "semantic-ui-react";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
@@ -16,6 +15,12 @@ export default function FormVehiculo(props) {
     const [loading, setLoading] = useState(false);
     const [abrir, setAbrir] = useState(false);
     const [actualizarVehiculo] = useMutation(ACTUALIZAR_VEHICULO);
+    const [objetoMensaje, setObjetoMensaje] = useState({
+        titulo: "",
+        texto: "",
+        boton: "",
+        error: false
+    })
     const history = useHistory();
 
     const abrirModal = () => {
@@ -27,7 +32,11 @@ export default function FormVehiculo(props) {
         history.push(`/admin/vehiculo/${solicitud.id}`);
     }
 
-
+    const cambiarMensaje = (data) => {
+        setObjetoMensaje(data);
+        setLoading(false);            
+        abrirModal();
+    }
 
     return (
         <>
@@ -45,13 +54,21 @@ export default function FormVehiculo(props) {
                                 input: vehiculo
                             }
                         });
-                        setLoading(false);
-                        abrirModal();
+                        cambiarMensaje({
+                            titulo: "Solicitud Exitosa",
+                            texto: "El vehiculo se ha actualizado exitosamente!",
+                            boton: "Entendido",
+                            error: false
+                        })
 
                     }
                     catch (err) {
-                        setLoading(false);
-                        toast.error(err.message);
+                        cambiarMensaje({
+                            titulo: "Solicitud Fallida",
+                            texto: err.mesage,
+                            boton: "Entendido",
+                            error: true
+                        })
                     }
                 }}
             >
@@ -99,9 +116,10 @@ export default function FormVehiculo(props) {
                 centered={true}
                 open={abrir}
                 onClose={cerrarModal}
-                titulo="Petición Exitosa"
-                texto="El Vehículo se ha actualizado con éxito."
-                boton="Salir"
+                titulo={objetoMensaje.titulo}
+                texto={objetoMensaje.texto}
+                boton={objetoMensaje.boton}
+                error={objetoMensaje.error}
             />
         </>
     )

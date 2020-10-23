@@ -31,3 +31,9 @@ mutation actualizarPuesto($id: ID! $input: actualizarPuesto!){
     actualizarPuesto(id: $id input: $input)
 }
 `;
+
+export const BORRAR_PUESTO = gql`
+mutation borrarPuesto($id: ID!){
+    borrarPuesto(id: $id)
+}
+`;

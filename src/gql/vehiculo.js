@@ -34,3 +34,9 @@ mutation actualizarVehiculo($id: ID! $input: actualizarVehiculo!){
     actualizarVehiculo(id: $id input: $input)
 }
 `;
+
+export const BORRAR_VEHICULO = gql`
+mutation borrarVehiculo($id: ID!){
+    borrarVehiculo(id: $id)
+}
+`;

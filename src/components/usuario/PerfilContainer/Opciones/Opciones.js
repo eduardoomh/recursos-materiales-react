@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Icon, Button } from "semantic-ui-react";
+import { Icon, Button, Image } from "semantic-ui-react";
 import ModalContrasena from "../ModalContrasena/ModalContrasena";
+import documentos from "../../../../assets/img/documentos.jpg";
 import "./Opciones.scss";
 
 export default function Opciones() {
@@ -18,6 +19,9 @@ export default function Opciones() {
 
     return (
         <div className="opciones-perfil">
+            <div className="opciones__imagen">
+                <Image src={documentos} />
+            </div>
             <p>Modifique sus datos personales.</p>
             <div>
                 <Button onClick={() => gotoEdit()} icon labelPosition='right' className="boton-guindo">
@@ -33,7 +37,7 @@ export default function Opciones() {
                 abrir={abrir}
                 cerrar={cerrarModal}
 
-             />
+            />
         </div>
     )
 }

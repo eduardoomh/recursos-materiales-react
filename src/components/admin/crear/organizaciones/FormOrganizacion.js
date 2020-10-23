@@ -4,7 +4,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@apollo/client";
 import { CREAR_ACOMODOSILLA } from "../../../../gql/acomodosilla";
-import { toast } from "react-toastify";
 import { Form, Button, Loader } from "semantic-ui-react";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
@@ -15,6 +14,12 @@ export default function FormOrganizacion() {
     const [loading, setLoading] = useState(false);
     const [abrir, setAbrir] = useState(false);
     const [crearAcomodosilla] = useMutation(CREAR_ACOMODOSILLA);
+    const [objetoMensaje, setObjetoMensaje] = useState({
+        titulo: "",
+        texto: "",
+        boton: "",
+        error: false
+    })
     const history = useHistory();
 
     const abrirModal = () => {
@@ -25,6 +30,12 @@ export default function FormOrganizacion() {
     const cerrarModal = () => {
         setAbrir(false);
         history.push("/admin/organizaciones/ref");
+    }
+
+    const cambiarMensaje = (data) => {
+        setObjetoMensaje(data);
+        setLoading(false);            
+        abrirModal();
     }
 
 
@@ -41,13 +52,21 @@ export default function FormOrganizacion() {
                         input: acomodosilla
                     }
                 });
-                setLoading(false);
-                abrirModal();
+                cambiarMensaje({
+                    titulo: "Solicitud Exitosa",
+                    texto: "La organizacion se ha creado exitosamente!",
+                    boton: "Entendido",
+                    error: false
+                })
 
             }
             catch (err) {
-                setLoading(false);
-                toast.error(err.message);
+                cambiarMensaje({
+                    titulo: "Solicitud Fallida",
+                    texto: err.mesage,
+                    boton: "Entendido",
+                    error: true
+                })
             }
         }
     })
@@ -87,9 +106,10 @@ export default function FormOrganizacion() {
                 centered={true}
                 open={abrir}
                 onClose={cerrarModal}
-                titulo="Peticion Exitosa"
-                texto="El Tipo de acomodo de sillas se ha creado con éxito."
-                boton="Salir"
+                titulo={objetoMensaje.titulo}
+                texto={objetoMensaje.texto}
+                boton={objetoMensaje.boton}
+                error={objetoMensaje.error}
             />
         </>
     )

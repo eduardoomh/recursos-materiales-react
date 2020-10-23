@@ -4,7 +4,6 @@ import { useFormik } from "formik";
 import { useMutation } from "@apollo/client";
 import { CREAR_SUBDIRECCION } from "../../../../gql/subdireccion";
 import * as Yup from "yup";
-import { toast } from "react-toastify";
 import { Form, Button, Loader } from "semantic-ui-react";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
@@ -15,7 +14,14 @@ export default function FormSubdireccion() {
     const [loading, setLoading] = useState(false);
     const [abrir, setAbrir] = useState(false);
     const [crearSubdireccion] = useMutation(CREAR_SUBDIRECCION);
+    const [objetoMensaje, setObjetoMensaje] = useState({
+        titulo: "",
+        texto: "",
+        boton: "",
+        error: false
+    })
     const history = useHistory();
+    
 
     const abrirModal = () => {
         setAbrir(true);
@@ -25,6 +31,12 @@ export default function FormSubdireccion() {
     const cerrarModal = () => {
         setAbrir(false);
         history.push("/admin/subdirecciones/ref");
+    }
+
+    const cambiarMensaje = (data) => {
+        setObjetoMensaje(data);
+        setLoading(false);            
+        abrirModal();
     }
 
     const formik = useFormik({
@@ -40,13 +52,21 @@ export default function FormSubdireccion() {
                         input: subdireccion
                     }
                 });
-                setLoading(false);
-                abrirModal();
+                cambiarMensaje({
+                    titulo: "Solicitud Exitosa",
+                    texto: "La subdireccion se ha creado exitosamente!",
+                    boton: "Entendido",
+                    error: false
+                })
 
             }
             catch (err) {
-                setLoading(false);
-                toast.error(err.message);
+                cambiarMensaje({
+                    titulo: "Solicitud Fallida",
+                    texto: err.mesage,
+                    boton: "Entendido",
+                    error: true
+                })
             }
         }
     })
@@ -87,9 +107,10 @@ export default function FormSubdireccion() {
                 centered={true}
                 open={abrir}
                 onClose={cerrarModal}
-                titulo="Peticion Exitosa"
-                texto="La subdirección se ha creado con éxito."
-                boton="Salir"
+                titulo={objetoMensaje.titulo}
+                texto={objetoMensaje.texto}
+                boton={objetoMensaje.boton}
+                error={objetoMensaje.error}
             />
         </>
     )

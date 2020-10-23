@@ -44,7 +44,7 @@ export default function DetalleEdificio(){
                             loading={loading} 
                             setLoading={setLoading} 
                             tipo="edificio"
-                            plural="edificio"
+                            plural="edificios"
                         />
                     </>
                 )

@@ -310,7 +310,7 @@ export const routesAdmin = [
         admin: true
     },
     {
-        path: "/admin/edificios/refresh",
+        path: "/admin/edificios/:refresh",
         layout: LayoutBasic,
         component: Edificios,
         exact: true,

@@ -1,10 +1,11 @@
 import React from "react";
 import { Modal, Button, Image } from "semantic-ui-react";
 import success from "../../../assets/img/success.jpg";
+import errorSolicitud from "../../../assets/img/error-solicitud.jpg";
 import "./ModalMensaje.scss";
 
 export default function ModalMensaje(props) {
-    const { open, onClose, titulo, texto, boton } = props;
+    const { open, onClose, titulo, texto, boton, error = false} = props;
 
     return (
         <div className="modal-mensaje">
@@ -17,7 +18,7 @@ export default function ModalMensaje(props) {
                 <Modal.Content>
                     <div className="modal-mensaje__contenido">
                         <div>
-                           <Image src={success} /> 
+                           <Image src={error ? errorSolicitud : success} /> 
                         </div>
                         
                         <p>{texto}</p>

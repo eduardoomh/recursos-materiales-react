@@ -10,6 +10,7 @@
 
         p{
             @include flexbox();
+            text-align: center;
             @include min-h(4rem);
             font-size: 1.4em;
             font-weight: bold;

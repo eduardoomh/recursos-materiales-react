@@ -46,7 +46,7 @@ export default function DetalleTipoorden(){
                             loading={loading} 
                             setLoading={setLoading} 
                             tipo="tipoorden"
-                            plura="tipoordenes"
+                            plural="tipoordenes"
                         />
                     </>
                 )

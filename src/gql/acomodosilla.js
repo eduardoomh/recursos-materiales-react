@@ -33,3 +33,9 @@ mutation actualizarAcomodosilla($id: ID! $input: actualizarAcomodosilla!){
     actualizarAcomodosilla(id: $id input: $input)
 }
 `;
+
+export const BORRAR_ACOMODOSILLA = gql`
+mutation borrarAcomodosilla($id: ID!){
+    borrarAcomodosilla(id: $id)
+}
+`;

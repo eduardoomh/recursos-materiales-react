@@ -6,7 +6,6 @@ import { useMutation } from "@apollo/client";
 import { CREAR_MANTENIMIENTO } from "../../../gql/mantenimiento";
 import { scrollTop } from "../../../utils/reutilizables/scroll";
 import { Form, Button, Loader } from "semantic-ui-react";
-import { toast } from "react-toastify";
 import MessageForm from "../../../components/reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../reutilizables/ModalBasic/ModalBasic";
 import SelectFormik from "../../../components/reutilizables/SelectFormik/SelectFormik";
@@ -18,6 +17,12 @@ export default function FormularioMantenimiento(props) {
     const [loading, setLoading] = useState(false);
     const [abrir, setAbrir] = useState(false);
     const [crearMantenimiento] = useMutation(CREAR_MANTENIMIENTO);
+    const [objetoMensaje, setObjetoMensaje] = useState({
+        titulo: "",
+        texto: "",
+        boton: "",
+        error: false
+    })
     const history = useHistory();
 
     const abrirModal = () => {
@@ -28,6 +33,13 @@ export default function FormularioMantenimiento(props) {
         setAbrir(false);
         history.push("/mantenimientos/ref");
     }
+
+    const cambiarMensaje = (data) => {
+        setObjetoMensaje(data);
+        setLoading(false);            
+        abrirModal();
+    }
+
 
     const departamentosOptions = departamentos.map(d => {
         return { key: d.id, text: d.nombre, value: d.id }
@@ -59,13 +71,21 @@ export default function FormularioMantenimiento(props) {
                             }
                         });
                         scrollTop();
-                        setLoading(false);
-                        abrirModal();
-
+                        cambiarMensaje({
+                            titulo: "Solicitud Exitosa",
+                            texto: "El mantenimiento se ha creado exitosamente!",
+                            boton: "Entendido",
+                            error: false
+                        })
+        
                     }
                     catch (err) {
-                        setLoading(false);
-                        toast.error(err.message);
+                        cambiarMensaje({
+                            titulo: "Solicitud Fallida",
+                            texto: err.mesage,
+                            boton: "Entendido",
+                            error: true
+                        })
                     }
                 }}
             >
@@ -166,9 +186,10 @@ export default function FormularioMantenimiento(props) {
                 centered={true}
                 open={abrir}
                 onClose={cerrarModal}
-                titulo="Peticion Exitosa"
-                texto="El Mantenimiento se ha creado con éxito."
-                boton="Salir"
+                titulo={objetoMensaje.titulo}
+                texto={objetoMensaje.texto}
+                boton={objetoMensaje.boton}
+                error={objetoMensaje.error}
             />
         </>
     )

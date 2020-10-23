@@ -4,7 +4,6 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@apollo/client";
 import { CREAR_DEPARTAMENTO } from "../../../../gql/departamento";
-import { toast } from "react-toastify";
 import { Form, Button, Loader } from "semantic-ui-react";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
@@ -17,6 +16,12 @@ export default function FormDepartamento(props) {
     const [loading, setLoading] = useState(false);
     const [abrir, setAbrir] = useState(false);
     const [crearDepartamento] = useMutation(CREAR_DEPARTAMENTO);
+    const [objetoMensaje, setObjetoMensaje] = useState({
+        titulo: "",
+        texto: "",
+        boton: "",
+        error: false
+    })
     const history = useHistory();
 
     const abrirModal = () => {
@@ -26,6 +31,12 @@ export default function FormDepartamento(props) {
     const cerrarModal = () => {
         setAbrir(false);
         history.push("/admin/departamentos/ref");
+    }
+
+    const cambiarMensaje = (data) => {
+        setObjetoMensaje(data);
+        setLoading(false);            
+        abrirModal();
     }
 
     const subdireccionesOptions = subdirecciones.map(d => {
@@ -49,13 +60,21 @@ export default function FormDepartamento(props) {
                                 input: departamento
                             }
                         });
-                        setLoading(false);
-                        abrirModal();
+                        cambiarMensaje({
+                            titulo: "Solicitud Exitosa",
+                            texto: "El departamento se ha creado exitosamente!",
+                            boton: "Entendido",
+                            error: false
+                        })
 
                     }
                     catch (err) {
-                        setLoading(false);
-                        toast.error(err.message);
+                        cambiarMensaje({
+                            titulo: "Solicitud Fallida",
+                            texto: err.mesage,
+                            boton: "Entendido",
+                            error: true
+                        })
                     }
                 }}
             >
@@ -114,9 +133,10 @@ export default function FormDepartamento(props) {
                 centered={true}
                 open={abrir}
                 onClose={cerrarModal}
-                titulo="Peticion Exitosa"
-                texto="El Departamento se ha creado con éxito."
-                boton="Salir"
+                titulo={objetoMensaje.titulo}
+                texto={objetoMensaje.texto}
+                boton={objetoMensaje.boton}
+                error={objetoMensaje.error}
             />
         </>
     )

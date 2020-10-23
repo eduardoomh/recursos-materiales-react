@@ -12,6 +12,8 @@ export default function Mantenimientos(){
     const [ loading, setLoading ] = useState(true);
     const [ solicitudesArray, setSolicitudesArray] = useState(false);
     const [ pagina, setPagina] = useState(1);
+    const [ orden, setOrden ] = useState({fecha: -1});
+    const [ filtro, setFiltro ] = useState("");
     const [ cantidad ] = useState(6);
     const { refresh } = useParams();
     
@@ -21,7 +23,9 @@ export default function Mantenimientos(){
             input: {
                 cantidad: cantidad,
                 pagina: pagina
-            }
+            },
+            orden: orden,
+            filtro: filtro
         }
         
     })  
@@ -72,7 +76,10 @@ export default function Mantenimientos(){
                     pagina={pagina}
                     setPagina={setPagina}
                     cantidad={cantidad}
-                    query={BUSCAR_MANTENIMIENTO} 
+                    query={BUSCAR_MANTENIMIENTO}
+                    orden={setOrden}
+                    filtro={setFiltro}
+                    refrescar={refrescarMantenimientos}
                 />
                 : <Loader active inline='centered' size='massive' />
 

@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const OBTENER_SALIDAS = gql`
-    query obtenerSalidas($input: PaginateInput!){
-        obtenerSalidas(input: $input){
+    query obtenerSalidas($input: PaginateInput! $orden: Orden $filtro: String){
+        obtenerSalidas(input: $input  orden: $orden filtro: $filtro){
             id
             destino
             fecha

@@ -4,29 +4,75 @@ import Buscador from "../Buscador/Buscador";
 import "./Filtrado.scss";
 
 export default function Filtrado(props) {
-    const { setTitulo, setFiltro, tipo, query } = props;
+    const { setTitulo, tipo, query, orden, filtro } = props;
     const [abrir, setAbrir] = useState(false);
 
     const ordenadoOpciones = [
-        { key: 'a', text: 'Fecha de Realizacion', value: 'realizacion' },
-        { key: 'b', text: 'Fecha de Creacion', value: 'creacion' }
+        { key: 'a', text: 'Realizacion Ascendente', value: 're_asc' },
+        { key: 'b', text: 'Realizacion Descendente', value: 're_des' },
+        { key: 'c', text: 'Creacion Ascendente', value: 'cre_as' },
+        { key: 'd', text: 'Creacion Descendente', value: 'cre_des' }
     ];
 
     const filtradoOpciones = [
         { key: 'a', text: 'Aprobadas', value: 'aprobadas' },
         { key: 'b', text: 'Pendientes', value: 'pendientes' },
-        { key: 'c', text: 'Mes Reciente', value: 'mes' }
+        { key: 'c', text: 'Verificadas', value: 'verificadas' },
+        { key: 'd', text: 'Mes Actual', value: 'mes' },
+        { key: 'e', text: 'Sin filtro', value: 'ningun' }
     ];
 
-    const filtradoMantenimiento = [
-        { key: 'd', text: 'Servicio', value: 'servicio' },
-        { key: 'e', text: 'Reparacion', value: 'reparacion' },
-        { key: 'f', text: 'Transporte', value: 'transporte' },
-    ]
+    const filtradoSalida = [
+        { key: 'd', text: 'Mes Actual', value: 'mes' },
+        { key: 'e', text: 'Sin filtro', value: 'ningun' }
+    ];
 
-    const changeTitulo = (e) => {
-        setFiltro(true);
-        setTitulo(`Ordenado por ${e.currentTarget.children[0].textContent}`);
+    const changeOrden = (e) => {
+        let val = e.currentTarget.children[0].textContent;
+
+        switch (val) {
+            case "Realizacion Ascendente":
+                orden({ fecha: -1 });
+                break;
+            case "Realizacion Descendente":
+                orden({ fecha: 1 });
+                break;
+            case "Creacion Ascendente":
+                orden({ createdAt: -1 });
+                break;
+            case "Creacion Descendente":
+                orden({ createdAt: 1 });
+                break;
+            default:
+                break;
+        }
+        setTitulo(`Ordenado por ${val}`);
+
+    }
+
+    const changeFiltro = (e) => {
+        let val = e.currentTarget.children[0].textContent;
+
+        switch (val) {
+            case "Aprobadas":
+                filtro("aprobados");
+                break;
+            case "Pendientes":
+                filtro("pendientes")
+                break;
+            case "Verificadas":
+                filtro("verificados");
+                break;
+            case "Mes Actual":
+                filtro("mes actual");
+                break;
+            case "Sin filtro":
+                filtro("");
+                break;
+            default:
+                break;
+        }
+        setTitulo(`Ordenado por ${val}`);
     }
 
     const cerrarModal = () => {
@@ -42,38 +88,24 @@ export default function Filtrado(props) {
                     label={false}
                     options={ordenadoOpciones}
                     placeholder='selecciona una opcion'
-                    onChange={(e) => changeTitulo(e)}
+                    onChange={(e) => changeOrden(e)}
                 />
             </div>
-            {
-                tipo === "mantenimiento" && (
-                    <div className="filtrado-box">
-                        <p>Tipo</p>
-                        <Form.Select
-                            fluid
-                            label={false}
-                            options={filtradoMantenimiento}
-                            placeholder='selecciona una opcion'
-                            onChange={(e) => changeTitulo(e)}
-                        />
-                    </div>
-                )
-            }
             <div className="filtrado-box">
                 <p>Filtrar</p>
                 <Form.Select
                     fluid
                     label={false}
-                    options={filtradoOpciones}
+                    options={tipo === "salida" ? filtradoSalida : filtradoOpciones}
                     placeholder='selecciona una opcion'
-                    onChange={(e) => changeTitulo(e)}
+                    onChange={(e) => changeFiltro(e)}
                 />
             </div>
             <div className="filtrado-box">
                 <p>Buscar</p>
                 <Icon className="icono-buscar" name="search" bordered link onClick={() => setAbrir(true)} />
             </div>
-            <Buscador abrir={abrir} cerrar={cerrarModal} tipo={tipo} query={query}/>
+            <Buscador abrir={abrir} cerrar={cerrarModal} tipo={tipo} query={query} />
         </div>
     )
 }

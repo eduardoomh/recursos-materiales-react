@@ -31,3 +31,9 @@ mutation actualizarTipoorder($id: ID! $input: actualizarTipoorder!){
     actualizarTipoorder(id: $id input: $input)
 }
 `;
+
+export const BORRAR_TIPOORDEN = gql`
+mutation borrarTipoorder($id: ID!){
+    borrarTipoorder(id: $id)
+}
+`;

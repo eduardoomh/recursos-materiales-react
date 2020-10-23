@@ -5,7 +5,6 @@ import * as Yup from "yup";
 import { useMutation } from "@apollo/client";
 import { CREAR_EVENTO } from "../../../gql/evento";
 import { scrollTop } from "../../../utils/reutilizables/scroll";
-import { toast } from "react-toastify";
 import { Form, Button, Loader } from "semantic-ui-react";
 import MessageForm from "../../../components/reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../reutilizables/ModalBasic/ModalBasic";
@@ -18,6 +17,12 @@ export default function FormularioEvento(props) {
     const [loading, setLoading] = useState(false);
     const [abrir, setAbrir] = useState(false);
     const [crearEvento] = useMutation(CREAR_EVENTO);
+    const [objetoMensaje, setObjetoMensaje] = useState({
+        titulo: "",
+        texto: "",
+        boton: "",
+        error: false
+    })
     const history = useHistory();
 
     const abrirModal = () => {
@@ -28,6 +33,13 @@ export default function FormularioEvento(props) {
         setAbrir(false);
         history.push("/eventos/ref");
     }
+
+    const cambiarMensaje = (data) => {
+        setObjetoMensaje(data);
+        setLoading(false);            
+        abrirModal();
+    }
+
 
     const departamentosOptions = departamentos.map(d => {
         return { key: d.id, text: d.nombre, value: d.id }
@@ -57,13 +69,21 @@ export default function FormularioEvento(props) {
                             }
                         });
                         scrollTop();
-                        setLoading(false);
-                        abrirModal();
-
+                        cambiarMensaje({
+                            titulo: "Solicitud Exitosa",
+                            texto: "El evento se ha creado exitosamente!",
+                            boton: "Entendido",
+                            error: false
+                        })
+        
                     }
                     catch (err) {
-                        setLoading(false);
-                        toast.error(err.message);
+                        cambiarMensaje({
+                            titulo: "Solicitud Fallida",
+                            texto: err.mesage,
+                            boton: "Entendido",
+                            error: true
+                        })
                     }
                 }}
             >
@@ -160,9 +180,10 @@ export default function FormularioEvento(props) {
                 centered={true}
                 open={abrir}
                 onClose={cerrarModal}
-                titulo="Peticion Exitosa"
-                texto="El Evento se ha creado con éxito."
-                boton="Salir"
+                titulo={objetoMensaje.titulo}
+                texto={objetoMensaje.texto}
+                boton={objetoMensaje.boton}
+                error={objetoMensaje.error}
             />
         </>
     )

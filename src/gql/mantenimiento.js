@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const OBTENER_REPARACIONES = gql`
-    query obtenerReparaciones($input: PaginateInput!){
-        obtenerReparaciones(input: $input){
+    query obtenerReparaciones($input: PaginateInput! $orden: Orden $filtro: String){
+        obtenerReparaciones(input: $input orden: $orden filtro: $filtro){
             id
             nombre
             fecha

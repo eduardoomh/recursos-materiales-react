@@ -38,3 +38,9 @@ mutation actualizarDepartamento($id: ID! $input: actualizarDepartamento!){
     actualizarDepartamento(id: $id input: $input)
 }
 `;
+
+export const BORRAR_DEPARTAMENTO = gql`
+mutation borrarDepartamento($id: ID!){
+    borrarDepartamento(id: $id)
+}
+`;

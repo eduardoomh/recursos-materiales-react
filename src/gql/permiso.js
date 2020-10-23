@@ -68,3 +68,9 @@ mutation actualizarPermiso($id: ID! $input: actualizarPermiso!){
     actualizarPermiso(id: $id input: $input)
 }
 `;
+
+export const BORRAR_PERMISO = gql`
+mutation borrarPermiso($id: ID!){
+    borrarPermiso(id: $id)
+}
+`;

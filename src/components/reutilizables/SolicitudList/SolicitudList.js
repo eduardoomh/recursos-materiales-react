@@ -5,21 +5,29 @@ import Filtrado from "../Filtrado/Filtrado";
 import Lista from "../List/List";
 
 export default function SolicitudList(props) {
-    const { data, tipo, pagina, setPagina, cantidad, loading, setLoading, query} = props;
-    const textTitulo = "Solicitudes Mas Recientes"
+    const { data, tipo, pagina, setPagina, cantidad, loading, setLoading, query, orden, filtro, refrescar} = props;
+    const textTitulo = "Proximas a realizarse"
 
     const [titulo, setTitulo] = useState(textTitulo);
-    const [filtro, setFiltro] = useState(false);
 
     useEffect(() => {
-
+        if(titulo !== textTitulo){
+            setPagina(1);
+            refrescar();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [titulo]);
 
     return (
         <div className="solicitud-list">
             <Titulo titulo={titulo} />
-            <Filtrado setTitulo={setTitulo} filtro={filtro} setFiltro={setFiltro} tipo={tipo} query={query}/>
+            <Filtrado 
+                setTitulo={setTitulo} 
+                tipo={tipo} 
+                query={query} 
+                orden={orden} 
+                filtro={filtro}
+            />
             <Lista 
                 data={data} 
                 tipo={tipo} 

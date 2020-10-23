@@ -14,6 +14,8 @@ export default function Eventos() {
     const [loading, setLoading] = useState(true);
     const [ solicitudesArray, setSolicitudesArray] = useState(false);
     const [ pagina, setPagina] = useState(1);
+    const [ orden, setOrden ] = useState({fecha: -1});
+    const [ filtro, setFiltro ] = useState("");
     const [ cantidad ] = useState(6);
     const { refresh } = useParams();
 
@@ -22,7 +24,9 @@ export default function Eventos() {
             input: {
                 cantidad: cantidad,
                 pagina: pagina
-            }
+            },
+            orden: orden,
+            filtro: filtro
         }
     })
 
@@ -76,6 +80,9 @@ export default function Eventos() {
                     setPagina={setPagina}
                     cantidad={cantidad}
                     query={BUSCAR_EVENTO} 
+                    orden={setOrden}
+                    filtro={setFiltro}
+                    refrescar={refrescarEventos}
                 />
                 : <Loader active inline='centered' size='massive' />
 

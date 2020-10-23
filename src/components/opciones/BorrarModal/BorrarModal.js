@@ -3,11 +3,10 @@ import { useMutation } from "@apollo/client";
 import { BORRAR_EVENTO} from "../../../gql/evento";
 import { BORRAR_MANTENIMIENTO} from "../../../gql/mantenimiento";
 import { BORRAR_SALIDA } from "../../../gql/salida";
-import { toast } from "react-toastify";
 import { Modal, Button } from "semantic-ui-react";
 
 export default function BorrarModal(props) {
-    const { abrir, id, cerrar, tipo, setMensaje } = props;
+    const { abrir, id, cerrar, tipo, cambiarMensaje } = props;
     const [borrarEvento] = useMutation(BORRAR_EVENTO);
     const [borrarMantenimiento] = useMutation(BORRAR_MANTENIMIENTO);
     const [borrarSalida] = useMutation(BORRAR_SALIDA);
@@ -39,14 +38,22 @@ export default function BorrarModal(props) {
                 default: 
                 break;
             }
-            setMensaje(true);
+            cambiarMensaje({
+                titulo: "peticion exitosa",
+                texto: "La solicitud se ha eliminado exitosamente!",
+                 boton: "Entendido",
+                 error: false
+            });
         }
         catch(error){
-            console.log(error);
-            toast.error(error.message);
+            cambiarMensaje({
+                titulo: "Solicitud Denegada",
+                texto: error.message,
+                boton: "Salir",
+                error: true
+            })
         }
-
-        
+  
     }
 
     return (

@@ -31,3 +31,9 @@ mutation actualizarEdificio($id: ID! $input: actualizarEdificio!){
     actualizarEdificio(id: $id input: $input)
 }
 `;
+
+export const BORRAR_EDIFICIO = gql`
+mutation borrarEdificio($id: ID!){
+    borrarEdificio(id: $id)
+}
+`;

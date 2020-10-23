@@ -5,7 +5,6 @@ import { Formik } from "formik";
 import { useMutation } from "@apollo/client";
 import { CREAR_SALIDA } from "../../../gql/salida";
 import { scrollTop } from "../../../utils/reutilizables/scroll";
-import { toast } from "react-toastify";
 import { Form, Button, Loader } from "semantic-ui-react";
 import MessageForm from "../../../components/reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../reutilizables/ModalBasic/ModalBasic";
@@ -18,6 +17,12 @@ export default function FormularioSalida(props) {
     const [loading, setLoading] = useState(false);
     const [abrir, setAbrir] = useState(false);
     const [crearSalida] = useMutation(CREAR_SALIDA);
+    const [objetoMensaje, setObjetoMensaje] = useState({
+        titulo: "",
+        texto: "",
+        boton: "",
+        error: false
+    })
     const history = useHistory();
 
     const abrirModal = () => {
@@ -29,6 +34,11 @@ export default function FormularioSalida(props) {
         history.push("/salidas/ref");
     }
 
+    const cambiarMensaje = (data) => {
+        setObjetoMensaje(data);
+        setLoading(false);            
+        abrirModal();
+    }
 
     const departamentosOptions = departamentos.map(d => {
         return { key: d.id, text: d.nombre, value: d.id }
@@ -55,13 +65,21 @@ export default function FormularioSalida(props) {
                             }
                         });
                         scrollTop();
-                        setLoading(false);
-                        abrirModal();
-
+                        cambiarMensaje({
+                            titulo: "Solicitud Exitosa",
+                            texto: "La salida se ha creado exitosamente!",
+                            boton: "Entendido",
+                            error: false
+                        })
+        
                     }
                     catch (err) {
-                        setLoading(false);
-                        toast.error(err.message);
+                        cambiarMensaje({
+                            titulo: "Solicitud Fallida",
+                            texto: err.mesage,
+                            boton: "Entendido",
+                            error: true
+                        })
                     }
                 }}
             >
@@ -150,9 +168,10 @@ export default function FormularioSalida(props) {
                 centered={true}
                 open={abrir}
                 onClose={cerrarModal}
-                titulo="Peticion Exitosa"
-                texto="La Salida se ha creado con éxito."
-                boton="Salir"
+                titulo={objetoMensaje.titulo}
+                texto={objetoMensaje.texto}
+                boton={objetoMensaje.boton}
+                error={objetoMensaje.error}
             />
         </>
     )

@@ -4,7 +4,6 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useMutation } from "@apollo/client";
 import { ACTUALIZAR_PERMISO } from "../../../../gql/permiso";
-import { toast } from "react-toastify";
 import { Form, Button, Loader } from "semantic-ui-react";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
@@ -18,6 +17,12 @@ export default function FormPermiso(props) {
     const [abrir, setAbrir] = useState(false);
     const history = useHistory();
     const [actualizarPermiso] = useMutation(ACTUALIZAR_PERMISO);
+    const [objetoMensaje, setObjetoMensaje] = useState({
+        titulo: "",
+        texto: "",
+        boton: "",
+        error: false
+    })
 
     const departamentosOptions = departamentos.map(d => {
         return { key: d.id, text: d.nombre, value: d.id }
@@ -40,6 +45,12 @@ export default function FormPermiso(props) {
         history.push(`/admin/permiso/${solicitud.id}`);
     }
 
+    const cambiarMensaje = (data) => {
+        setObjetoMensaje(data);
+        setLoading(false);            
+        abrirModal();
+    }
+
 
     return (
         <>
@@ -57,13 +68,21 @@ export default function FormPermiso(props) {
                                 input: permiso
                             }
                         });
-                        setLoading(false);
-                        abrirModal();
+                        cambiarMensaje({
+                            titulo: "Solicitud Exitosa",
+                            texto: "El permiso se ha actualizado exitosamente!",
+                            boton: "Entendido",
+                            error: false
+                        })
 
                     }
                     catch (err) {
-                        setLoading(false);
-                        toast.error(err.message);
+                        cambiarMensaje({
+                            titulo: "Solicitud Fallida",
+                            texto: err.mesage,
+                            boton: "Entendido",
+                            error: true
+                        })
                     }
                 }}
             >
@@ -100,9 +119,10 @@ export default function FormPermiso(props) {
                 centered={true}
                 open={abrir}
                 onClose={cerrarModal}
-                titulo="Petición Exitosa"
-                texto="El Permiso se ha actualizado con éxito."
-                boton="Salir"
+                titulo={objetoMensaje.titulo}
+                texto={objetoMensaje.texto}
+                boton={objetoMensaje.boton}
+                error={objetoMensaje.error}
             />
         </>
     )

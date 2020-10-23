@@ -12,6 +12,8 @@ export default function Salidas(){
     const [ loading, setLoading ] = useState(true);
     const [ solicitudesArray, setSolicitudesArray] = useState(false);
     const [ pagina, setPagina] = useState(1);
+    const [ orden, setOrden ] = useState({fecha: -1});
+    const [ filtro, setFiltro ] = useState("");
     const [ cantidad ] = useState(6);
     const { refresh } = useParams();
     
@@ -21,7 +23,9 @@ export default function Salidas(){
             input: {
                 cantidad: cantidad,
                 pagina: pagina
-            }
+            },
+            orden: orden,
+            filtro: filtro
         }
     })
 
@@ -72,7 +76,10 @@ export default function Salidas(){
                     pagina={pagina}
                     setPagina={setPagina}
                     cantidad={cantidad}
-                    query={BUSCAR_SALIDA} 
+                    query={BUSCAR_SALIDA}
+                    orden={setOrden}
+                    filtro={setFiltro}
+                    refrescar={refrescarSalidas}
                 />
                 : <Loader active inline='centered' size='massive' />
 

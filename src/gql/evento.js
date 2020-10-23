@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const OBTENER_EVENTOS = gql`
-    query obtenerEventos($input: PaginateInput!){
-        obtenerEventos(input: $input){
+    query obtenerEventos($input: PaginateInput! $orden: Orden $filtro: String ){
+        obtenerEventos(input: $input orden: $orden filtro: $filtro){
             id
             nombre
             fecha

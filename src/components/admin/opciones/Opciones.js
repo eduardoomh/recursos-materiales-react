@@ -10,6 +10,12 @@ export default function Aprobacion(props) {
     const { id, tipo, plural } = props;
     const [abrir, setAbrir] = useState(false);
     const [mensaje, setMensaje] = useState(false);
+    const [objetoMensaje, setObjetoMensaje] = useState({
+        titulo: "",
+        texto: "",
+        boton: "",
+        error: false
+    })
     const history = useHistory();
 
     const gotoUpdate = (id) => {
@@ -23,6 +29,12 @@ export default function Aprobacion(props) {
     const cerrarMensaje = () => {
         setMensaje(false);
         history.push(`/admin/${plural}/borrado`);
+    }
+
+    const cambiarMensaje = (data) => {
+        setObjetoMensaje(data);
+        setMensaje(true);
+
     }
 
     return (
@@ -41,13 +53,21 @@ export default function Aprobacion(props) {
                     <Icon name='trash' />
                 </Button>
             </div>
-            <BorrarModal abrir={abrir} id={id} cerrar={cerrarModal} tipo={tipo} setMensaje={setMensaje}/>
-            <ModalMensaje 
+            <BorrarModal 
+                abrir={abrir} 
+                id={id} 
+                cerrar={cerrarModal} 
+                tipo={tipo} 
+                setMensaje={setMensaje}
+                cambiarMensaje={cambiarMensaje}
+            />
+            <ModalMensaje  
                 open={mensaje} 
                 onClose={cerrarMensaje} 
-                titulo="Solicitud Eliminada" 
-                texto="La solicitud seleccionada ha sido eliminada"
-                boton="Entendido"
+                titulo={objetoMensaje.titulo}
+                texto={objetoMensaje.texto}
+                boton={objetoMensaje.boton}
+                error={objetoMensaje.error}
             />
 
         </div>

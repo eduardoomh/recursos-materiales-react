@@ -5,7 +5,6 @@ import * as Yup from "yup";
 import { useMutation } from "@apollo/client";
 import { ACTUALIZAR_EVENTO } from "../../../gql/evento";
 import { scrollTop } from "../../../utils/reutilizables/scroll";
-import { toast } from "react-toastify";
 import { Form, Button, Loader } from "semantic-ui-react";
 import MessageForm from "../../../components/reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../reutilizables/ModalBasic/ModalBasic";
@@ -18,6 +17,12 @@ export default function FormularioActualizar(props) {
     const [loading, setLoading] = useState(false);
     const [abrir, setAbrir] = useState(false);
     const [actualizarEvento] = useMutation(ACTUALIZAR_EVENTO);
+    const [objetoMensaje, setObjetoMensaje] = useState({
+        titulo: "",
+        texto: "",
+        boton: "",
+        error: false
+    })
     const history = useHistory();
 
     const abrirModal = () => {
@@ -27,6 +32,12 @@ export default function FormularioActualizar(props) {
     const cerrarModal = () => {
         setAbrir(false);
         history.push(`/evento/${solicitud.id}`);
+    }
+
+    const cambiarMensaje = (data) => {
+        setObjetoMensaje(data);
+        setLoading(false);            
+        abrirModal();
     }
 
     const departamentosOptions = departamentos.map(d => {
@@ -58,13 +69,21 @@ export default function FormularioActualizar(props) {
                             }
                         });
                         scrollTop();
-                        setLoading(false);
-                        abrirModal();
-
+                        cambiarMensaje({
+                            titulo: "Solicitud Exitosa",
+                            texto: "El evento se ha actualizado exitosamente!",
+                            boton: "Entendido",
+                            error: false
+                        })
+        
                     }
                     catch (err) {
-                        setLoading(false);
-                        toast.error(err.message);
+                        cambiarMensaje({
+                            titulo: "Solicitud Fallida",
+                            texto: err.mesage,
+                            boton: "Entendido",
+                            error: true
+                        })
                     }
                 }}
             >
@@ -161,9 +180,10 @@ export default function FormularioActualizar(props) {
                 centered={true}
                 open={abrir}
                 onClose={cerrarModal}
-                titulo="Actualización Exitosa"
-                texto="El Evento se ha actualizado correctamente."
-                boton="Salir"
+                titulo={objetoMensaje.titulo}
+                texto={objetoMensaje.texto}
+                boton={objetoMensaje.boton}
+                error={objetoMensaje.error}
             />
         </>
     )

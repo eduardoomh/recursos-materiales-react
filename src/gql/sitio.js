@@ -35,3 +35,9 @@ mutation actualizarSitio($id: ID! $input: actualizarSitio!){
     actualizarSitio(id: $id input: $input)
 }
 `;
+
+export const BORRAR_SITIO = gql`
+mutation borrarSitio($id: ID!){
+    borrarSitio(id: $id)
+}
+`;
