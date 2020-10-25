@@ -9,7 +9,7 @@ import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
 import SelectFormik from "../../../reutilizables/SelectFormik/SelectFormik";
 import ModalMensaje from "../../../reutilizables/ModalMensaje/ModalMensaje";
-import "./FormDepartamento.scss"; 
+import "./FormDepartamento.scss";
 
 export default function FormDepartamento(props) {
     const { subdirecciones, solicitud } = props;
@@ -35,7 +35,7 @@ export default function FormDepartamento(props) {
 
     const cambiarMensaje = (data) => {
         setObjetoMensaje(data);
-        setLoading(false);            
+        setLoading(false);
         abrirModal();
     }
 
@@ -122,7 +122,10 @@ export default function FormDepartamento(props) {
 
                             <Button type="submit">Actualizar Departamento</Button>
                         </Form>
-                        <MessageForm />
+                        <div className="formulario-admin__mensaje-form">
+                            <MessageForm data="Los datos que ingrese pueden ser modificados en cualquier momento." />
+                        </div>
+
 
                     </div>
                 )}

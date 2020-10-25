@@ -174,7 +174,9 @@ export default function FormularioMantenimiento(props) {
 
                             <Button type="submit">Crear Mantenimiento</Button>
                         </Form>
-                        <MessageForm />
+                        <div className="formulario-mantenimiento__mensaje-form">
+                            <MessageForm data="El Mantenimiento sera creado pero estara pendiente, esperando verificacion y aprobacion." />
+                        </div>
 
                     </div>
                 )}

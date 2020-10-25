@@ -121,8 +121,9 @@ export default function FormDepartamento(props) {
 
                             <Button type="submit">Crear Departamento</Button>
                         </Form>
-                        <MessageForm />
-
+                        <div className="formulario-admin__mensaje-form">
+                            <MessageForm data="Los datos que ingrese pueden ser modificados en cualquier momento." />
+                        </div>
                     </div>
                 )}
             </Formik>

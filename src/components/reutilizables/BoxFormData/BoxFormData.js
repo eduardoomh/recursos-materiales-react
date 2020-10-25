@@ -4,7 +4,7 @@ import defaultAvatar from "../../../assets/img/default_user.png";
 import "./BoxFormData.scss";
 
 export default function BoxFormData(props) {
-    const { titulo, data, avatar, user = false } = props;
+    const { titulo, data, avatar, user = false, imagen = false } = props;
     return (
         <article>
             <p>{titulo}</p>
@@ -12,8 +12,10 @@ export default function BoxFormData(props) {
                 {
                     user &&  <article className="box-imagen"><Image src={avatar === null ? defaultAvatar : avatar} /></article>
                 }
-               
-                {data || "cargando"}
+                {
+                    imagen ? <Image src={data} /> : data || "cargando"
+                }
+    
             </p>
         </article>
     )

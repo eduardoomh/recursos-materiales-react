@@ -21,7 +21,7 @@ export default function FormSubdireccion() {
         error: false
     })
     const history = useHistory();
-    
+
 
     const abrirModal = () => {
         setAbrir(true);
@@ -35,7 +35,7 @@ export default function FormSubdireccion() {
 
     const cambiarMensaje = (data) => {
         setObjetoMensaje(data);
-        setLoading(false);            
+        setLoading(false);
         abrirModal();
     }
 
@@ -97,7 +97,10 @@ export default function FormSubdireccion() {
 
                     <Button type="submit">Crear Subdireccion</Button>
                 </Form>
-                <MessageForm />
+                <div className="formulario-admin__mensaje-form">
+                    <MessageForm data="Los datos que ingrese pueden ser modificados en cualquier momento." />
+                </div>
+
 
             </div>
             <ModalBasic show={loading}>

@@ -6,6 +6,7 @@ export const OBTENER_SALIDAS = gql`
             id
             destino
             fecha
+            evidencias
         }
   
     }
@@ -17,6 +18,7 @@ export const OBTENER_SALIDAS_FILTRO = gql`
             id
             destino
             fecha
+            evidencias
         }
   
     }

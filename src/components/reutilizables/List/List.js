@@ -34,6 +34,7 @@ export default function Lista(props) {
                                         status={c.aprobado}
                                         contenido={c.nombre || c.destino}
                                         aprobado={c.aprobado}
+                                        evidencias={c.evidencias}
                                     />
                             )
                         }

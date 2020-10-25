@@ -12,7 +12,7 @@ export default function CrearSitio(){
     const { data: edificios, loading: loadingEdificios } = useQuery(OBTENER_EDIFICIOS, {
         variables: {
             input: {
-                cantidad: 15,
+                cantidad: 500,
                 pagina: 1
             }
         }

@@ -156,7 +156,9 @@ export default function FormularioSalida(props) {
 
                             <Button type="submit">Crear Salida</Button>
                         </Form>
-                        <MessageForm />
+                        <div className="formulario-salida__mensaje-form">
+                            <MessageForm data="La salida no necesita verificacion ni aprobacion." />
+                        </div>
 
                     </div>
                 )}

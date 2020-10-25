@@ -19,7 +19,7 @@ export default function ActualizarEvento() {
     const { data: acomodosillas, loading: loadingAcomodosillas} = useQuery(OBTENER_ACOMODOSILLAS, {
         variables: {
             input: {
-                cantidad: 15,
+                cantidad: 500,
                 pagina: 1
             }
         }
@@ -28,7 +28,7 @@ export default function ActualizarEvento() {
     const { data: departamentos, loading: loadingDepartamentos} = useQuery(OBTENER_DEPARTAMENTOS, {
         variables: {
             input: {
-                cantidad: 15,
+                cantidad: 500,
                 pagina: 1
             }
         }
@@ -37,7 +37,7 @@ export default function ActualizarEvento() {
     const { data: sitios, loading: loadingSitios} = useQuery(OBTENER_SITIOS, {
         variables: {
             input: {
-                cantidad: 15,
+                cantidad: 500,
                 pagina: 1
             }
         }

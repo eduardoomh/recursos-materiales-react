@@ -45,7 +45,7 @@ export default function FormularioActualizar(props) {
     })
 
     const acomodosillasOptions = acomodosillas.map(d => {
-        return { key: d.id, text: d.imagen, value: d.id }
+        return { key: d.id, text: d.nombre, value: d.id }
     })
 
     const sitiosOptions = sitios.map(d => {
@@ -168,7 +168,9 @@ export default function FormularioActualizar(props) {
 
                             <Button type="submit">Actualizar Evento</Button>
                         </Form>
-                        <MessageForm />
+                        <div className="formulario-evento__mensaje-form">
+                            <MessageForm data="Procure que los datos a actualizar del evento sean correctos." />
+                        </div>
 
                     </div>
                 )}

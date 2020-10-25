@@ -23,7 +23,7 @@ export default function EditDepartamento() {
     const { data: subdirecciones, loading: loadingSubdirecciones } = useQuery(OBTENER_SUBDIRECCIONES, {
         variables: {
             input: {
-                cantidad: 15,
+                cantidad: 500,
                 pagina: 1
             }
         }

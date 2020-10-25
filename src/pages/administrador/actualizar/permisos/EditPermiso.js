@@ -25,7 +25,7 @@ export default function EditPermiso() {
     const { data: usuarios, loading: loadingUsuarios } = useQuery(OBTENER_USUARIOS_FORM, {
         variables: {
             input: {
-                cantidad: 15,
+                cantidad: 500,
                 pagina: 1
             },
             filtro: {
@@ -38,7 +38,7 @@ export default function EditPermiso() {
     const { data: departamentos, loading: loadingDepartamentos } = useQuery(OBTENER_DEPARTAMENTOS, {
         variables: {
             input: {
-                cantidad: 15,
+                cantidad: 500,
                 pagina: 1
             }
         }
@@ -47,7 +47,7 @@ export default function EditPermiso() {
     const { data: puestos, loading: loadingPuestos } = useQuery(OBTENER_PUESTOS, {
         variables: {
             input: {
-                cantidad: 15,
+                cantidad: 500,
                 pagina: 1
             }
         }

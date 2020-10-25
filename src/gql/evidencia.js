@@ -5,6 +5,8 @@ query obtenerEvidencias($input: pedirEvidenciaInput!){
     obtenerEvidencias(input: $input){
         id
         imagen
+        solicitud
+        tipo
         createdAt
     }
 }
@@ -18,8 +20,8 @@ mutation crearEvidencia($file: Upload $input: crearEvidencia!){
 `;
 
 export const BORRAR_EVIDENCIA = gql`
-mutation borrarEvidencia($id: ID!){
-    borrarEvidencia(id: $id)
+mutation borrarEvidencia($id: ID! $input: crearEvidencia!){
+    borrarEvidencia(id: $id, input: $input)
 }
 `;
 

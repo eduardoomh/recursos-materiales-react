@@ -5,8 +5,9 @@ import { transformarFecha } from "../../../utils/reutilizables/fecha";
 import "./CardItem.scss";
 
 export default function CardItem(props) {
-    const { tipo, id, fecha, contenido, aprobado } = props;
+    const { tipo, id, fecha, contenido, aprobado, evidencias } = props;
     const history = useHistory();
+    let imagenes = evidencias === 1 ? `Existe ${evidencias} imagen subida` : `Existen ${evidencias} imagenes subidas`;
 
     const cardClick = () => {
 
@@ -18,11 +19,11 @@ export default function CardItem(props) {
             <div className="cardItem__icono">
                 <Popup
                     trigger={
-                    <div>
-                        <Icon name="images" size="big" color="grey" />
+                    <div className={evidencias === 0 ? "" : "color-evidencia"}>
+                        <Icon name="images" size="big" color={evidencias === 0 ?  "grey" : "black"} />
                     </div>
                     }
-                    content='No hay evidencias subidas'
+                    content={evidencias === 0 ? 'No hay evidencias subidas' : imagenes }
                     inverted
                     position='bottom left'
                 />

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
+import { useDropzone } from "react-dropzone";
 import * as Yup from "yup";
 import { useMutation } from "@apollo/client";
 import { CREAR_ACOMODOSILLA } from "../../../../gql/acomodosilla";
-import { Form, Button, Loader } from "semantic-ui-react";
+import { saveStorage, getStorage } from "../../../../servicios/reutilizables/localStorage";
+import { Form, Button, Loader, Icon } from "semantic-ui-react";
 import MessageForm from "../../../reutilizables/MessageForm/MessageForm";
 import ModalBasic from "../../../reutilizables/ModalBasic/ModalBasic";
 import ModalMensaje from "../../../reutilizables/ModalMensaje/ModalMensaje";
@@ -13,6 +15,7 @@ import "./FormOrganizacion.scss";
 export default function FormOrganizacion() {
     const [loading, setLoading] = useState(false);
     const [abrir, setAbrir] = useState(false);
+    const [nombreValue, setNombreValue] = useState("");
     const [crearAcomodosilla] = useMutation(CREAR_ACOMODOSILLA);
     const [objetoMensaje, setObjetoMensaje] = useState({
         titulo: "",
@@ -21,6 +24,7 @@ export default function FormOrganizacion() {
         error: false
     })
     const history = useHistory();
+    let value;
 
     const abrirModal = () => {
         setAbrir(true);
@@ -34,45 +38,68 @@ export default function FormOrganizacion() {
 
     const cambiarMensaje = (data) => {
         setObjetoMensaje(data);
-        setLoading(false);            
+        setLoading(false);
         abrirModal();
     }
-
 
     const formik = useFormik({
         initialValues: emptyValues(),
         validationSchema: validation(),
         onSubmit: async (formData) => {
-            try {
-                setLoading(true);
-                const acomodosilla = formData;
+            value = saveStorage("nombreAcomodosilla",formData);
+            console.log(value)
+        }
+    })
 
-                await crearAcomodosilla({
-                    variables: {
-                        input: acomodosilla
-                    }
-                });
+    const onDrop = useCallback(async (acceptedFile) => {
+        console.log(acceptedFile);
+        const file = acceptedFile[0];
+
+        try {
+            setLoading(true);
+            console.log(formik.values.nombre)
+            console.log(value);
+            const result = await crearAcomodosilla({ variables: { file, input: getStorage("nombreAcomodosilla") } });
+            const { data } = result;
+
+            if(data.crearAcomodosilla === true){
                 cambiarMensaje({
-                    titulo: "Solicitud Exitosa",
-                    texto: "La organizacion se ha creado exitosamente!",
+                    titulo: "Peticion exitosa",
+                    texto: "La organizacion ha sido creada correctamente",
                     boton: "Entendido",
                     error: false
                 })
-
-            }
-            catch (err) {
+            }else{
                 cambiarMensaje({
-                    titulo: "Solicitud Fallida",
-                    texto: err.mesage,
+                    titulo: "Peticion fallida",
+                    texto: "La organizacion no se ha creado, ha habido un error",
                     boton: "Entendido",
                     error: true
                 })
             }
+            
         }
+        catch (err) {
+            cambiarMensaje({
+                titulo: "Peticion fallida",
+                texto: err.message,
+                boton: "Entendido",
+                error: true
+            })
+            setLoading(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: "image/jpeg, image/png",
+        noKeyboard: true,
+        multiple: false,
+        onDrop,
+
     })
-
-
-
+    
+ 
     return (
         <>
             <div className="formulario-admin">
@@ -85,18 +112,18 @@ export default function FormOrganizacion() {
                         onChange={formik.handleChange}
                         error={formik.errors.nombre}
                     />
-                    <Form.Input
-                        label="Imagen"
-                        name="imagen"
-                        icon='clipboard outline'
-                        value={formik.values.imagen}
-                        onChange={formik.handleChange}
-                        error={formik.errors.imagen}
-                    />
-
-                    <Button type="submit">Crear Tipo de Acomodo</Button>
+                    <input {...getInputProps()} />
+                    <Button icon disabled={formik.values.nombre === "" ? true : false} {...getRootProps()} loading={loading}>
+                        <Icon name="upload" />
+                            {
+                                " "+"Seleccionar Imagen"
+                            }
+                    </Button>
                 </Form>
-                <MessageForm />
+                <div className="formulario-admin__mensaje-form">
+                    <MessageForm data="Los datos que ingrese pueden ser modificados en cualquier momento." />
+                </div>
+
 
             </div>
             <ModalBasic show={loading}>
@@ -117,14 +144,12 @@ export default function FormOrganizacion() {
 
 function emptyValues() {
     return {
-        nombre: "",
-        imagen: ""
+        nombre: ""
     }
 }
 
 function validation() {
     return Yup.object({
-        nombre: Yup.string().required("Este campo es obligatorio"),
-        imagen: Yup.string().required("Este campo es obligatorio")
+        nombre: Yup.string().required("Este campo es obligatorio")
     })
 }

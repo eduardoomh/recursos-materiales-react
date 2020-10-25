@@ -87,7 +87,9 @@ export default function FormEdificio() {
 
                     <Button type="submit">Crear Edificio</Button>
                 </Form>
-                <MessageForm />
+                <div className="formulario-admin__mensaje-form">
+                        <MessageForm data="Los datos que ingrese pueden ser modificados en cualquier momento." />
+                    </div>
 
             </div>
             <ModalBasic show={loading}>

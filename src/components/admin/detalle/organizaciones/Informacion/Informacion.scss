@@ -2,6 +2,6 @@
 @import "../../../../../scss/contenedores/solicitudCaja.scss";
 
 .info-organizacion{
-    @include solicitudCaja(3, "admin");
+    @include solicitudCaja(4, "organizacion");
      
 }

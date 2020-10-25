@@ -9,7 +9,12 @@
 
     &__lista{
         @include flexbox();
-        font-size: 1.3em;
+        font-size: 1.4em;
+        ul{
+            li{
+                @include min-h(2em);
+            }
+        }
     }
 
     &__imagen{

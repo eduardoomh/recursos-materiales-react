@@ -18,7 +18,7 @@ export default function ActualizarSalida() {
     const { data: vehiculos, loading: loadingVehiculos } = useQuery(OBTENER_VEHICULOS, {
         variables: {
             input: {
-                cantidad: 15,
+                cantidad: 500,
                 pagina: 1
             }
         }
@@ -27,7 +27,7 @@ export default function ActualizarSalida() {
     const { data: departamentos, loading: loadingDepartamentos } = useQuery(OBTENER_DEPARTAMENTOS, {
         variables: {
             input: {
-                cantidad: 15,
+                cantidad: 500,
                 pagina: 1
             }
         }

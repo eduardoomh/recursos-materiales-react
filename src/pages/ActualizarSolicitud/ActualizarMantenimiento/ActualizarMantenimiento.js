@@ -18,7 +18,7 @@ export default function ActualizarMantenimiento() {
     const { data: tipoorders, loading: loadingTipoorders } = useQuery(OBTENER_TIPOORDERS, {
         variables: {
             input: {
-                cantidad: 15,
+                cantidad: 500,
                 pagina: 1
             }
         }
@@ -27,7 +27,7 @@ export default function ActualizarMantenimiento() {
     const { data: departamentos, loading: loadingDepartamentos } = useQuery(OBTENER_DEPARTAMENTOS, {
         variables: {
             input: {
-                cantidad: 15,
+                cantidad: 500,
                 pagina: 1
             }
         }

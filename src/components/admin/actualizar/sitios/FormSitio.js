@@ -35,7 +35,7 @@ export default function FormSitio(props) {
 
     const cambiarMensaje = (data) => {
         setObjetoMensaje(data);
-        setLoading(false);            
+        setLoading(false);
         abrirModal();
     }
 
@@ -96,7 +96,10 @@ export default function FormSitio(props) {
 
                             <Button type="submit">Actualizar Sitio</Button>
                         </Form>
-                        <MessageForm />
+                        <div className="formulario-admin__mensaje-form">
+                            <MessageForm data="Los datos que ingrese pueden ser modificados en cualquier momento." />
+                        </div>
+
 
                     </div>
                 )}
@@ -118,7 +121,7 @@ export default function FormSitio(props) {
 }
 
 function emptyValues(props) {
-    const {edificio} = props;
+    const { edificio } = props;
     return {
         nombre: props.nombre,
         edificio: edificio.id

@@ -11,7 +11,7 @@ import ModalMensaje from "../../../reutilizables/ModalMensaje/ModalMensaje";
 import "./FormVehiculo.scss";
 
 export default function FormVehiculo(props) {
-    const {solicitud} = props;
+    const { solicitud } = props;
     const [loading, setLoading] = useState(false);
     const [abrir, setAbrir] = useState(false);
     const [actualizarVehiculo] = useMutation(ACTUALIZAR_VEHICULO);
@@ -34,7 +34,7 @@ export default function FormVehiculo(props) {
 
     const cambiarMensaje = (data) => {
         setObjetoMensaje(data);
-        setLoading(false);            
+        setLoading(false);
         abrirModal();
     }
 
@@ -104,7 +104,10 @@ export default function FormVehiculo(props) {
 
                             <Button type="submit">Actualizar Vehiculo</Button>
                         </Form>
-                        <MessageForm />
+                        <div className="formulario-admin__mensaje-form">
+                            <MessageForm data="Los datos que ingrese pueden ser modificados en cualquier momento." />
+                        </div>
+
 
                     </div>
                 )}

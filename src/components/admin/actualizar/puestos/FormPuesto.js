@@ -11,7 +11,7 @@ import ModalMensaje from "../../../reutilizables/ModalMensaje/ModalMensaje";
 import "./FormPuesto.scss";
 
 export default function FormPuesto(props) {
-    const {solicitud} = props;
+    const { solicitud } = props;
     const [loading, setLoading] = useState(false);
     const [abrir, setAbrir] = useState(false);
     const [actualizarPuesto] = useMutation(ACTUALIZAR_PUESTO);
@@ -35,7 +35,7 @@ export default function FormPuesto(props) {
 
     const cambiarMensaje = (data) => {
         setObjetoMensaje(data);
-        setLoading(false);            
+        setLoading(false);
         abrirModal();
     }
 
@@ -87,7 +87,10 @@ export default function FormPuesto(props) {
 
                     <Button type="submit">Actualizar Puesto</Button>
                 </Form>
-                <MessageForm />
+                <div className="formulario-admin__mensaje-form">
+                    <MessageForm data="Los datos que ingrese pueden ser modificados en cualquier momento." />
+                </div>
+
 
             </div>
             <ModalBasic show={loading}>

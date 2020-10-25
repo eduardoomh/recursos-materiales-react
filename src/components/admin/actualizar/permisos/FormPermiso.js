@@ -47,7 +47,7 @@ export default function FormPermiso(props) {
 
     const cambiarMensaje = (data) => {
         setObjetoMensaje(data);
-        setLoading(false);            
+        setLoading(false);
         abrirModal();
     }
 
@@ -107,7 +107,10 @@ export default function FormPermiso(props) {
 
                             <Button type="submit">Actualizar Permiso</Button>
                         </Form>
-                        <MessageForm />
+                        <div className="formulario-admin__mensaje-form">
+                            <MessageForm data="Los datos que ingrese pueden ser modificados en cualquier momento." />
+                        </div>
+
 
                     </div>
                 )}
@@ -129,7 +132,7 @@ export default function FormPermiso(props) {
 }
 
 function emptyValues(props) {
-    const {usuario, departamento, puesto} = props;
+    const { usuario, departamento, puesto } = props;
     return {
         usuario: usuario.id,
         departamento: departamento.id,

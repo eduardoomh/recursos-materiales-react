@@ -1,0 +1,17 @@
+@import "../../../scss/index.scss";
+
+.mensaje-form{
+    padding: 1em;
+    text-align: center;
+    p{
+        @include flexbox();
+        font-size: 1.3em;
+
+        &:first-child{
+            @include flexbox();
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+    }
+}

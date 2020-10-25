@@ -7,6 +7,7 @@ export const OBTENER_EVENTOS = gql`
             nombre
             fecha
             aprobado
+            evidencias
         }
   
     }
@@ -19,6 +20,7 @@ export const OBTENER_EVENTOS_FILTRO = gql`
             nombre
             fecha
             aprobado
+            evidencias
         }
   
     }

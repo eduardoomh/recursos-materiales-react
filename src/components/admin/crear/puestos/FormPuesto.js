@@ -34,7 +34,7 @@ export default function FormPuesto() {
 
     const cambiarMensaje = (data) => {
         setObjetoMensaje(data);
-        setLoading(false);            
+        setLoading(false);
         abrirModal();
     }
 
@@ -85,7 +85,10 @@ export default function FormPuesto() {
 
                     <Button type="submit">Crear Puesto</Button>
                 </Form>
-                <MessageForm />
+                <div className="formulario-admin__mensaje-form">
+                    <MessageForm data="Los datos que ingrese pueden ser modificados en cualquier momento." />
+                </div>
+
 
             </div>
             <ModalBasic show={loading}>

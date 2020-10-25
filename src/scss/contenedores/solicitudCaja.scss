@@ -40,6 +40,11 @@
             @include min-h(60rem);
         }
 
+        @if $tipo == "organizacion"{
+            grid-template-rows: repeat($value, 1fr);
+            @include min-h(60rem);
+        }
+
         @if $tipo == "usuario"{
             grid-template-rows: 2fr repeat($value, 1fr);
             @include min-h(55rem);

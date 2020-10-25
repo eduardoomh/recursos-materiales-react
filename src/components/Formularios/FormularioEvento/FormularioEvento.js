@@ -46,7 +46,7 @@ export default function FormularioEvento(props) {
     })
 
     const acomodosillasOptions = acomodosillas.map(d => {
-        return { key: d.id, text: d.imagen, value: d.id }
+        return { key: d.id, text: d.nombre, value: d.id }
     })
 
     const sitiosOptions = sitios.map(d => {
@@ -168,7 +168,10 @@ export default function FormularioEvento(props) {
 
                             <Button type="submit">Crear Evento</Button>
                         </Form>
-                        <MessageForm />
+                        <div className="formulario-evento__mensaje-form">
+                            <MessageForm data="El evento sera creado pero estara pendiente, esperando verificacion y aprobacion" />
+                        </div>
+                        
 
                     </div>
                 )}

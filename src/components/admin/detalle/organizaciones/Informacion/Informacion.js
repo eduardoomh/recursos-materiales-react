@@ -3,7 +3,7 @@ import BoxFormData from "../../../../reutilizables/BoxFormData/BoxFormData";
 import { formatDate } from "../../../../../utils/reutilizables/fecha";
 import "./Informacion.scss";
 
-export default function Informacion(props){
+export default function Informacion(props) {
     const { data, loading } = props;
 
     return (
@@ -15,8 +15,13 @@ export default function Informacion(props){
                         <>
 
                             <BoxFormData
-                                titulo="Usuario"
+                                titulo="Nombre de la organizacion"
                                 data={data.nombre}
+                            />
+                            <BoxFormData
+                                titulo="Imagen"
+                                data={data.imagen}
+                                imagen={true}
                             />
 
                             <BoxFormData
@@ -25,7 +30,7 @@ export default function Informacion(props){
                             />
 
                             <BoxFormData
-                                titulo="Creado hace"
+                                titulo="Fecha de creacion"
                                 data={formatDate(data.createdAt)}
                             />
 

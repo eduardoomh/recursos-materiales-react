@@ -12,7 +12,7 @@ export default function CrearDepartamento(){
 const { data: subdirecciones, loading: loadingSubdirections } = useQuery(OBTENER_SUBDIRECCIONES, {
     variables: {
         input: {
-            cantidad: 15,
+            cantidad: 500,
             pagina: 1
         }
     }

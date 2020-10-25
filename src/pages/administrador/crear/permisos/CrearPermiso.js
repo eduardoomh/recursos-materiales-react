@@ -14,7 +14,7 @@ export default function CrearPermiso(){
     const { data: puestos, loading: loadingPuestos } = useQuery(OBTENER_PUESTOS, {
         variables: {
             input: {
-                cantidad: 15,
+                cantidad: 500,
                 pagina: 1
             }
         }
@@ -23,7 +23,7 @@ export default function CrearPermiso(){
     const { data: departamentos, loading: loadingDepartamentos } = useQuery(OBTENER_DEPARTAMENTOS, {
         variables: {
             input: {
-                cantidad: 15,
+                cantidad: 500,
                 pagina: 1
             }
         }
@@ -32,7 +32,7 @@ export default function CrearPermiso(){
     const { data: usuarios, loading: loadingUsuarios } = useQuery(OBTENER_USUARIOS_FORM, {
         variables: {
             input: {
-                cantidad: 15,
+                cantidad: 500,
                 pagina: 1
             },
             filtro: {

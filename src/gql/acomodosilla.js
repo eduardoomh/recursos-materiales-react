@@ -23,14 +23,20 @@ query obtenerAcomodosilla($id: ID!){
 `;
 
 export const CREAR_ACOMODOSILLA = gql`
-mutation crearAcomodosilla($input: crearAcomodosilla!){
-    crearAcomodosilla(input: $input)
+mutation crearAcomodosilla($file: Upload! $input: crearAcomodosilla!){
+    crearAcomodosilla(file: $file input: $input)
 }
 `;
 
 export const ACTUALIZAR_ACOMODOSILLA = gql`
 mutation actualizarAcomodosilla($id: ID! $input: actualizarAcomodosilla!){
     actualizarAcomodosilla(id: $id input: $input)
+}
+`;
+
+export const ACTUALIZAR_ACOMODOSILLA_IMAGEN= gql`
+mutation actualizarAcomodosillaImagen($id: ID! $file: Upload!){
+    actualizarAcomodosillaImagen(id: $id file: $file)
 }
 `;
 

@@ -11,12 +11,16 @@ export default function ModalEvidencias(props) {
     const [loading, setLoading] = useState(false);
     const [borrarEvidencia] = useMutation(BORRAR_EVIDENCIA);
 
-    const EliminarEvidencia = async (id) => {
+    const EliminarEvidencia = async (id, solicitud, tipo) => {
         try {
             setLoading(true);
             await borrarEvidencia({
                 variables: {
-                    id: id
+                    id: id,
+                    input: {
+                        solicitud: solicitud,
+                        tipo: tipo
+                    }
                 }
             })
             refrescarEvidencias();
@@ -56,7 +60,7 @@ export default function ModalEvidencias(props) {
                                                     content={
                                                         <>
                                                             <p>Esta seguro de querer eliminar la imagen?</p>
-                                                            <Button color='red' content='Eliminar' loading={loading} onClick={() => EliminarEvidencia(e.id)} />
+                                                            <Button color='red' content='Eliminar' loading={loading} onClick={() => EliminarEvidencia(e.id, e.solicitud, e.tipo)} />
                                                         </>
                                                     }
                                                     on='click'

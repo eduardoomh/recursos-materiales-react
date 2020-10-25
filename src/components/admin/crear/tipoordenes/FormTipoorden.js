@@ -34,7 +34,7 @@ export default function FormTipoorden() {
 
     const cambiarMensaje = (data) => {
         setObjetoMensaje(data);
-        setLoading(false);            
+        setLoading(false);
         abrirModal();
     }
 
@@ -84,10 +84,13 @@ export default function FormTipoorden() {
                         onChange={formik.handleChange}
                         error={formik.errors.nombre}
                     />
- 
+
                     <Button type="submit">Crear Tipo de Orden</Button>
                 </Form>
-                <MessageForm />
+                <div className="formulario-admin__mensaje-form">
+                    <MessageForm data="Los datos que ingrese pueden ser modificados en cualquier momento." />
+                </div>
+
 
             </div>
             <ModalBasic show={loading}>
