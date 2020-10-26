@@ -153,7 +153,7 @@ export default function FormOrganizacion(props) {
                     <Button icon {...getRootProps()} loading={loading}>
                         <Icon name="upload" />
                             {
-                                " "+"Seleccionar Imagen"
+                                " Seleccionar Imagen"
                             }
                     </Button>
                 </Form>

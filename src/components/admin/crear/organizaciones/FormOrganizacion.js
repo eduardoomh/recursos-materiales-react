@@ -15,7 +15,6 @@ import "./FormOrganizacion.scss";
 export default function FormOrganizacion() {
     const [loading, setLoading] = useState(false);
     const [abrir, setAbrir] = useState(false);
-    const [nombreValue, setNombreValue] = useState("");
     const [crearAcomodosilla] = useMutation(CREAR_ACOMODOSILLA);
     const [objetoMensaje, setObjetoMensaje] = useState({
         titulo: "",
@@ -116,7 +115,7 @@ export default function FormOrganizacion() {
                     <Button icon disabled={formik.values.nombre === "" ? true : false} {...getRootProps()} loading={loading}>
                         <Icon name="upload" />
                             {
-                                " "+"Seleccionar Imagen"
+                                " Seleccionar Imagen"
                             }
                     </Button>
                 </Form>

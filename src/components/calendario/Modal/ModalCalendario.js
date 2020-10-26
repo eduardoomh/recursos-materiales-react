@@ -23,9 +23,9 @@ export default function ModalCalendario(props) {
 
     const gotoPage = (id, tipo) => {
         if (tipo) {
-            history.push(`/mantenimientos/${id}`);
+            history.push(`/mantenimiento/${id}`);
         } else {
-            history.push(`/eventos/${id}`);
+            history.push(`/evento/${id}`);
         }
 
     }
