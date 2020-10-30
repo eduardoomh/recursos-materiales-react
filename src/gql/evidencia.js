@@ -14,7 +14,7 @@ query obtenerEvidencias($input: pedirEvidenciaInput!){
 
 
 export const CREAR_EVIDENCIA = gql`
-mutation crearEvidencia($file: Upload $input: crearEvidencia!){
+mutation crearEvidencia($file: Upload! $input: crearEvidencia!){
     crearEvidencia(file: $file input: $input)
 }
 `;
