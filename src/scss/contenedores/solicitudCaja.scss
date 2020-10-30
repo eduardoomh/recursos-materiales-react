@@ -7,6 +7,11 @@
     display: grid;
     grid-template-columns: 1fr 50rem 1fr;
     grid-template-rows: 1fr 3rem;
+
+    @media  (min-width: 0) and (max-width: 710px) {
+        grid-template-columns: 1fr 100vw 1fr;
+
+    }
      
     div{
         grid-column: 2/3;
@@ -14,6 +19,7 @@
         display: grid;
         @include min-h(50rem);
         grid-template-columns: 1fr;
+
 
         @if $tipo == "salida"{
             grid-template-rows: 2fr repeat($value, 1fr);
@@ -55,6 +61,11 @@
         border-radius: 6px;
         background-color: $gris;
         margin-top: 3rem;
+
+        @media  (min-width: 0) and (max-width: 667px) {
+            margin-top: 1rem;
+    
+        }
 
         button{
             @include boton();

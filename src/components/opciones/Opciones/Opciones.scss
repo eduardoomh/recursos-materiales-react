@@ -4,10 +4,21 @@
     @include min-w(50rem);
     margin-top: 1em;
 
+    @media  (min-width: 0) and (max-width: 733px) {
+        min-width: 100vw !important;
+        max-width: 100vw !important;
+
+    }
+
     p{
         @include min-h(4rem);
         @include flexbox();
         font-size: 1.3em;
+
+        @media  (min-width: 0) and (max-width: 718px) {
+            @include min-w(100vw);
+    
+        }
     }
     div{
         @include flexbox();
@@ -17,10 +28,20 @@
         button{
             @include min-w(15em);        
         }
+
+        @media  (min-width: 0) and (max-width: 718px) {
+            @include min-w(100vw);
+    
+        }
     }
 
     &__imagen{
         @include flexbox();
+
+        @media  (min-width: 0) and (max-width: 733px) {
+            @include min-w(100vw);
+    
+        }
 
         img{
            @include min-h(12rem); 

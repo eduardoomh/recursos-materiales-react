@@ -12,6 +12,18 @@
         grid-row: 1/2;
         margin-top: 2em;
         font-size: 1.3em;
+
+        @media  (min-width: 0) and (max-width: 507px) {
+            font-size: 1em;
+    
+        }
+
+        @media  (min-width: 0) and (max-width: 400px) {
+            font-size: .9em;
+    
+    
+        }
+
     }
 
      

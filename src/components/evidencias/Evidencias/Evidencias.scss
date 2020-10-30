@@ -4,6 +4,11 @@
     @include min-w(50rem);
     margin-top: 1em;
 
+    @media  (min-width: 0) and (max-width: 712px) {
+        @include min-w(100vw);
+
+    }
+
     &__image-container{
         @include flexbox();
         @include min-h(12rem);
@@ -16,6 +21,29 @@
         @include min-h(7rem);
         @include flexbox();
         font-size: 1.3em;
+
+        @media  (min-width: 0) and (max-width: 595px) {
+            font-size: 1.2em;
+    
+        }
+
+        @media  (min-width: 0) and (max-width: 533px) {
+            font-size: 1.1em;
+    
+        }
+
+        
+        @media  (min-width: 0) and (max-width: 499px) {
+            font-size: 1em;
+            text-align: center;
+    
+        }
+
+        @media  (min-width: 0) and (max-width: 454px) {
+            font-size: .8em;
+            text-align: center;
+    
+        }
     }
 
     &__boton{

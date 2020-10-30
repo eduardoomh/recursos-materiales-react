@@ -4,11 +4,26 @@
     @include min-w(50rem);
     margin-top: 3em;
 
+    @media  (min-width: 0) and (max-width: 718px) {
+        @include min-w(100vw);
+
+    }
+
     p{
         @include min-h(8rem);
         @include flexbox();
         font-size: 1.3em;
         text-align: center;
+
+        @media  (min-width: 0) and (max-width: 718px) {
+            padding: .3em;
+    
+        }
+
+        @media  (min-width: 0) and (max-width: 504px) {
+            font-size: 1.1em;
+    
+        }
     }
     div{
         @include flexbox();
