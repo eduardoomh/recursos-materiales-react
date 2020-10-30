@@ -37,7 +37,7 @@ export default function DetalleOrganizacion(){
     return(
         <div className="ver-organizacion">
             <Banner titulo="Detalle de la organizacion de eventos" />
-            <Titulo titulo="Informacion sobre la organizacion seleccionada" />
+            <Titulo titulo="Información sobre la organizacion seleccionada" />
             {
                 acomodosilla && !loadingAcomodosilla ? (
                     <>

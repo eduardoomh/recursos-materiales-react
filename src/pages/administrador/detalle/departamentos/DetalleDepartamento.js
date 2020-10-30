@@ -36,7 +36,7 @@ export default function DetalleDepartamento(){
     return(
         <div className="ver-departamento">
             <Banner titulo="Detalle del Departamento" />
-            <Titulo titulo="Informacion sobre el Departamento seleccionado" />
+            <Titulo titulo="Información sobre el Departamento seleccionado" />
             {
                 departamento && !loadingDepartamento ? (
                     <>

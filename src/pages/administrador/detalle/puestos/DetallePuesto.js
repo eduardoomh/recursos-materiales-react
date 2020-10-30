@@ -34,7 +34,7 @@ export default function DetallePuesto() {
 
     return (
         <div className="ver-puesto">
-            <Banner titulo="Informacion del puesto" />
+            <Banner titulo="Información del puesto" />
             <Titulo titulo="puede editar la informacion si lo requiere" />
             {
                 puesto && !loadingPuesto ? (

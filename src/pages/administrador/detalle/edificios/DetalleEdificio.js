@@ -35,7 +35,7 @@ export default function DetalleEdificio(){
     return(
         <div className="ver-edificio">
             <Banner titulo="Detalle del Edificio" />
-            <Titulo titulo="Informacion sobre el Edificio seleccionado" />
+            <Titulo titulo="Información sobre el Edificio seleccionado" />
             {
                 edificio && !loadingEdificio ? (
                     <>

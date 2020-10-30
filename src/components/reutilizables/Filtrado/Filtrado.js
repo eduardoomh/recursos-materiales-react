@@ -8,10 +8,10 @@ export default function Filtrado(props) {
     const [abrir, setAbrir] = useState(false);
 
     const ordenadoOpciones = [
-        { key: 'a', text: 'Realizacion Ascendente', value: 're_asc' },
-        { key: 'b', text: 'Realizacion Descendente', value: 're_des' },
-        { key: 'c', text: 'Creacion Ascendente', value: 'cre_as' },
-        { key: 'd', text: 'Creacion Descendente', value: 'cre_des' }
+        { key: 'a', text: 'Realización Ascendente', value: 're_asc' },
+        { key: 'b', text: 'Realización Descendente', value: 're_des' },
+        { key: 'c', text: 'Creación Ascendente', value: 'cre_as' },
+        { key: 'd', text: 'Creación Descendente', value: 'cre_des' }
     ];
 
     const filtradoOpciones = [
@@ -31,16 +31,16 @@ export default function Filtrado(props) {
         let val = e.currentTarget.children[0].textContent;
 
         switch (val) {
-            case "Realizacion Ascendente":
+            case "Realización Ascendente":
                 orden({ fecha: -1 });
                 break;
-            case "Realizacion Descendente":
+            case "Realización Descendente":
                 orden({ fecha: 1 });
                 break;
-            case "Creacion Ascendente":
+            case "Creación Ascendente":
                 orden({ createdAt: -1 });
                 break;
-            case "Creacion Descendente":
+            case "Creación Descendente":
                 orden({ createdAt: 1 });
                 break;
             default:

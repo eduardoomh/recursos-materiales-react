@@ -34,7 +34,7 @@ export default function DetalleSitio(){
     return(
         <div className="ver-sitio">
             <Banner titulo="Detalle del Sitio" />
-            <Titulo titulo="Informacion sobre el Sitio seleccionado" />
+            <Titulo titulo="Información sobre el Sitio seleccionado" />
             {
                 sitio && !loadingSitio ? (
                     <>

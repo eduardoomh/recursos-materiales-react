@@ -11,7 +11,7 @@ export default function PerfilContainer() {
 
     const panes = [
         {
-          menuItem: 'Informacion',
+          menuItem: 'Información',
           render: () => <Informacion identity={identity} />,
         },
         {

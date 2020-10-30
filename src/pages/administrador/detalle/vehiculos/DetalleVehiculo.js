@@ -34,7 +34,7 @@ export default function DetalleVehiculo(){
     return(
         <div className="ver-vehiculo">
             <Banner titulo="Detalle del Vehiculo" />
-            <Titulo titulo="Informacion sobre el vehiculo seleccionado" />
+            <Titulo titulo="Información sobre el vehiculo seleccionado" />
             {
                 vehiculo && !loadingVehiculo ? (
                     <>

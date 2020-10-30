@@ -37,7 +37,7 @@ export default function ModalCalendario(props) {
                 open={abrir}
                 onClose={cerrarModal}
             >
-                <Modal.Header>Pendiente para este dia</Modal.Header>
+                <Modal.Header>Pendiente para éste día</Modal.Header>
                 <Modal.Content>
                     {
                         array?.length > 0 ? array.map(arr => (
@@ -53,13 +53,13 @@ export default function ModalCalendario(props) {
 
                         ) : (
                                 <div className="modal-solicitudes__empty">
-                                    <p>No hay solicitudes programadas para este dia</p>
+                                    <p>No hay solicitudes programadas para este día</p>
                                 </div>
                             )
                     }
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button positive onClick={cerrarModal}>
+                    <Button onClick={cerrarModal}>
                         Cerrar
               </Button>
                 </Modal.Actions>

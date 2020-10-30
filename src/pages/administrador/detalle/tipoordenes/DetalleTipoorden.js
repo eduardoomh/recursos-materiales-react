@@ -37,7 +37,7 @@ export default function DetalleTipoorden(){
     return(
         <div className="ver-tipoorden">
             <Banner titulo="Detalle del tipo de orden" />
-            <Titulo titulo="Informacion sobre el Tipo de orden seleccionado" />
+            <Titulo titulo="Información sobre el Tipo de orden seleccionado" />
             {
                 tipoorder && !loadingTipoorder ? (
                     <>

@@ -17,7 +17,7 @@ export default function InformacionEvento(props) {
  
     const panes = [
         {
-          menuItem: 'Informacion',
+          menuItem: 'Información',
           render: () => <Informacion data={data} loading={loading} />,
         },
         {
@@ -30,7 +30,7 @@ export default function InformacionEvento(props) {
                         />,
         },
         {
-          menuItem: 'Aprobacion',
+          menuItem: 'Aprobación',
           render: () => <Aprobacion 
                           verificado={data.verificado} 
                           aprobado={data.aprobado} 

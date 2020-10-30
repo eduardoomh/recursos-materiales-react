@@ -16,7 +16,7 @@ export default function InformacionMantenimiento(props) {
 
   const panes = [
     {
-      menuItem: 'Informacion',
+      menuItem: 'Información',
       render: () => <Informacion data={data} loading={loading} />,
     },
     {
@@ -29,7 +29,7 @@ export default function InformacionMantenimiento(props) {
                     />,
     },
     {
-      menuItem: 'Aprobacion',
+      menuItem: 'Aprobación',
       render: () => <Aprobacion
                       verificado={data.verificado}
                       aprobado={data.aprobado}

@@ -35,7 +35,7 @@ export default function DetallePermiso(){
     return(
         <div className="ver-permiso">
             <Banner titulo="Detalle del Permiso" />
-            <Titulo titulo="Informacion sobre el permiso seleccionado" />
+            <Titulo titulo="Información sobre el permiso seleccionado" />
             {
                 permiso && !loadingPermiso ? (
                     <>

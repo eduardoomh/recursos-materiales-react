@@ -114,7 +114,7 @@ export default function MisSolicitudes(){
     return(
         <div className="mis-solicitudes">
             <Banner titulo="Sus Solicitudes" />
-            <Titulo titulo="Aqui encontrara todas las solicitudes que ha creado usted." />
+            <Titulo titulo="Aqui encontrará todas las solicitudes que ha creado usted." />
             {
                 eventosArray && mantenimientosArray && salidasArray ? (
                     <SolicitudesUsuario                     

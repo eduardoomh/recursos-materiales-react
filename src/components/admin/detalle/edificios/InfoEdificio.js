@@ -12,7 +12,7 @@ export default function InfoEdificio(props) {
  
     const panes = [
         {
-          menuItem: 'Informacion',
+          menuItem: 'Información',
           render: () => <Informacion data={data} loading={loading} />,
         },
         {

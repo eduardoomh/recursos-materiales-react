@@ -27,7 +27,7 @@ export default function Container() {
                     url2="/nuevo/evento"
                 />
                 <Recordatorio
-                    texto="Lleve un inventario de todos los vehiculos que entran y salen de la institucion."
+                    texto="Lleve un inventario de todos los vehículos que entran y salen de la institución."
                     imagen={vehiculo}
                     tipo="Salida"
                     url1="/eventos"

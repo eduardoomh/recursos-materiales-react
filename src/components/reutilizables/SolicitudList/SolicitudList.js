@@ -6,7 +6,7 @@ import Lista from "../List/List";
 
 export default function SolicitudList(props) {
     const { data, tipo, pagina, setPagina, cantidad, loading, setLoading, query, orden, filtro, refrescar} = props;
-    const textTitulo = "Proximas a realizarse"
+    const textTitulo = "Próximas a realizarse"
 
     const [titulo, setTitulo] = useState(textTitulo);
 

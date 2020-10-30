@@ -10,7 +10,7 @@ export default function Banner(props) {
         <div className="banner">
             <div className="banner-info">
 
-                <h1>Consulte todas las solicitudes para Eventos, Mantenimientos y salidas de vehiculos.</h1>
+                <h1>Consulte todas las solicitudes para Eventos, Mantenimientos y salidas de vehículos.</h1>
 
 
                 <div className="boton-box">

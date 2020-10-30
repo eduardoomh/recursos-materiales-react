@@ -35,7 +35,7 @@ export default function DetalleSubdireccion(){
     return(
         <div className="ver-subdireccion">
             <Banner titulo="Detalle de la Subdireccion" />
-            <Titulo titulo="Informacion sobre la subdireccion seleccionado" />
+            <Titulo titulo="Información sobre la subdireccion seleccionado" />
             {
                 subdireccion && !loadingSubdireccion ? (
                     <>
