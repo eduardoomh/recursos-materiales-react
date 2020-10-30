@@ -17,6 +17,11 @@
         grid-gap: 2em;
         padding-top: 2em;
 
+        @media  (min-width: 0) and (max-width: 667px) {
+            grid-template-rows: repeat(3, 1fr);
+    
+        }
+
 
     }
     

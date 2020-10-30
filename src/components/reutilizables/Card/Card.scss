@@ -4,7 +4,7 @@
 
 .card{
     display: grid;
-    grid-template-columns: 1fr 8rem;
+    grid-template-columns: 1fr 4rem;
     grid-template-rows: 6rem;
     @include min-h(6rem);
     justify-content: center;
@@ -44,6 +44,12 @@
         @include min-h(3.5rem);
         padding-left: 2em;
         padding-right: 2em;
+
+        @media  (min-width: 0) and (max-width: 667px) {
+            font-size: 1.2em;
+            padding-left: .5em;
+    
+        }
     }
 
     .botones{
@@ -53,6 +59,12 @@
 
         i{
             color: $guindo !important;
+            
+            @media  (min-width: 0) and (max-width: 667px) {
+                font-size: 1.5em !important;
+            
+            }
+            
         }
     }
 

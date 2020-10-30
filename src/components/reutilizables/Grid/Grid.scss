@@ -5,6 +5,17 @@
     @include min-w(100vw);
     padding: 2em 5em;
 
+    @media  (min-width: 668px) and (max-width: 999px) {
+        padding: 2em .3em;
+
+    }
+
+    @media  (min-width: 0) and (max-width: 667px) {
+        padding: 2em 0;
+
+    }
+
+
     &__map{
         display: grid;
         grid-template-columns: 1fr;

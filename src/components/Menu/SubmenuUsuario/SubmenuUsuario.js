@@ -14,6 +14,7 @@ export default function SubmenuCrear(props){
             <li><Link to="/usuario/perfil">Perfil</Link></li>
             <li><Link to="/usuario/perfil/editar">Editar perfil</Link></li>
             <li><Link to="/usuario/solicitudes">Solicitudes</Link></li>
+            <li><Link to="/usuarios">Usuarios</Link></li>
             <li  onClick={() => logout()}>Cerrar Sesion</li>
             <li className="absolute" onClick={() => previousMenu()}><Icon name="angle double left" size="big" /></li> 
         </MenuResponsive>

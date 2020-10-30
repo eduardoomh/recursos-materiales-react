@@ -6,8 +6,21 @@
     @include flexbox();
     @include min-h(6rem);
 
+    @media  (min-width: 0) and (max-width: 684px) {
+        @include min-h(12rem);
+        flex-direction: column;
+
+    }
+
+
     .filtrado-box{
         padding: .5em;
+        
+        @media  (min-width: 0) and (max-width: 684px) {
+            display: grid;
+            grid-template-columns: 6rem 1fr;
+            grid-template-rows: 1fr;
+        }
            p{
                 @include flexbox();
                 @include min-h(inherit);

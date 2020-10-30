@@ -1,4 +1,4 @@
-@import "../../../scss//index.scss";
+@import "../../../scss/index.scss";
 
 .recordatorio{
     display: grid;
@@ -9,14 +9,37 @@
     border-bottom: 1px solid #d0d0d0;
     box-shadow: $box-shadow;
     margin: 1em;
+    grid-gap: .3em;
+
+    @media  (min-width: 900px) and (max-width: 1050px) {
+        grid-template-columns: 15rem 1fr 15rem;
+
+    }
+
+    @media  (min-width: 668px) and (max-width: 900px) {
+        grid-template-columns: 15rem 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    
+    @media  (min-width: 0) and (max-width: 667px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr .4fr .4fr;
+        @include min-h(50rem);
+    }
 
     .box-image{
         @include flexbox();
 
+        @media  (min-width: 0) and (max-width: 667px) {
+            grid-column: 1/2;
+            grid-row: 1/2;
+        }
+
             img{
                 @include min-w(100%);
                 padding: 1em;
-            }
+            } 
     }
 
 
@@ -24,7 +47,7 @@
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: .5fr 1fr;
-
+       
         h4{
             @include flexbox();
             font-size: 1.4em;
@@ -40,16 +63,60 @@
             color: $guindo;
         }
 
+        @media  (min-width: query("chico")) and (max-width: query("grande")) {
+            h4{
+                font-size: 1.3em;
+
+            }
+            p{
+                font-size: 1.3em;
+            }
+    
+        }
+
+        @media  (min-width: 0) and (max-width: 667px) {
+            grid-column: 1/2;
+            grid-row: 2/3;
+        }
+
+
     }
 
     &__botones{
         @include flexbox();
         flex-direction: column;
         grid-gap: 1.5em;
+        padding: .5em;
 
         button{
             @include boton();
             
+        }
+
+        @media  (min-width: 668px) and (max-width: 900px) {
+            grid-column:2/3;
+            grid-row: 2/3;
+
+        }
+
+        @media  (min-width: 668px) and (max-width: 900px) {
+            flex-direction: row;
+
+            button{
+                @include min-w(14rem);
+            }
+    
+        }
+
+        @media  (min-width: 0) and (max-width: 667px) {
+            grid-column: 1/2;
+            grid-row: 3/4;
+            flex-direction: column;
+
+            button{
+                @include min-w(14rem);
+            }
+    
         }
     }
 }

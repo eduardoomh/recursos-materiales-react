@@ -14,5 +14,11 @@
         @include flexbox();
         margin: 0;
         font-size: 2.3em;
+
+        @media  (min-width: 0) and (max-width: 667px) {
+            font-size: 2em;
+            text-align: center;
+            padding: .3em;
+        }
     }
 }

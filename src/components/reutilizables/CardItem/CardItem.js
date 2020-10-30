@@ -19,11 +19,11 @@ export default function CardItem(props) {
             <div className="cardItem__icono">
                 <Popup
                     trigger={
-                    <div className={evidencias === 0 ? "" : "color-evidencia"}>
-                        <Icon name="images" size="big" color={evidencias === 0 ?  "grey" : "black"} />
-                    </div>
+                        <div className={evidencias === 0 ? "" : "color-evidencia"}>
+                            <Icon name="images" size="big" color={evidencias === 0 ? "grey" : "black"} />
+                        </div>
                     }
-                    content={evidencias === 0 ? 'No hay evidencias subidas' : imagenes }
+                    content={evidencias === 0 ? 'No hay evidencias subidas' : imagenes}
                     inverted
                     position='bottom left'
                 />
@@ -32,8 +32,31 @@ export default function CardItem(props) {
             <p className="contenido">{contenido}</p>
             <p className="fecha"><Icon name="clock" color="grey" />{transformarFecha(fecha)}</p>
             <p className="botones">
-                <p>{aprobado ? "Aprobado" : "pendiente"}</p>
-                <Icon name="angle right" size="big" color="red" />
+                <p>{
+                    aprobado ?
+                        <Popup
+                            trigger={
+                                <Icon name="thumbs up" color="teal" className="botones__icon" />
+                            }
+                            content="Aprobada"
+                            inverted
+                            position='top left'
+                            className="green-icon"
+                        />
+
+                        :
+                        <Popup
+                            trigger={
+                                <Icon name="thumbs down" className="botones__icon-pendiente"/>
+                            }
+                            content="Pendiente"
+                            inverted
+                            position='top left'
+                            
+                        />
+
+                }
+                </p>
             </p>
         </article>
     )

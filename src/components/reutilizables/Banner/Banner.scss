@@ -7,4 +7,11 @@
     @include flexbox();
     @include min-h(10rem);
     font-size: 1.1em;
+    background-color: red;
+
+    @media  (min-width: 0) and (max-width: 667px) {
+        font-size: .7em;
+        text-align: center;
+    }
+
 }

@@ -43,6 +43,14 @@ header{
         align-items: center;
         margin-top: 0;
 
+        @media  (min-width: 0) and (max-width: 530px) {
+            grid-template-columns: 4em 1fr;
+            grid-template-rows: 1fr;
+            padding-left: 0;
+            mrgin-left: 0;
+
+        }
+
         li{
             display: flex;
             justify-content: center;

@@ -7,8 +7,12 @@
     grid-template-columns: 1fr;
     grid-template-rows: 22rem 1fr;
     min-width: 100vw;
-    max-width: 100vh;
+    max-width: 100vw;
     min-height: calc(100vh - 4.5em);
+
+    @media  (min-width: 0) and (max-width: 580px) {
+        grid-template-rows: 40rem 1fr;
+    }
 
     .loading{
         font-size: 1.5em;
